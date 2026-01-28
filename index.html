@@ -2966,22 +2966,76 @@
             position: fixed;
             top: 85px;
             left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(90deg, var(--accent-yellow), var(--accent-orange), var(--accent-pink), var(--accent-purple), var(--accent-blue), var(--accent-green), var(--accent-yellow));
-            background-size: 200% 100%;
+            transform: translateX(-50%) translateY(0);
+            background: var(--bg-card);
             border: 4px solid var(--border-color);
             border-radius: 50px;
-            padding: 10px 25px;
+            padding: 12px 25px;
             box-shadow: 6px 6px 0 var(--border-color);
             z-index: 999;
             max-width: 90%;
             overflow: hidden;
-            animation: rainbowBg 5s linear infinite;
+            opacity: 1;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        @keyframes rainbowBg {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+        .announcement-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-purple) 100%);
+            opacity: 0.15;
+            border-radius: 46px;
+            z-index: -1;
+        }
+
+        /* Slide up and fade out animation */
+        .announcement-bar.slide-out {
+            transform: translateX(-50%) translateY(-120px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Slide down and fade in animation */
+        .announcement-bar.slide-in {
+            animation: slideInBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes slideInBounce {
+            0% {
+                transform: translateX(-50%) translateY(-120px) scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px) scale(1.05);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateX(-50%) translateY(-5px) scale(0.98);
+            }
+            100% {
+                transform: translateX(-50%) translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Pulse glow effect when visible */
+        .announcement-bar.active-glow {
+            animation: announceGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes announceGlow {
+            0%, 100% { 
+                box-shadow: 6px 6px 0 var(--border-color), 
+                            0 0 0 0 var(--glow-pink);
+            }
+            50% { 
+                box-shadow: 6px 6px 0 var(--border-color), 
+                            0 0 20px 5px var(--glow-pink);
+            }
         }
 
         .announcement-content {
@@ -3011,7 +3065,7 @@
             font-family: 'Baloo 2', cursive;
             font-weight: 700;
             font-size: 1rem;
-            color: var(--border-color);
+            color: var(--text-primary);
             display: inline-block;
             animation: marquee 15s linear infinite;
             padding-right: 50px;
@@ -3020,27 +3074,6 @@
         @keyframes marquee {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
-        }
-
-        .announcement-close {
-            width: 30px;
-            height: 30px;
-            border: 3px solid var(--border-color);
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-            box-shadow: 2px 2px 0 var(--border-color);
-        }
-
-        .announcement-close:hover {
-            transform: rotate(90deg) scale(1.1);
-            background: var(--accent-red);
         }
 
         .announcement-bar.hidden {
@@ -3120,7 +3153,6 @@
                     🎉 Selamat Datang di Portofolio Aithor! ✨ Saya tersedia untuk proyek freelance! 💼 Hubungi saya untuk kolaborasi yang menyenangkan! 🚀 Diskon 20% untuk proyek pertama! 🔥
                 </span>
             </div>
-            <button class="announcement-close" id="closeAnnouncement" title="Tutup">✕</button>
         </div>
     </div>
 
@@ -4266,7 +4298,6 @@
 
         // ===== ANNOUNCEMENT BAR =====
         const announcementBar = document.getElementById('announcementBar');
-        const closeAnnouncement = document.getElementById('closeAnnouncement');
         const announcementText = document.getElementById('announcementText');
 
         // ============================================
@@ -4282,32 +4313,61 @@
         // ============================================
 
         let currentAnnouncementIndex = 0;
+        let announcementInterval = null;
+        const DISPLAY_DURATION = 15000; // How long to show each message (15 seconds)
+        const TRANSITION_DELAY = 4000; // Delay before next message appears (4 seconds)
 
-        // Rotate announcements
-        function rotateAnnouncement() {
+        // Slide out the announcement bar
+        function slideOutAnnouncement() {
+            announcementBar.classList.remove('slide-in', 'active-glow');
+            announcementBar.classList.add('slide-out');
+        }
+
+        // Slide in the announcement bar with new message
+        function slideInAnnouncement() {
+            // Update to next message
             currentAnnouncementIndex = (currentAnnouncementIndex + 1) % announcements.length;
+            announcementText.textContent = announcements[currentAnnouncementIndex];
+            
+            // Reset marquee animation
             announcementText.style.animation = 'none';
             announcementText.offsetHeight; // Trigger reflow
-            announcementText.textContent = announcements[currentAnnouncementIndex];
             announcementText.style.animation = 'marquee 15s linear infinite';
-        }
-
-        // Change announcement every 20 seconds
-        setInterval(rotateAnnouncement, 20000);
-
-        // Close announcement
-        closeAnnouncement.addEventListener('click', (e) => {
-            e.stopPropagation();
-            announcementBar.classList.add('hidden');
             
-            // Save preference
-            sessionStorage.setItem('announcementClosed', 'true');
-        });
-
-        // Check if announcement was closed this session
-        if (sessionStorage.getItem('announcementClosed') === 'true') {
-            announcementBar.classList.add('hidden');
+            // Slide in
+            announcementBar.classList.remove('slide-out');
+            announcementBar.classList.add('slide-in');
+            
+            // Add glow effect after slide in completes
+            setTimeout(() => {
+                announcementBar.classList.add('active-glow');
+            }, 800);
         }
+
+        // Rotate announcements with slide out -> delay -> slide in
+        function rotateAnnouncement() {
+            // First slide out
+            slideOutAnnouncement();
+            
+            // After slide out animation completes + delay, slide in new message
+            setTimeout(() => {
+                slideInAnnouncement();
+            }, 500 + TRANSITION_DELAY); // 500ms for slide out + 4s delay
+        }
+
+        // Initialize announcement bar
+        function initAnnouncementBar() {
+            // Add initial glow effect
+            setTimeout(() => {
+                announcementBar.classList.add('active-glow');
+            }, 500);
+            
+            // Start rotation cycle
+            announcementInterval = setInterval(rotateAnnouncement, DISPLAY_DURATION);
+        }
+
+        // Start the announcement bar
+        initAnnouncementBar();
 
         // Prevent click effects on announcement
         announcementBar.addEventListener('click', (e) => {
