@@ -1267,14 +1267,15 @@
 
             .music-player {
                 bottom: 100px;
-                right: 15px;
                 left: 15px;
-                width: auto;
+                right: auto;
+                width: calc(100% - 30px);
+                max-width: 300px;
             }
 
             .donate-btn {
                 bottom: 30px;
-                right: 100px;
+                right: 20px;
             }
         }
 
@@ -1431,7 +1432,7 @@
         .music-player {
             position: fixed;
             bottom: 30px;
-            right: 180px;
+            left: 20px;
             background: var(--bg-card);
             border: 4px solid var(--border-color);
             border-radius: 25px;
@@ -1607,6 +1608,275 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
+
+        /* ===== VISITOR STATS WIDGET ===== */
+        .visitor-stats {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--bg-card);
+            border: 4px solid var(--border-color);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 8px 8px 0 var(--border-color);
+            z-index: 996;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            min-width: 200px;
+        }
+
+        .visitor-stats.minimized {
+            min-width: auto;
+            padding: 12px 15px;
+            border-radius: 50px;
+        }
+
+        .visitor-stats.minimized .stats-content {
+            display: none;
+        }
+
+        .visitor-stats.minimized .stats-header h3 {
+            display: none;
+        }
+
+        .stats-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .visitor-stats.minimized .stats-header {
+            margin-bottom: 0;
+        }
+
+        .stats-header h3 {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .stats-toggle {
+            width: 35px;
+            height: 35px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            background: var(--accent-yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 3px 3px 0 var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .stats-toggle:hover {
+            transform: rotate(180deg) scale(1.1);
+            background: var(--accent-orange);
+        }
+
+        .stats-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-secondary);
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateX(5px);
+            box-shadow: 4px 4px 0 var(--border-color);
+        }
+
+        .stat-item:nth-child(1) { border-left: 6px solid var(--accent-pink); }
+        .stat-item:nth-child(2) { border-left: 6px solid var(--accent-blue); }
+        .stat-item:nth-child(3) { border-left: 6px solid var(--accent-green); }
+        .stat-item:nth-child(4) { border-left: 6px solid var(--accent-purple); }
+
+        .stat-icon {
+            font-size: 1.8rem;
+            animation: statBounce 2s ease-in-out infinite;
+        }
+
+        .stat-item:nth-child(1) .stat-icon { animation-delay: 0s; }
+        .stat-item:nth-child(2) .stat-icon { animation-delay: 0.2s; }
+        .stat-item:nth-child(3) .stat-icon { animation-delay: 0.4s; }
+        .stat-item:nth-child(4) .stat-icon { animation-delay: 0.6s; }
+
+        @keyframes statBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(10deg); }
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-label {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .stat-value .counting {
+            display: inline-block;
+            min-width: 30px;
+        }
+
+        /* ===== ANNOUNCEMENT BAR ===== */
+        .announcement-bar {
+            position: fixed;
+            top: 85px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--accent-yellow), var(--accent-orange), var(--accent-pink), var(--accent-purple), var(--accent-blue), var(--accent-green), var(--accent-yellow));
+            background-size: 200% 100%;
+            border: 4px solid var(--border-color);
+            border-radius: 50px;
+            padding: 10px 25px;
+            box-shadow: 6px 6px 0 var(--border-color);
+            z-index: 999;
+            max-width: 90%;
+            overflow: hidden;
+            animation: rainbowBg 5s linear infinite;
+        }
+
+        @keyframes rainbowBg {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .announcement-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            white-space: nowrap;
+        }
+
+        .announcement-icon {
+            font-size: 1.5rem;
+            animation: announceBounce 1s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes announceBounce {
+            0%, 100% { transform: scale(1) rotate(-10deg); }
+            50% { transform: scale(1.2) rotate(10deg); }
+        }
+
+        .announcement-text-wrapper {
+            overflow: hidden;
+            max-width: 400px;
+        }
+
+        .announcement-text {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--border-color);
+            display: inline-block;
+            animation: marquee 15s linear infinite;
+            padding-right: 50px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .announcement-close {
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            box-shadow: 2px 2px 0 var(--border-color);
+        }
+
+        .announcement-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: var(--accent-red);
+        }
+
+        .announcement-bar.hidden {
+            transform: translateX(-50%) translateY(-150%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Responsive for stats and announcement */
+        @media (max-width: 768px) {
+            .visitor-stats {
+                top: auto;
+                bottom: 200px;
+                left: 15px;
+                transform: scale(0.9);
+                transform-origin: bottom left;
+            }
+
+            .announcement-bar {
+                top: 75px;
+                padding: 8px 15px;
+                max-width: 95%;
+            }
+
+            .announcement-text-wrapper {
+                max-width: 200px;
+            }
+
+            .announcement-text {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .visitor-stats {
+                bottom: 180px;
+                min-width: 160px;
+            }
+
+            .stat-item {
+                padding: 8px 10px;
+            }
+
+            .stat-icon {
+                font-size: 1.4rem;
+            }
+
+            .stat-value {
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1625,6 +1895,57 @@
 
     <!-- Confetti Canvas -->
     <canvas id="confetti-canvas"></canvas>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" id="announcementBar">
+        <div class="announcement-content">
+            <span class="announcement-icon">📢</span>
+            <div class="announcement-text-wrapper">
+                <span class="announcement-text" id="announcementText">
+                    🎉 Selamat Datang di Portofolio Aithor! ✨ Saya tersedia untuk proyek freelance! 💼 Hubungi saya untuk kolaborasi yang menyenangkan! 🚀 Diskon 20% untuk proyek pertama! 🔥
+                </span>
+            </div>
+            <button class="announcement-close" id="closeAnnouncement" title="Tutup">✕</button>
+        </div>
+    </div>
+
+    <!-- Visitor Stats Widget -->
+    <div class="visitor-stats" id="visitorStats">
+        <div class="stats-header">
+            <h3><span>📊</span> Statistik</h3>
+            <button class="stats-toggle" id="statsToggle" title="Minimize/Maximize">➖</button>
+        </div>
+        <div class="stats-content">
+            <div class="stat-item">
+                <span class="stat-icon">👀</span>
+                <div class="stat-info">
+                    <div class="stat-label">Total Pengunjung</div>
+                    <div class="stat-value"><span class="counting" id="totalVisitors">0</span></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">🟢</span>
+                <div class="stat-info">
+                    <div class="stat-label">Online Sekarang</div>
+                    <div class="stat-value"><span class="counting" id="onlineNow">0</span></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">📅</span>
+                <div class="stat-info">
+                    <div class="stat-label">Hari Ini</div>
+                    <div class="stat-value"><span class="counting" id="todayVisitors">0</span></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">❤️</span>
+                <div class="stat-info">
+                    <div class="stat-label">Total Likes</div>
+                    <div class="stat-value"><span class="counting" id="totalLikes">0</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Floating Shapes Background -->
     <div class="floating-shapes">
@@ -2328,15 +2649,34 @@
         console.log('🎨 Welcome to my portfolio! Try the Konami code for a surprise! ⬆️⬆️⬇️⬇️⬅️➡️⬅️➡️🅱️🅰️');
 
         // ===== CLICK EFFECT & SOUND =====
-        const clickSounds = [];
-        const clickSoundUrls = [
-            'data:audio/wav;base64,UklGRl9vT19teleQBAAIABAAFAAUAAABAAAAAAAAAAAAAAAAJH'
-        ];
+        // ============================================
+        // 🔊 CUSTOM CLICK SOUND SETTINGS 🔊
+        // ============================================
+        // Set your custom click sound URL here (MP3, WAV, OGG)
+        // Leave empty to use default synthesized sound
+        const CUSTOM_CLICK_SFX_URL = '';  // <-- ADD YOUR CLICK SFX URL HERE
+        // Example: 'https://example.com/click-sound.mp3'
+        // ============================================
 
-        // Create click sound using Web Audio API
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let customClickSound = null;
+
+        // Load custom click sound if URL is provided
+        if (CUSTOM_CLICK_SFX_URL) {
+            customClickSound = new Audio(CUSTOM_CLICK_SFX_URL);
+            customClickSound.volume = 0.5;
+            customClickSound.preload = 'auto';
+        }
         
         function playClickSound() {
+            // Use custom sound if available
+            if (customClickSound && CUSTOM_CLICK_SFX_URL) {
+                customClickSound.currentTime = 0;
+                customClickSound.play().catch(err => console.log('Custom SFX error:', err));
+                return;
+            }
+            
+            // Default synthesized click sound
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
             
@@ -2393,6 +2733,119 @@
         // Add click event listener
         document.addEventListener('click', (e) => {
             createClickEffect(e.clientX, e.clientY);
+        });
+
+        // ===== VISITOR STATS WIDGET =====
+        const visitorStats = document.getElementById('visitorStats');
+        const statsToggle = document.getElementById('statsToggle');
+        let statsMinimized = false;
+
+        // Simulated visitor data (in real app, connect to backend/analytics)
+        const visitorData = {
+            total: 12847,
+            online: 23,
+            today: 156,
+            likes: 4892
+        };
+
+        // Animate counting numbers
+        function animateCount(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateCount() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start).toLocaleString();
+                    requestAnimationFrame(updateCount);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            }
+            updateCount();
+        }
+
+        // Initialize stats with animation
+        function initVisitorStats() {
+            setTimeout(() => {
+                animateCount(document.getElementById('totalVisitors'), visitorData.total);
+                animateCount(document.getElementById('onlineNow'), visitorData.online, 1000);
+                animateCount(document.getElementById('todayVisitors'), visitorData.today, 1500);
+                animateCount(document.getElementById('totalLikes'), visitorData.likes);
+            }, 2000);
+
+            // Simulate online users changing
+            setInterval(() => {
+                const change = Math.floor(Math.random() * 5) - 2;
+                visitorData.online = Math.max(1, visitorData.online + change);
+                document.getElementById('onlineNow').textContent = visitorData.online;
+            }, 5000);
+        }
+
+        // Toggle stats widget
+        statsToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            statsMinimized = !statsMinimized;
+            visitorStats.classList.toggle('minimized', statsMinimized);
+            statsToggle.textContent = statsMinimized ? '➕' : '➖';
+        });
+
+        // Prevent click effects on stats widget
+        visitorStats.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Initialize stats
+        initVisitorStats();
+
+        // ===== ANNOUNCEMENT BAR =====
+        const announcementBar = document.getElementById('announcementBar');
+        const closeAnnouncement = document.getElementById('closeAnnouncement');
+        const announcementText = document.getElementById('announcementText');
+
+        // ============================================
+        // 📢 ANNOUNCEMENT TEMPLATES 📢
+        // ============================================
+        // Customize your announcements here!
+        const announcements = [
+            "🎉 Selamat Datang di Portofolio Aithor! ✨ Saya tersedia untuk proyek freelance! 💼 Hubungi saya untuk kolaborasi yang menyenangkan! 🚀 Diskon 20% untuk proyek pertama! 🔥",
+            "💡 Tips: Coba klik dimana saja untuk efek keren! 🌟 Atau tekan Konami Code untuk kejutan! ⬆️⬆️⬇️⬇️⬅️➡️⬅️➡️BA 🎮",
+            "🆕 Update Terbaru: Proyek E-Commerce selesai! 🛒 Cek di bagian Proyek! 📱 Website responsif & modern! ✨",
+            "☕ Suka dengan karya saya? Dukung dengan Trakteer! 💝 Setiap dukungan sangat berarti! 🙏 Terima kasih! 🌈"
+        ];
+        // ============================================
+
+        let currentAnnouncementIndex = 0;
+
+        // Rotate announcements
+        function rotateAnnouncement() {
+            currentAnnouncementIndex = (currentAnnouncementIndex + 1) % announcements.length;
+            announcementText.style.animation = 'none';
+            announcementText.offsetHeight; // Trigger reflow
+            announcementText.textContent = announcements[currentAnnouncementIndex];
+            announcementText.style.animation = 'marquee 15s linear infinite';
+        }
+
+        // Change announcement every 20 seconds
+        setInterval(rotateAnnouncement, 20000);
+
+        // Close announcement
+        closeAnnouncement.addEventListener('click', (e) => {
+            e.stopPropagation();
+            announcementBar.classList.add('hidden');
+            
+            // Save preference
+            sessionStorage.setItem('announcementClosed', 'true');
+        });
+
+        // Check if announcement was closed this session
+        if (sessionStorage.getItem('announcementClosed') === 'true') {
+            announcementBar.classList.add('hidden');
+        }
+
+        // Prevent click effects on announcement
+        announcementBar.addEventListener('click', (e) => {
+            e.stopPropagation();
         });
 
         // ===== MUSIC PLAYER =====
