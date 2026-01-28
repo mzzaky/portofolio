@@ -932,7 +932,7 @@
 
         /* ===== CONTACT SECTION ===== */
         .contact {
-            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-purple) 50%, var(--accent-blue) 100%);
+            background: var(--bg-secondary);
             position: relative;
             overflow: hidden;
         }
@@ -944,8 +944,22 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FF6B9D' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.8;
+        }
+
+        /* Decorative circles */
+        .contact::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            opacity: 0.1;
+            top: -100px;
+            right: -100px;
+            z-index: 0;
         }
 
         .contact .section-header {
@@ -954,16 +968,16 @@
         }
 
         .contact .section-title {
-            color: white;
+            color: var(--text-primary);
         }
 
         .contact .section-title::after {
-            background: var(--accent-yellow);
+            background: var(--accent-pink);
         }
 
         .contact .section-badge {
-            background: rgba(255,255,255,0.2);
-            border-color: white;
+            background: var(--bg-card);
+            border-color: var(--border-color);
         }
 
         .contact-container {
@@ -1047,6 +1061,68 @@
 
         .contact-form .btn:hover {
             background: var(--accent-purple);
+        }
+
+        /* Form Success Message */
+        .form-success-message {
+            text-align: center;
+            padding: 40px;
+            background: var(--bg-card);
+            border: 5px solid var(--border-color);
+            border-radius: 40px;
+            box-shadow: 15px 15px 0 rgba(0,0,0,0.3);
+            animation: successPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes successPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .form-success-message .success-icon {
+            font-size: 4rem;
+            animation: successBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes successBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .form-success-message h3 {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.8rem;
+            color: var(--accent-green);
+            margin: 15px 0;
+        }
+
+        .form-success-message p {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Form Loading State */
+        .contact-form.loading .btn {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .contact-form.loading .btn::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 3px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 10px;
+            animation: btnSpin 0.8s linear infinite;
+        }
+
+        @keyframes btnSpin {
+            to { transform: rotate(360deg); }
         }
 
         /* Social Links */
@@ -3354,13 +3430,13 @@
             font-size: 1rem;
             color: var(--text-primary);
             display: inline-block;
-            animation: marquee 15s linear infinite;
             padding-right: 50px;
+            /* Animation will be set dynamically via JS */
         }
 
         @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-100% - 50px)); }
         }
 
         .announcement-bar.hidden {
@@ -3886,29 +3962,47 @@
             <h2 class="section-title">Hubungi Saya</h2>
         </div>
         <div class="contact-container">
-            <form class="contact-form" id="contactForm">
+            <!-- 
+                SETUP FORMSPREE (Gratis untuk GitHub Pages):
+                1. Buka https://formspree.io dan daftar akun gratis
+                2. Buat form baru dan dapatkan endpoint (contoh: https://formspree.io/f/xyzabcde)
+                3. Ganti YOUR_FORMSPREE_ID di bawah dengan ID form kamu
+                4. Selesai! Pesan akan dikirim ke email kamu
+            -->
+            <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
                 <div class="form-row">
                     <div class="form-group">
                         <label>👤 Nama Anda</label>
-                        <input type="text" placeholder="Masukkan nama Anda" required>
+                        <input type="text" name="name" placeholder="Masukkan nama Anda" required>
                     </div>
                     <div class="form-group">
                         <label>📧 Email</label>
-                        <input type="email" placeholder="email@contoh.com" required>
+                        <input type="email" name="email" placeholder="email@contoh.com" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>📝 Subjek</label>
-                    <input type="text" placeholder="Tentang apa pesan Anda?">
+                    <input type="text" name="subject" placeholder="Tentang apa pesan Anda?">
                 </div>
                 <div class="form-group">
                     <label>💬 Pesan</label>
-                    <textarea placeholder="Ceritakan tentang proyek Anda..." required></textarea>
+                    <textarea name="message" placeholder="Ceritakan tentang proyek Anda..." required></textarea>
                 </div>
+                <!-- Hidden field for spam protection -->
+                <input type="hidden" name="_subject" value="Pesan Baru dari Portfolio!">
+                <input type="text" name="_gotcha" style="display:none">
                 <button type="submit" class="btn btn-primary">
                     <span>🚀</span> Kirim Pesan
                 </button>
             </form>
+            
+            <!-- Success Message (shown after form submission) -->
+            <div class="form-success-message" id="formSuccess" style="display: none;">
+                <div class="success-icon">✅</div>
+                <h3>Pesan Terkirim!</h3>
+                <p>Terima kasih telah menghubungi saya. Saya akan segera membalas pesan Anda! 🚀</p>
+            </div>
+            
             <div class="social-links">
                 <a href="#" class="social-link" title="GitHub">🐱</a>
                 <a href="#" class="social-link" title="LinkedIn">💼</a>
@@ -4270,16 +4364,58 @@
             }
         }
 
-        // ===== FORM SUBMISSION =====
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
+        // ===== FORM SUBMISSION WITH FORMSPREE =====
+        const contactForm = document.getElementById('contactForm');
+        const formSuccess = document.getElementById('formSuccess');
+        
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Create confetti celebration
-            createConfetti();
+            // Add loading state
+            contactForm.classList.add('loading');
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span>⏳</span> Mengirim...';
             
-            // Show success message
-            alert('🎉 Pesan terkirim! Terima kasih telah menghubungi saya!');
-            e.target.reset();
+            try {
+                // Submit form data to Formspree
+                const formData = new FormData(contactForm);
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Create confetti celebration
+                    createConfetti();
+                    
+                    // Hide form and show success message
+                    contactForm.style.display = 'none';
+                    formSuccess.style.display = 'block';
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    // Show form again after 5 seconds
+                    setTimeout(() => {
+                        formSuccess.style.display = 'none';
+                        contactForm.style.display = 'block';
+                    }, 5000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                // Show error notification using toast
+                showCopyToast('Gagal mengirim pesan. Coba lagi!', 'Error');
+                console.error('Form error:', error);
+            } finally {
+                // Remove loading state
+                contactForm.classList.remove('loading');
+                submitBtn.innerHTML = originalBtnText;
+            }
         });
 
         // ===== SMOOTH SCROLL FOR NAV LINKS =====
@@ -4630,6 +4766,7 @@
         // ===== ANNOUNCEMENT BAR =====
         const announcementBar = document.getElementById('announcementBar');
         const announcementText = document.getElementById('announcementText');
+        const announcementWrapper = document.querySelector('.announcement-text-wrapper');
 
         // ============================================
         // 📢 ANNOUNCEMENT TEMPLATES 📢
@@ -4644,14 +4781,41 @@
         // ============================================
 
         let currentAnnouncementIndex = 0;
-        let announcementInterval = null;
-        const DISPLAY_DURATION = 15000; // How long to show each message (15 seconds)
-        const TRANSITION_DELAY = 1000; // Delay before next message appears (4 seconds)
+        let announcementTimeout = null;
+        const SLIDE_ANIMATION_DURATION = 800; // Duration of slide in/out animation
+        const TRANSITION_PAUSE = 500; // Short pause between messages
+
+        // Calculate marquee duration based on text length
+        function calculateMarqueeDuration(text) {
+            // Base speed: roughly 50 characters per 5 seconds
+            const baseSpeed = 50 / 5;
+            const duration = Math.max(8, text.length / baseSpeed);
+            return duration;
+        }
+
+        // Start marquee animation
+        function startMarquee() {
+            const text = announcementText.textContent;
+            const duration = calculateMarqueeDuration(text);
+            
+            // Reset position and start animation immediately
+            announcementText.style.animation = 'none';
+            announcementText.style.transform = 'translateX(0)';
+            announcementText.offsetHeight; // Force reflow
+            announcementText.style.animation = `marquee ${duration}s linear`;
+            
+            // Schedule next announcement after marquee completes
+            if (announcementTimeout) clearTimeout(announcementTimeout);
+            announcementTimeout = setTimeout(() => {
+                rotateAnnouncement();
+            }, duration * 1000 + 500); // Add small buffer after animation
+        }
 
         // Slide out the announcement bar
         function slideOutAnnouncement() {
             announcementBar.classList.remove('slide-in', 'active-glow');
             announcementBar.classList.add('slide-out');
+            announcementText.style.animation = 'none'; // Stop marquee
         }
 
         // Slide in the announcement bar with new message
@@ -4660,19 +4824,15 @@
             currentAnnouncementIndex = (currentAnnouncementIndex + 1) % announcements.length;
             announcementText.textContent = announcements[currentAnnouncementIndex];
             
-            // Reset marquee animation
-            announcementText.style.animation = 'none';
-            announcementText.offsetHeight; // Trigger reflow
-            announcementText.style.animation = 'marquee 15s linear infinite';
-            
             // Slide in
             announcementBar.classList.remove('slide-out');
             announcementBar.classList.add('slide-in');
             
-            // Add glow effect after slide in completes
+            // Start marquee immediately after slide-in animation completes
             setTimeout(() => {
                 announcementBar.classList.add('active-glow');
-            }, 800);
+                startMarquee();
+            }, SLIDE_ANIMATION_DURATION);
         }
 
         // Rotate announcements with slide out -> delay -> slide in
@@ -4680,21 +4840,22 @@
             // First slide out
             slideOutAnnouncement();
             
-            // After slide out animation completes + delay, slide in new message
+            // After slide out animation completes + short pause, slide in new message
             setTimeout(() => {
                 slideInAnnouncement();
-            }, 500 + TRANSITION_DELAY); // 500ms for slide out + 4s delay
+            }, 500 + TRANSITION_PAUSE);
         }
 
         // Initialize announcement bar
         function initAnnouncementBar() {
-            // Add initial glow effect
+            // Set initial message
+            announcementText.textContent = announcements[0];
+            
+            // Add initial glow effect and start marquee after page loads
             setTimeout(() => {
                 announcementBar.classList.add('active-glow');
+                startMarquee();
             }, 500);
-            
-            // Start rotation cycle
-            announcementInterval = setInterval(rotateAnnouncement, DISPLAY_DURATION);
         }
 
         // Start the announcement bar
