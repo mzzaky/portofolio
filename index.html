@@ -1104,6 +1104,396 @@
             50% { transform: scale(1.2); }
         }
 
+        /* ===== GALLERY SECTION ===== */
+        .gallery {
+            background: var(--bg-secondary);
+            overflow: hidden;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .gallery-slideshow {
+            position: relative;
+            background: var(--bg-card);
+            border: 6px solid var(--border-color);
+            border-radius: 30px;
+            box-shadow: 15px 15px 0 var(--border-color);
+            overflow: hidden;
+            aspect-ratio: 16/9;
+        }
+
+        .gallery-slideshow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            border-bottom: 4px solid var(--border-color);
+            z-index: 2;
+        }
+
+        .gallery-slideshow::after {
+            content: '🖼️ Galeri Karya';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: white;
+            z-index: 3;
+        }
+
+        /* Window buttons decoration */
+        .gallery-window-btns {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            z-index: 3;
+        }
+
+        .gallery-window-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+        }
+
+        .gallery-window-btn:nth-child(1) { background: var(--accent-red); }
+        .gallery-window-btn:nth-child(2) { background: var(--accent-yellow); }
+        .gallery-window-btn:nth-child(3) { background: var(--accent-green); }
+
+        .gallery-slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: calc(100% - 50px);
+            margin-top: 50px;
+            overflow: hidden;
+        }
+
+        .gallery-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: scale(0.95) translateX(100%);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: var(--bg-card);
+        }
+
+        .gallery-slide.active {
+            opacity: 1;
+            transform: scale(1) translateX(0);
+            z-index: 1;
+        }
+
+        .gallery-slide.prev {
+            transform: scale(0.95) translateX(-100%);
+        }
+
+        .gallery-slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border: 4px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 8px 8px 0 var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-slide img:hover {
+            transform: scale(1.02);
+            box-shadow: 12px 12px 0 var(--border-color);
+        }
+
+        /* Slide Caption */
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 40px 20px 20px;
+            text-align: center;
+        }
+
+        .gallery-caption h4 {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .gallery-caption p {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Navigation Arrows */
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: var(--accent-yellow);
+            border: 4px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 5px 5px 0 var(--border-color);
+            z-index: 10;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .gallery-nav:hover {
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 8px 8px 0 var(--border-color);
+            background: var(--accent-orange);
+        }
+
+        .gallery-nav:active {
+            transform: translateY(-50%) scale(0.95);
+            box-shadow: 3px 3px 0 var(--border-color);
+        }
+
+        .gallery-nav-prev {
+            left: -30px;
+        }
+
+        .gallery-nav-next {
+            right: -30px;
+        }
+
+        /* Dots Indicator */
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .gallery-dot {
+            width: 18px;
+            height: 18px;
+            background: var(--bg-card);
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 var(--border-color);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .gallery-dot:hover {
+            transform: scale(1.2) rotate(10deg);
+            background: var(--accent-yellow);
+        }
+
+        .gallery-dot.active {
+            background: var(--accent-pink);
+            transform: scale(1.3);
+            box-shadow: 4px 4px 0 var(--border-color);
+        }
+
+        .gallery-dot.active::after {
+            content: '⭐';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            animation: starPop 0.5s ease-out;
+        }
+
+        @keyframes starPop {
+            0% { transform: translateX(-50%) scale(0); opacity: 0; }
+            50% { transform: translateX(-50%) scale(1.5); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1); opacity: 1; }
+        }
+
+        /* Counter Display */
+        .gallery-counter {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-purple);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 3px solid var(--border-color);
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 4px 4px 0 var(--border-color);
+            z-index: 10;
+        }
+
+        /* Thumbnail Strip */
+        .gallery-thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .gallery-thumb {
+            width: 80px;
+            height: 60px;
+            border: 3px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 var(--border-color);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0.6;
+        }
+
+        .gallery-thumb:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 6px 6px 0 var(--border-color);
+            opacity: 0.9;
+        }
+
+        .gallery-thumb.active {
+            opacity: 1;
+            border-color: var(--accent-pink);
+            transform: scale(1.1);
+            box-shadow: 5px 5px 0 var(--accent-pink);
+        }
+
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Autoplay indicator */
+        .gallery-autoplay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .autoplay-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 3px solid var(--border-color);
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            box-shadow: 4px 4px 0 var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .autoplay-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 0 var(--border-color);
+            background: var(--accent-yellow);
+        }
+
+        .autoplay-btn.playing {
+            background: var(--accent-green);
+            color: var(--border-color);
+        }
+
+        .autoplay-btn .autoplay-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Responsive Gallery */
+        @media (max-width: 768px) {
+            .gallery-slideshow {
+                border-radius: 20px;
+                box-shadow: 10px 10px 0 var(--border-color);
+            }
+
+            .gallery-nav {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .gallery-nav-prev {
+                left: 10px;
+            }
+
+            .gallery-nav-next {
+                right: 10px;
+            }
+
+            .gallery-thumb {
+                width: 60px;
+                height: 45px;
+            }
+
+            .gallery-caption h4 {
+                font-size: 1.1rem;
+            }
+
+            .gallery-counter {
+                bottom: 10px;
+                right: 10px;
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-slideshow::after {
+                font-size: 1rem;
+            }
+
+            .gallery-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+
+            .gallery-dots {
+                gap: 8px;
+            }
+
+            .gallery-dot {
+                width: 14px;
+                height: 14px;
+            }
+
+            .gallery-thumb {
+                width: 50px;
+                height: 38px;
+            }
+        }
+
         /* ===== SCROLL TO TOP ===== */
         .scroll-top {
             position: fixed;
@@ -1275,7 +1665,15 @@
 
             .donate-btn {
                 bottom: 30px;
-                right: 20px;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .donate-btn:hover {
+                transform: translateX(-50%) translateY(-5px) scale(1.05);
             }
         }
 
@@ -1388,7 +1786,8 @@
         .donate-btn {
             position: fixed;
             bottom: 30px;
-            right: 100px;
+            left: 50%;
+            transform: translateX(-50%);
             background: linear-gradient(135deg, #FF6B9D, #FF8C42);
             border: 4px solid var(--border-color);
             border-radius: 50px;
@@ -1408,7 +1807,7 @@
         }
 
         .donate-btn:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform: translateX(-50%) translateY(-5px) scale(1.05);
             box-shadow: 10px 10px 0 var(--border-color);
             background: linear-gradient(135deg, #FF8C42, #FFE66D);
         }
@@ -1419,8 +1818,8 @@
         }
 
         @keyframes donateFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
         }
 
         @keyframes heartPulse {
@@ -2469,6 +2868,7 @@
         <a href="#home" class="nav-link active">Beranda</a>
         <a href="#about" class="nav-link">Tentang</a>
         <a href="#skills" class="nav-link">Keahlian</a>
+        <a href="#gallery" class="nav-link">Galeri</a>
         <a href="#projects" class="nav-link">Proyek</a>
         <a href="#contact" class="nav-link">Kontak</a>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
@@ -2583,6 +2983,119 @@
                 <div class="skill-bar">
                     <div class="skill-progress" style="--progress: 75%"></div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="section-header">
+            <span class="section-badge">📸 Hasil Karya</span>
+            <h2 class="section-title">Galeri</h2>
+        </div>
+        <div class="gallery-container fade-in">
+            <div class="gallery-slideshow">
+                <!-- Window decoration buttons -->
+                <div class="gallery-window-btns">
+                    <div class="gallery-window-btn"></div>
+                    <div class="gallery-window-btn"></div>
+                    <div class="gallery-window-btn"></div>
+                </div>
+                
+                <div class="gallery-slides-wrapper">
+                    <!-- ============================================ -->
+                    <!-- 📸 GALLERY IMAGES - CUSTOMIZE YOUR URLS HERE -->
+                    <!-- ============================================ -->
+                    <!-- Replace the src URLs with your GitHub raw image URLs -->
+                    <!-- Format: https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/path/to/image.png -->
+                    
+                    <div class="gallery-slide active">
+                        <img src="https://raw.githubusercontent.com/mzzaky/portofolio/main/gallery/project1.png" alt="Project Screenshot 1" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22 viewBox=%220 0 800 450%22><rect fill=%22%23FFE5D9%22 width=%22800%22 height=%22450%22/><text x=%22400%22 y=%22225%22 font-family=%22Baloo 2%22 font-size=%2240%22 fill=%22%232D3436%22 text-anchor=%22middle%22>🖼️ Gambar 1</text></svg>'">
+                        <div class="gallery-caption">
+                            <h4>🛒 E-Commerce Platform</h4>
+                            <p>Website belanja online modern dengan UI/UX yang intuitif</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide">
+                        <img src="https://raw.githubusercontent.com/mzzaky/portofolio/main/gallery/project2.png" alt="Project Screenshot 2" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22 viewBox=%220 0 800 450%22><rect fill=%22%23E8F8F5%22 width=%22800%22 height=%22450%22/><text x=%22400%22 y=%22225%22 font-family=%22Baloo 2%22 font-size=%2240%22 fill=%22%232D3436%22 text-anchor=%22middle%22>🖼️ Gambar 2</text></svg>'">
+                        <div class="gallery-caption">
+                            <h4>📱 Mobile App Design</h4>
+                            <p>Desain aplikasi mobile dengan tampilan modern dan fresh</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide">
+                        <img src="https://raw.githubusercontent.com/mzzaky/portofolio/main/gallery/project3.png" alt="Project Screenshot 3" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22 viewBox=%220 0 800 450%22><rect fill=%22%23FFF9E3%22 width=%22800%22 height=%22450%22/><text x=%22400%22 y=%22225%22 font-family=%22Baloo 2%22 font-size=%2240%22 fill=%22%232D3436%22 text-anchor=%22middle%22>🖼️ Gambar 3</text></svg>'">
+                        <div class="gallery-caption">
+                            <h4>🎨 Landing Page</h4>
+                            <p>Landing page kreatif dengan animasi yang menarik</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide">
+                        <img src="https://raw.githubusercontent.com/mzzaky/portofolio/main/gallery/project4.png" alt="Project Screenshot 4" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22 viewBox=%220 0 800 450%22><rect fill=%22%23F3E5F5%22 width=%22800%22 height=%22450%22/><text x=%22400%22 y=%22225%22 font-family=%22Baloo 2%22 font-size=%2240%22 fill=%22%232D3436%22 text-anchor=%22middle%22>🖼️ Gambar 4</text></svg>'">
+                        <div class="gallery-caption">
+                            <h4>📊 Dashboard Analytics</h4>
+                            <p>Dashboard dengan visualisasi data yang informatif</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-slide">
+                        <img src="https://raw.githubusercontent.com/mzzaky/portofolio/main/gallery/project5.png" alt="Project Screenshot 5" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22450%22 viewBox=%220 0 800 450%22><rect fill=%22%23E3F2FD%22 width=%22800%22 height=%22450%22/><text x=%22400%22 y=%22225%22 font-family=%22Baloo 2%22 font-size=%2240%22 fill=%22%232D3436%22 text-anchor=%22middle%22>🖼️ Gambar 5</text></svg>'">
+                        <div class="gallery-caption">
+                            <h4>🎮 Game Interface</h4>
+                            <p>UI game dengan tema colorful dan playful</p>
+                        </div>
+                    </div>
+                    
+                    <!-- ============================================ -->
+                </div>
+                
+                <!-- Counter Display -->
+                <div class="gallery-counter">
+                    <span id="currentSlide">1</span> / <span id="totalSlides">5</span>
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <button class="gallery-nav gallery-nav-prev" id="galleryPrev" aria-label="Previous slide">◀️</button>
+                <button class="gallery-nav gallery-nav-next" id="galleryNext" aria-label="Next slide">▶️</button>
+            </div>
+            
+            <!-- Dots Indicator -->
+            <div class="gallery-dots" id="galleryDots">
+                <button class="gallery-dot active" data-slide="0" aria-label="Go to slide 1"></button>
+                <button class="gallery-dot" data-slide="1" aria-label="Go to slide 2"></button>
+                <button class="gallery-dot" data-slide="2" aria-label="Go to slide 3"></button>
+                <button class="gallery-dot" data-slide="3" aria-label="Go to slide 4"></button>
+                <button class="gallery-dot" data-slide="4" aria-label="Go to slide 5"></button>
+            </div>
+            
+            <!-- Thumbnails -->
+            <div class="gallery-thumbnails" id="galleryThumbnails">
+                <div class="gallery-thumb active" data-slide="0">
+                    <img src="https://raw.githubusercontent.com/mzzaky/portofolio/main/gallery/project1.png" alt="Thumbnail 1" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2260%22><rect fill=%22%23FFE5D9%22 width=%2280%22 height=%2260%22/><text x=%2240%22 y=%2235%22 font-size=%2220%22 text-anchor=%22middle%22>1</text></svg>'">
+                </div>
+                <div class="gallery-thumb" data-slide="1">
+                    <img src="https://raw.githubusercontent.com/mzzaky/portofolio/main/gallery/project2.png" alt="Thumbnail 2" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2260%22><rect fill=%22%23E8F8F5%22 width=%2280%22 height=%2260%22/><text x=%2240%22 y=%2235%22 font-size=%2220%22 text-anchor=%22middle%22>2</text></svg>'">
+                </div>
+                <div class="gallery-thumb" data-slide="2">
+                    <img src="https://raw.githubusercontent.com/mzzaky/portofolio/main/gallery/project3.png" alt="Thumbnail 3" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2260%22><rect fill=%22%23FFF9E3%22 width=%2280%22 height=%2260%22/><text x=%2240%22 y=%2235%22 font-size=%2220%22 text-anchor=%22middle%22>3</text></svg>'">
+                </div>
+                <div class="gallery-thumb" data-slide="3">
+                    <img src="https://raw.githubusercontent.com/mzzaky/portofolio/main/gallery/project4.png" alt="Thumbnail 4" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2260%22><rect fill=%22%23F3E5F5%22 width=%2280%22 height=%2260%22/><text x=%2240%22 y=%2235%22 font-size=%2220%22 text-anchor=%22middle%22>4</text></svg>'">
+                </div>
+                <div class="gallery-thumb" data-slide="4">
+                    <img src="https://raw.githubusercontent.com/mzzaky/portofolio/main/gallery/project5.png" alt="Thumbnail 5" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2260%22><rect fill=%22%23E3F2FD%22 width=%2280%22 height=%2260%22/><text x=%2240%22 y=%2235%22 font-size=%2220%22 text-anchor=%22middle%22>5</text></svg>'">
+                </div>
+            </div>
+            
+            <!-- Autoplay Button -->
+            <div class="gallery-autoplay">
+                <button class="autoplay-btn" id="autoplayBtn">
+                    <span class="autoplay-icon">▶️</span>
+                    <span class="autoplay-text">Autoplay</span>
+                </button>
             </div>
         </div>
     </section>
@@ -3553,6 +4066,211 @@
                     promoToggle.textContent = '➕';
                 }
             }, 30000);
+        }
+
+        // ===== GALLERY SLIDESHOW =====
+        const gallerySlides = document.querySelectorAll('.gallery-slide');
+        const galleryDots = document.querySelectorAll('.gallery-dot');
+        const galleryThumbs = document.querySelectorAll('.gallery-thumb');
+        const galleryPrev = document.getElementById('galleryPrev');
+        const galleryNext = document.getElementById('galleryNext');
+        const currentSlideEl = document.getElementById('currentSlide');
+        const totalSlidesEl = document.getElementById('totalSlides');
+        const autoplayBtn = document.getElementById('autoplayBtn');
+        
+        let currentGallerySlide = 0;
+        let galleryAutoplay = null;
+        let isAutoplayActive = false;
+        const totalGallerySlides = gallerySlides.length;
+
+        // Update total slides display
+        if (totalSlidesEl) {
+            totalSlidesEl.textContent = totalGallerySlides;
+        }
+
+        // Go to specific slide
+        function goToSlide(index) {
+            // Handle wrap around
+            if (index < 0) index = totalGallerySlides - 1;
+            if (index >= totalGallerySlides) index = 0;
+
+            // Remove active class from current slide
+            gallerySlides[currentGallerySlide].classList.remove('active');
+            gallerySlides[currentGallerySlide].classList.add('prev');
+            
+            // Update current slide index
+            currentGallerySlide = index;
+            
+            // Remove prev class and add active to new slide
+            setTimeout(() => {
+                gallerySlides.forEach(slide => slide.classList.remove('prev'));
+            }, 600);
+            gallerySlides[currentGallerySlide].classList.remove('prev');
+            gallerySlides[currentGallerySlide].classList.add('active');
+
+            // Update dots
+            galleryDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentGallerySlide);
+            });
+
+            // Update thumbnails
+            galleryThumbs.forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === currentGallerySlide);
+            });
+
+            // Update counter
+            if (currentSlideEl) {
+                currentSlideEl.textContent = currentGallerySlide + 1;
+            }
+        }
+
+        // Next slide
+        function nextSlide() {
+            goToSlide(currentGallerySlide + 1);
+        }
+
+        // Previous slide
+        function prevSlide() {
+            goToSlide(currentGallerySlide - 1);
+        }
+
+        // Toggle autoplay
+        function toggleAutoplay() {
+            if (isAutoplayActive) {
+                clearInterval(galleryAutoplay);
+                galleryAutoplay = null;
+                isAutoplayActive = false;
+                autoplayBtn.classList.remove('playing');
+                autoplayBtn.querySelector('.autoplay-icon').textContent = '▶️';
+                autoplayBtn.querySelector('.autoplay-text').textContent = 'Autoplay';
+            } else {
+                galleryAutoplay = setInterval(nextSlide, 4000);
+                isAutoplayActive = true;
+                autoplayBtn.classList.add('playing');
+                autoplayBtn.querySelector('.autoplay-icon').textContent = '⏸️';
+                autoplayBtn.querySelector('.autoplay-text').textContent = 'Pause';
+            }
+        }
+
+        // Event listeners
+        if (galleryPrev) {
+            galleryPrev.addEventListener('click', (e) => {
+                e.stopPropagation();
+                prevSlide();
+                // Reset autoplay timer if active
+                if (isAutoplayActive) {
+                    clearInterval(galleryAutoplay);
+                    galleryAutoplay = setInterval(nextSlide, 4000);
+                }
+            });
+        }
+
+        if (galleryNext) {
+            galleryNext.addEventListener('click', (e) => {
+                e.stopPropagation();
+                nextSlide();
+                // Reset autoplay timer if active
+                if (isAutoplayActive) {
+                    clearInterval(galleryAutoplay);
+                    galleryAutoplay = setInterval(nextSlide, 4000);
+                }
+            });
+        }
+
+        // Dot click events
+        galleryDots.forEach((dot, index) => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(index);
+                // Reset autoplay timer if active
+                if (isAutoplayActive) {
+                    clearInterval(galleryAutoplay);
+                    galleryAutoplay = setInterval(nextSlide, 4000);
+                }
+            });
+        });
+
+        // Thumbnail click events
+        galleryThumbs.forEach((thumb, index) => {
+            thumb.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goToSlide(index);
+                // Reset autoplay timer if active
+                if (isAutoplayActive) {
+                    clearInterval(galleryAutoplay);
+                    galleryAutoplay = setInterval(nextSlide, 4000);
+                }
+            });
+        });
+
+        // Autoplay button
+        if (autoplayBtn) {
+            autoplayBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleAutoplay();
+            });
+        }
+
+        // Keyboard navigation for gallery
+        document.addEventListener('keydown', (e) => {
+            // Only if gallery is in viewport
+            const gallerySection = document.getElementById('gallery');
+            if (gallerySection) {
+                const rect = gallerySection.getBoundingClientRect();
+                const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isInViewport) {
+                    if (e.key === 'ArrowLeft') {
+                        prevSlide();
+                    } else if (e.key === 'ArrowRight') {
+                        nextSlide();
+                    }
+                }
+            }
+        });
+
+        // Touch swipe support for gallery
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const gallerySlideshow = document.querySelector('.gallery-slideshow');
+
+        if (gallerySlideshow) {
+            gallerySlideshow.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            gallerySlideshow.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe left - next slide
+                    nextSlide();
+                } else {
+                    // Swipe right - previous slide
+                    prevSlide();
+                }
+                
+                // Reset autoplay timer if active
+                if (isAutoplayActive) {
+                    clearInterval(galleryAutoplay);
+                    galleryAutoplay = setInterval(nextSlide, 4000);
+                }
+            }
+        }
+
+        // Prevent click effects on gallery
+        if (gallerySlideshow) {
+            gallerySlideshow.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
         }
     </script>
 </body>
