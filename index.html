@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ Portofolio Kreatif | Nama Anda</title>
+    <title>✨ Portofolio Kreatif | Aithor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Fredoka:wght@300;400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
@@ -1264,6 +1264,18 @@
                 height: 50px;
                 font-size: 1.4rem;
             }
+
+            .music-player {
+                bottom: 100px;
+                right: 15px;
+                left: 15px;
+                width: auto;
+            }
+
+            .donate-btn {
+                bottom: 30px;
+                right: 100px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1281,6 +1293,319 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
+        }
+
+        /* ===== CLICK EFFECT ===== */
+        .click-effect {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            animation: clickBurst 0.6s ease-out forwards;
+        }
+
+        .click-ring {
+            position: absolute;
+            border: 4px solid var(--accent-pink);
+            border-radius: 50%;
+            animation: ringExpand 0.6s ease-out forwards;
+        }
+
+        .click-ring:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            border-color: var(--accent-pink);
+            animation-delay: 0s;
+        }
+
+        .click-ring:nth-child(2) {
+            width: 35px;
+            height: 35px;
+            border-color: var(--accent-yellow);
+            animation-delay: 0.1s;
+        }
+
+        .click-ring:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            border-color: var(--accent-blue);
+            animation-delay: 0.2s;
+        }
+
+        .click-star {
+            position: absolute;
+            font-size: 1.2rem;
+            animation: starBurst 0.6s ease-out forwards;
+        }
+
+        .click-star:nth-child(4) { --angle: 0deg; --distance: 40px; }
+        .click-star:nth-child(5) { --angle: 45deg; --distance: 35px; }
+        .click-star:nth-child(6) { --angle: 90deg; --distance: 40px; }
+        .click-star:nth-child(7) { --angle: 135deg; --distance: 35px; }
+        .click-star:nth-child(8) { --angle: 180deg; --distance: 40px; }
+        .click-star:nth-child(9) { --angle: 225deg; --distance: 35px; }
+        .click-star:nth-child(10) { --angle: 270deg; --distance: 40px; }
+        .click-star:nth-child(11) { --angle: 315deg; --distance: 35px; }
+
+        @keyframes ringExpand {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes starBurst {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg) scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(
+                    calc(-50% + cos(var(--angle)) * var(--distance)),
+                    calc(-50% + sin(var(--angle)) * var(--distance))
+                ) rotate(180deg) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(
+                    calc(-50% + cos(var(--angle)) * calc(var(--distance) * 1.5)),
+                    calc(-50% + sin(var(--angle)) * calc(var(--distance) * 1.5))
+                ) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes clickBurst {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* ===== DONATE BUTTON ===== */
+        .donate-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 100px;
+            background: linear-gradient(135deg, #FF6B9D, #FF8C42);
+            border: 4px solid var(--border-color);
+            border-radius: 50px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            text-decoration: none;
+            box-shadow: 6px 6px 0 var(--border-color);
+            z-index: 998;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation: donateFloat 3s ease-in-out infinite;
+        }
+
+        .donate-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 10px 10px 0 var(--border-color);
+            background: linear-gradient(135deg, #FF8C42, #FFE66D);
+        }
+
+        .donate-btn .donate-icon {
+            font-size: 1.5rem;
+            animation: heartPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes donateFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* ===== MUSIC PLAYER ===== */
+        .music-player {
+            position: fixed;
+            bottom: 30px;
+            right: 180px;
+            background: var(--bg-card);
+            border: 4px solid var(--border-color);
+            border-radius: 25px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 8px 8px 0 var(--border-color);
+            z-index: 997;
+            transition: all 0.3s ease;
+            min-width: 280px;
+        }
+
+        .music-player.minimized {
+            min-width: auto;
+            padding: 12px 15px;
+            border-radius: 50px;
+        }
+
+        .music-player.minimized .music-info,
+        .music-player.minimized .music-progress,
+        .music-player.minimized .music-volume {
+            display: none;
+        }
+
+        .music-toggle-btn {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 var(--border-color);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            flex-shrink: 0;
+        }
+
+        .music-toggle-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 6px 6px 0 var(--border-color);
+        }
+
+        .music-toggle-btn.playing {
+            animation: musicPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .music-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .music-title {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .music-artist {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .music-progress {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            margin-top: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .music-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .music-btn {
+            width: 35px;
+            height: 35px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            background: var(--accent-yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.15);
+            background: var(--accent-orange);
+        }
+
+        .music-volume {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .volume-slider {
+            width: 60px;
+            height: 6px;
+            -webkit-appearance: none;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-pink);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .music-minimize {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .music-minimize:hover {
+            background: var(--accent-cyan);
+            transform: rotate(180deg);
+        }
+
+        /* Vinyl animation when playing */
+        .vinyl-spin {
+            animation: vinylRotate 3s linear infinite;
+        }
+
+        @keyframes vinylRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -1332,7 +1657,7 @@
             <span class="hero-badge">✨ Tersedia untuk Proyek Baru!</span>
             <h1 class="hero-title">
                 Halo! <span class="wave">👋</span><br>
-                Saya <span class="highlight">Nama Anda</span>
+                Saya <span class="highlight">Aithor</span>
             </h1>
             <p class="hero-subtitle">
                 Seorang Developer & Designer kreatif yang mengubah ide-ide keren menjadi pengalaman digital yang menakjubkan! 🎨💻
@@ -1511,7 +1836,7 @@
         <div class="testimonials-container">
             <div class="testimonial-card fade-in">
                 <p class="testimonial-content">
-                    "Bekerja dengan Nama Anda adalah pengalaman yang luar biasa! Hasil kerjanya melampaui ekspektasi dan komunikasinya sangat baik. Highly recommended! 🌟"
+                    "Bekerja dengan Aithor adalah pengalaman yang luar biasa! Hasil kerjanya melampaui ekspektasi dan komunikasinya sangat baik. Highly recommended! 🌟"
                 </p>
                 <div class="testimonial-author">
                     <div class="testimonial-avatar">👨‍💼</div>
@@ -1579,10 +1904,42 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>Dibuat dengan <span>❤️</span> oleh Nama Anda © 2025</p>
+            <p>Dibuat dengan <span>❤️</span> oleh Aithor © 2025</p>
             <p>Semua hak dilindungi 🌈</p>
         </div>
     </footer>
+
+    <!-- Donate Button -->
+    <a href="https://trakteer.id/Aithor" target="_blank" rel="noopener noreferrer" class="donate-btn">
+        <span class="donate-icon">☕</span>
+        <span>Traktir Saya!</span>
+    </a>
+
+    <!-- Music Player Widget -->
+    <div class="music-player" id="musicPlayer">
+        <button class="music-toggle-btn" id="playPauseBtn" title="Play/Pause">
+            <span id="playIcon">▶️</span>
+        </button>
+        <div class="music-info">
+            <div class="music-title" id="musicTitle">No Music Loaded</div>
+            <div class="music-artist" id="musicArtist">Add your music URL</div>
+            <div class="music-progress" id="progressContainer">
+                <div class="music-progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+        <div class="music-controls">
+            <div class="music-volume">
+                <span>🔊</span>
+                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="70">
+            </div>
+        </div>
+        <button class="music-minimize" id="minimizeBtn" title="Minimize">➖</button>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="audioPlayer" preload="auto">
+        <!-- Music source will be set via JavaScript -->
+    </audio>
 
     <!-- Scroll to Top Button -->
     <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">⬆️</button>
@@ -1708,18 +2065,21 @@
 
         const confettiColors = ['#FF6B9D', '#4ECDC4', '#FFE66D', '#A66DD4', '#FF8C42', '#6BCB77'];
         let confettiParticles = [];
+        let confettiAnimationId = null;
 
         class Confetti {
             constructor() {
                 this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height - canvas.height;
+                this.y = Math.random() * -canvas.height;
                 this.size = Math.random() * 10 + 5;
                 this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
                 this.speedY = Math.random() * 3 + 2;
                 this.speedX = Math.random() * 4 - 2;
                 this.rotation = Math.random() * 360;
                 this.rotationSpeed = Math.random() * 10 - 5;
-                this.shape = Math.floor(Math.random() * 3); // 0: square, 1: circle, 2: triangle
+                this.shape = Math.floor(Math.random() * 3);
+                this.opacity = 1;
+                this.fadeSpeed = 0.01;
             }
 
             update() {
@@ -1727,14 +2087,17 @@
                 this.x += this.speedX;
                 this.rotation += this.rotationSpeed;
                 
-                if (this.y > canvas.height) {
-                    this.y = -this.size;
-                    this.x = Math.random() * canvas.width;
+                // Start fading when past 70% of screen height
+                if (this.y > canvas.height * 0.7) {
+                    this.opacity -= this.fadeSpeed;
                 }
             }
 
             draw() {
+                if (this.opacity <= 0) return;
+                
                 ctx.save();
+                ctx.globalAlpha = this.opacity;
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.rotation * Math.PI / 180);
                 ctx.fillStyle = this.color;
@@ -1764,29 +2127,38 @@
         }
 
         function createConfetti() {
+            // Cancel previous animation if running
+            if (confettiAnimationId) {
+                cancelAnimationFrame(confettiAnimationId);
+            }
+            
             confettiParticles = [];
             for (let i = 0; i < 100; i++) {
                 confettiParticles.push(new Confetti());
             }
             animateConfetti();
-            
-            // Stop confetti after 3 seconds
-            setTimeout(() => {
-                confettiParticles = [];
-            }, 3000);
         }
 
         function animateConfetti() {
-            if (confettiParticles.length === 0) return;
-            
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
+            // Update and draw particles
             confettiParticles.forEach(particle => {
                 particle.update();
                 particle.draw();
             });
             
-            requestAnimationFrame(animateConfetti);
+            // Remove particles that are fully faded or off screen
+            confettiParticles = confettiParticles.filter(p => p.opacity > 0 && p.y < canvas.height + 50);
+            
+            // Continue animation if particles exist
+            if (confettiParticles.length > 0) {
+                confettiAnimationId = requestAnimationFrame(animateConfetti);
+            } else {
+                // Clear canvas when done
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                confettiAnimationId = null;
+            }
         }
 
         // ===== FORM SUBMISSION =====
@@ -1954,6 +2326,189 @@
         animateCursorTrail();
 
         console.log('🎨 Welcome to my portfolio! Try the Konami code for a surprise! ⬆️⬆️⬇️⬇️⬅️➡️⬅️➡️🅱️🅰️');
+
+        // ===== CLICK EFFECT & SOUND =====
+        const clickSounds = [];
+        const clickSoundUrls = [
+            'data:audio/wav;base64,UklGRl9vT19teleQBAAIABAAFAAUAAABAAAAAAAAAAAAAAAAJH'
+        ];
+
+        // Create click sound using Web Audio API
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playClickSound() {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+            
+            oscillator.type = 'sine';
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.15);
+        }
+
+        function createClickEffect(x, y) {
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.style.left = x + 'px';
+            effect.style.top = y + 'px';
+            
+            // Create rings
+            for (let i = 0; i < 3; i++) {
+                const ring = document.createElement('div');
+                ring.className = 'click-ring';
+                effect.appendChild(ring);
+            }
+            
+            // Create stars
+            const starEmojis = ['⭐', '✨', '💫', '🌟', '⚡', '💥', '🎯', '🔥'];
+            for (let i = 0; i < 8; i++) {
+                const star = document.createElement('div');
+                star.className = 'click-star';
+                star.textContent = starEmojis[i % starEmojis.length];
+                effect.appendChild(star);
+            }
+            
+            document.body.appendChild(effect);
+            
+            // Play sound
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            playClickSound();
+            
+            // Remove effect after animation
+            setTimeout(() => {
+                effect.remove();
+            }, 600);
+        }
+
+        // Add click event listener
+        document.addEventListener('click', (e) => {
+            createClickEffect(e.clientX, e.clientY);
+        });
+
+        // ===== MUSIC PLAYER =====
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playIcon = document.getElementById('playIcon');
+        const musicTitle = document.getElementById('musicTitle');
+        const musicArtist = document.getElementById('musicArtist');
+        const progressBar = document.getElementById('progressBar');
+        const progressContainer = document.getElementById('progressContainer');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const minimizeBtn = document.getElementById('minimizeBtn');
+        const musicPlayer = document.getElementById('musicPlayer');
+        
+        let isPlaying = false;
+        let isMinimized = false;
+
+        // ============================================
+        // 🎵 SET YOUR MUSIC URL HERE 🎵
+        // ============================================
+        // Replace this URL with your music file URL
+        // Supported formats: MP3, WAV, OGG, M4A
+        // Example: 'https://example.com/your-song.mp3'
+        const MUSIC_URL = '';  // <-- ADD YOUR MUSIC URL HERE
+        const MUSIC_TITLE = 'Your Song Title';  // <-- ADD SONG TITLE
+        const MUSIC_ARTIST = 'Artist Name';  // <-- ADD ARTIST NAME
+        // ============================================
+
+        // Initialize music player
+        function initMusicPlayer() {
+            if (MUSIC_URL) {
+                audioPlayer.src = MUSIC_URL;
+                musicTitle.textContent = MUSIC_TITLE;
+                musicArtist.textContent = MUSIC_ARTIST;
+            } else {
+                musicTitle.textContent = '🎵 No Music';
+                musicArtist.textContent = 'Set MUSIC_URL in code';
+            }
+            
+            audioPlayer.volume = volumeSlider.value / 100;
+        }
+
+        // Play/Pause toggle
+        playPauseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            if (!MUSIC_URL) {
+                alert('🎵 Please set a music URL in the code!\n\nLook for MUSIC_URL in the JavaScript section.');
+                return;
+            }
+            
+            if (isPlaying) {
+                audioPlayer.pause();
+                playIcon.textContent = '▶️';
+                playPauseBtn.classList.remove('playing');
+            } else {
+                audioPlayer.play().catch(err => {
+                    console.log('Playback error:', err);
+                });
+                playIcon.textContent = '⏸️';
+                playPauseBtn.classList.add('playing');
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Update progress bar
+        audioPlayer.addEventListener('timeupdate', () => {
+            if (audioPlayer.duration) {
+                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressBar.style.width = progress + '%';
+            }
+        });
+
+        // Click on progress bar to seek
+        progressContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const rect = progressContainer.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
+            const seekTime = (clickX / width) * audioPlayer.duration;
+            audioPlayer.currentTime = seekTime;
+        });
+
+        // Volume control
+        volumeSlider.addEventListener('input', (e) => {
+            e.stopPropagation();
+            audioPlayer.volume = volumeSlider.value / 100;
+        });
+
+        volumeSlider.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Minimize/Maximize player
+        minimizeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            isMinimized = !isMinimized;
+            musicPlayer.classList.toggle('minimized', isMinimized);
+            minimizeBtn.textContent = isMinimized ? '➕' : '➖';
+        });
+
+        // When song ends
+        audioPlayer.addEventListener('ended', () => {
+            isPlaying = false;
+            playIcon.textContent = '▶️';
+            playPauseBtn.classList.remove('playing');
+            progressBar.style.width = '0%';
+        });
+
+        // Prevent click effects on music player
+        musicPlayer.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Initialize
+        initMusicPlayer();
     </script>
 </body>
 </html>
