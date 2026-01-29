@@ -4094,7 +4094,7 @@
         .shortcut-widget {
             position: fixed;
             bottom: 30px;
-            right: 100px;
+            right: 30px;
             background: var(--bg-card);
             border: 4px solid var(--border-color);
             border-radius: 25px;
@@ -4123,7 +4123,7 @@
 
         /* Move widget left when scroll-top button is visible */
         .shortcut-widget.scroll-visible {
-            right: 110px;
+            right: 100px;
         }
 
         .shortcut-widget.minimized {
@@ -4383,7 +4383,7 @@
         /* Responsive for shortcut widget */
         @media (max-width: 768px) {
             .shortcut-widget {
-                bottom: 110px;
+                bottom: 30px;
                 right: 15px;
                 min-width: 190px;
                 max-width: 250px;
@@ -4391,8 +4391,7 @@
             }
 
             .shortcut-widget.scroll-visible {
-                right: 15px;
-                bottom: 110px;
+                right: 85px;
             }
 
             .shortcut-header h3 {
@@ -4416,11 +4415,15 @@
 
         @media (max-width: 480px) {
             .shortcut-widget {
-                bottom: 100px;
+                bottom: 25px;
                 right: 10px;
                 min-width: 170px;
                 max-width: 220px;
                 padding: 12px 14px;
+            }
+
+            .shortcut-widget.scroll-visible {
+                right: 80px;
             }
 
             .shortcut-widget.minimized {
@@ -5203,7 +5206,7 @@
                 <div class="shortcut-keys">
                     <span class="key-badge">Alt</span>
                     <span class="key-plus">+</span>
-                    <span class="key-badge">Space</span>
+                    <span class="key-badge">5</span>
                 </div>
             </div>
         </div>
@@ -6343,7 +6346,7 @@
         });
 
         // Keyboard shortcuts for music player (local, without Alt key)
-        // Note: Alt+Space shortcut is handled globally above
+        // Note: Alt+5 shortcut is handled globally above
         document.addEventListener('keydown', (e) => {
             // Check if user is typing in an input field
             const activeElement = document.activeElement;
@@ -6861,7 +6864,7 @@
                         e.preventDefault();
                         toggleThemeShortcut();
                         break;
-                    case ' ': // Space
+                    case '5':
                         e.preventDefault();
                         toggleMusicPlayPause();
                         break;
