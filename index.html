@@ -4440,6 +4440,498 @@
                 font-size: 0.8rem;
             }
         }
+
+        /* ===== BIAYA / PRICING SECTION ===== */
+        .pricing {
+            padding: 100px 20px;
+            background: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: var(--accent-yellow);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: pricingBubble 15s ease-in-out infinite;
+        }
+
+        .pricing::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: pricingBubble 20s ease-in-out infinite reverse;
+        }
+
+        @keyframes pricingBubble {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        .pricing-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Pricing Card */
+        .pricing-card {
+            background: var(--bg-card);
+            border: 5px solid var(--border-color);
+            border-radius: 30px;
+            padding: 35px 30px;
+            position: relative;
+            box-shadow: 10px 10px 0 var(--border-color);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            border-radius: 25px 25px 0 0;
+        }
+
+        .pricing-card.game-card::before {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+        }
+
+        .pricing-card.web-card::before {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+        }
+
+        .pricing-card.software-card::before {
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow));
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-15px) rotate(-1deg);
+            box-shadow: 15px 20px 0 var(--border-color);
+        }
+
+        /* Pricing Icon */
+        .pricing-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 25px;
+            background: var(--bg-secondary);
+            border: 4px solid var(--border-color);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            position: relative;
+            animation: iconBounce 3s ease-in-out infinite;
+        }
+
+        .game-card .pricing-icon {
+            background: linear-gradient(135deg, rgba(166, 109, 212, 0.2), rgba(255, 107, 157, 0.2));
+        }
+
+        .web-card .pricing-icon {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.2), rgba(116, 192, 252, 0.2));
+        }
+
+        .software-card .pricing-icon {
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.2), rgba(255, 230, 109, 0.2));
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-8px) rotate(-5deg); }
+            75% { transform: translateY(-4px) rotate(5deg); }
+        }
+
+        /* Sparkle decorations */
+        .pricing-sparkles {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            animation: sparkleRotate 4s ease-in-out infinite;
+        }
+
+        @keyframes sparkleRotate {
+            0%, 100% { transform: rotate(0deg) scale(1); opacity: 1; }
+            50% { transform: rotate(180deg) scale(1.2); opacity: 0.8; }
+        }
+
+        /* Pricing Title */
+        .pricing-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        /* Pricing Description */
+        .pricing-desc {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Pricing Features List */
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 25px;
+            padding: 0;
+        }
+
+        .pricing-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: var(--bg-secondary);
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            font-family: 'Fredoka', cursive;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-feature:hover {
+            transform: translateX(8px);
+            box-shadow: 4px 4px 0 var(--border-color);
+        }
+
+        .pricing-feature .feature-icon {
+            font-size: 1.3rem;
+            animation: featureWiggle 2s ease-in-out infinite;
+        }
+
+        @keyframes featureWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        /* Pricing Selectors */
+        .pricing-selectors {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .selector-group {
+            position: relative;
+        }
+
+        .selector-label {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .selector-label .label-icon {
+            font-size: 1.2rem;
+            animation: labelPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes labelPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .pricing-select {
+            width: 100%;
+            padding: 14px 20px;
+            font-family: 'Fredoka', cursive;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            border: 4px solid var(--border-color);
+            border-radius: 20px;
+            cursor: pointer;
+            appearance: none;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232D3436' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 20px;
+            box-shadow: 4px 4px 0 var(--border-color);
+        }
+
+        [data-theme="dark"] .pricing-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234ECDC4' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+
+        .pricing-select:hover {
+            transform: translateY(-3px);
+            box-shadow: 6px 6px 0 var(--border-color);
+        }
+
+        .pricing-select:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            box-shadow: 6px 6px 0 var(--border-color), 0 0 0 4px var(--glow-pink);
+        }
+
+        /* Price Display */
+        .pricing-price-box {
+            background: linear-gradient(135deg, var(--accent-yellow), var(--accent-orange));
+            border: 4px solid var(--border-color);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            box-shadow: 6px 6px 0 var(--border-color);
+            overflow: hidden;
+        }
+
+        .pricing-price-box::before {
+            content: '💰';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-size: 2rem;
+            animation: coinFloat 2s ease-in-out infinite;
+        }
+
+        .pricing-price-box::after {
+            content: '💎';
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            font-size: 2rem;
+            animation: coinFloat 2s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes coinFloat {
+            0%, 100% { transform: translateY(0) rotate(-10deg); }
+            50% { transform: translateY(-15px) rotate(10deg); }
+        }
+
+        .game-card .pricing-price-box {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+        }
+
+        .web-card .pricing-price-box {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+        }
+
+        .software-card .pricing-price-box {
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-yellow));
+        }
+
+        .price-label {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1rem;
+            color: var(--border-color);
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .price-value {
+            font-family: 'Baloo 2', cursive;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--border-color);
+            line-height: 1.1;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .price-value.price-updated {
+            animation: priceJump 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes priceJump {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.3) rotate(-5deg); }
+            60% { transform: scale(0.9) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .price-note {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 0.9rem;
+            color: var(--border-color);
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        /* CTA Button */
+        .pricing-cta {
+            width: 100%;
+            padding: 18px 30px;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--border-color);
+            background: var(--accent-green);
+            border: 4px solid var(--border-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 6px 6px 0 var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .pricing-cta:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--border-color);
+            background: var(--accent-yellow);
+        }
+
+        .pricing-cta .cta-icon {
+            font-size: 1.5rem;
+            animation: ctaWiggle 1s ease-in-out infinite;
+        }
+
+        @keyframes ctaWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg); }
+            75% { transform: rotate(15deg); }
+        }
+
+        /* Popular Badge */
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-red);
+            color: white;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 8px 25px;
+            border-radius: 20px;
+            border: 3px solid var(--border-color);
+            box-shadow: 4px 4px 0 var(--border-color);
+            z-index: 10;
+            animation: badgeBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes badgeBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0) rotate(-2deg); }
+            50% { transform: translateX(-50%) translateY(-8px) rotate(2deg); }
+        }
+
+        /* Floating coins decoration */
+        .floating-coins {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+        }
+
+        .coin {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            animation: floatCoin 8s ease-in-out infinite;
+        }
+
+        .coin:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .coin:nth-child(2) { top: 30%; right: 8%; animation-delay: -2s; }
+        .coin:nth-child(3) { bottom: 20%; left: 10%; animation-delay: -4s; }
+        .coin:nth-child(4) { bottom: 40%; right: 5%; animation-delay: -6s; }
+
+        @keyframes floatCoin {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Responsive Pricing */
+        @media (max-width: 1200px) {
+            .pricing-container {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pricing {
+                padding: 80px 15px;
+            }
+
+            .pricing-container {
+                grid-template-columns: 1fr;
+                max-width: 450px;
+            }
+
+            .pricing-card {
+                padding: 30px 25px;
+            }
+
+            .pricing-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.8rem;
+            }
+
+            .pricing-title {
+                font-size: 1.5rem;
+            }
+
+            .price-value {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pricing-card {
+                padding: 25px 20px;
+            }
+
+            .pricing-feature {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+
+            .pricing-select {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+
+            .pricing-cta {
+                padding: 15px 25px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -4637,6 +5129,7 @@
         <a href="#skills" class="nav-link">Keahlian</a>
         <a href="#gallery" class="nav-link">Galeri</a>
         <a href="#projects" class="nav-link">Proyek</a>
+        <a href="#pricing" class="nav-link">Biaya</a>
         <a href="#contact" class="nav-link">Kontak</a>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
     </nav>
@@ -4965,6 +5458,226 @@
                         <span>Marketing Director, Brand Co.</span>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Biaya / Pricing Section -->
+    <section class="pricing" id="pricing">
+        <!-- Floating coins decoration -->
+        <div class="floating-coins">
+            <span class="coin">💰</span>
+            <span class="coin">💎</span>
+            <span class="coin">🪙</span>
+            <span class="coin">✨</span>
+        </div>
+
+        <div class="section-header">
+            <span class="section-badge">💸 Investasi Terbaik</span>
+            <h2 class="section-title">Paket Layanan</h2>
+        </div>
+
+        <div class="pricing-container">
+            <!-- Game Development Card -->
+            <div class="pricing-card game-card fade-in">
+                <span class="pricing-sparkles">✨</span>
+                <div class="pricing-icon">🎮</div>
+                <h3 class="pricing-title">Game Development</h3>
+                <p class="pricing-desc">Wujudkan ide game impianmu menjadi kenyataan! Dari game mobile hingga PC dengan kualitas premium.</p>
+                
+                <ul class="pricing-features">
+                    <li class="pricing-feature">
+                        <span class="feature-icon">🎨</span>
+                        <span>Desain karakter & environment</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">⚡</span>
+                        <span>Game mechanics & gameplay</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">🎵</span>
+                        <span>Sound effects & music</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">📱</span>
+                        <span>Multi-platform support</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">🔧</span>
+                        <span>Bug fixing & maintenance</span>
+                    </li>
+                </ul>
+
+                <div class="pricing-selectors">
+                    <div class="selector-group">
+                        <label class="selector-label">
+                            <span class="label-icon">⚙️</span>
+                            Tingkat Kompleksitas
+                        </label>
+                        <select class="pricing-select" id="gameComplexity" onchange="updatePrice('game')">
+                            <option value="simple">🟢 Sederhana - Game casual/puzzle</option>
+                            <option value="medium">🟡 Menengah - Game RPG/Action ringan</option>
+                            <option value="complex">🔴 Kompleks - Game MMO/Open World</option>
+                        </select>
+                    </div>
+                    <div class="selector-group">
+                        <label class="selector-label">
+                            <span class="label-icon">⏰</span>
+                            Timeline Proyek
+                        </label>
+                        <select class="pricing-select" id="gameTimeline" onchange="updatePrice('game')">
+                            <option value="normal">📅 Normal (2-4 bulan)</option>
+                            <option value="fast">🚀 Cepat (1-2 bulan) +30%</option>
+                            <option value="urgent">⚡ Urgent (&lt;1 bulan) +50%</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pricing-price-box">
+                    <div class="price-label">Mulai dari</div>
+                    <div class="price-value" id="gamePrice">Rp 3.000.000</div>
+                    <div class="price-note">*Harga dapat disesuaikan dengan kebutuhan</div>
+                </div>
+
+                <a href="#contact" class="pricing-cta">
+                    <span class="cta-icon">🎮</span>
+                    Mulai Proyek Game!
+                </a>
+            </div>
+
+            <!-- Web Development Card -->
+            <div class="pricing-card web-card fade-in">
+                <span class="popular-badge">🔥 Populer!</span>
+                <span class="pricing-sparkles">⭐</span>
+                <div class="pricing-icon">🌐</div>
+                <h3 class="pricing-title">Web Development</h3>
+                <p class="pricing-desc">Website modern & responsif yang membuat bisnis kamu tampil profesional di dunia digital!</p>
+                
+                <ul class="pricing-features">
+                    <li class="pricing-feature">
+                        <span class="feature-icon">📱</span>
+                        <span>Responsive design</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">🚀</span>
+                        <span>SEO optimized</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">💾</span>
+                        <span>Database integration</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">🔒</span>
+                        <span>SSL & security</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">📊</span>
+                        <span>Admin dashboard</span>
+                    </li>
+                </ul>
+
+                <div class="pricing-selectors">
+                    <div class="selector-group">
+                        <label class="selector-label">
+                            <span class="label-icon">⚙️</span>
+                            Tingkat Kompleksitas
+                        </label>
+                        <select class="pricing-select" id="webComplexity" onchange="updatePrice('web')">
+                            <option value="simple">🟢 Sederhana - Landing page/Portfolio</option>
+                            <option value="medium">🟡 Menengah - Company profile/Blog</option>
+                            <option value="complex">🔴 Kompleks - E-commerce/Web App</option>
+                        </select>
+                    </div>
+                    <div class="selector-group">
+                        <label class="selector-label">
+                            <span class="label-icon">⏰</span>
+                            Timeline Proyek
+                        </label>
+                        <select class="pricing-select" id="webTimeline" onchange="updatePrice('web')">
+                            <option value="normal">📅 Normal (2-4 minggu)</option>
+                            <option value="fast">🚀 Cepat (1-2 minggu) +30%</option>
+                            <option value="urgent">⚡ Urgent (&lt;1 minggu) +50%</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pricing-price-box">
+                    <div class="price-label">Mulai dari</div>
+                    <div class="price-value" id="webPrice">Rp 1.500.000</div>
+                    <div class="price-note">*Harga dapat disesuaikan dengan kebutuhan</div>
+                </div>
+
+                <a href="#contact" class="pricing-cta">
+                    <span class="cta-icon">🌐</span>
+                    Mulai Proyek Web!
+                </a>
+            </div>
+
+            <!-- Software Development Card -->
+            <div class="pricing-card software-card fade-in">
+                <span class="pricing-sparkles">💫</span>
+                <div class="pricing-icon">💻</div>
+                <h3 class="pricing-title">Software Development</h3>
+                <p class="pricing-desc">Aplikasi desktop & mobile custom yang memenuhi kebutuhan spesifik bisnis kamu!</p>
+                
+                <ul class="pricing-features">
+                    <li class="pricing-feature">
+                        <span class="feature-icon">🖥️</span>
+                        <span>Desktop & mobile apps</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">🔄</span>
+                        <span>Cross-platform support</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">📈</span>
+                        <span>Scalable architecture</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">🔌</span>
+                        <span>API integration</span>
+                    </li>
+                    <li class="pricing-feature">
+                        <span class="feature-icon">📚</span>
+                        <span>Documentation & training</span>
+                    </li>
+                </ul>
+
+                <div class="pricing-selectors">
+                    <div class="selector-group">
+                        <label class="selector-label">
+                            <span class="label-icon">⚙️</span>
+                            Tingkat Kompleksitas
+                        </label>
+                        <select class="pricing-select" id="softwareComplexity" onchange="updatePrice('software')">
+                            <option value="simple">🟢 Sederhana - Tools/Utility app</option>
+                            <option value="medium">🟡 Menengah - Management system</option>
+                            <option value="complex">🔴 Kompleks - Enterprise solution</option>
+                        </select>
+                    </div>
+                    <div class="selector-group">
+                        <label class="selector-label">
+                            <span class="label-icon">⏰</span>
+                            Timeline Proyek
+                        </label>
+                        <select class="pricing-select" id="softwareTimeline" onchange="updatePrice('software')">
+                            <option value="normal">📅 Normal (1-3 bulan)</option>
+                            <option value="fast">🚀 Cepat (2-4 minggu) +30%</option>
+                            <option value="urgent">⚡ Urgent (&lt;2 minggu) +50%</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pricing-price-box">
+                    <div class="price-label">Mulai dari</div>
+                    <div class="price-value" id="softwarePrice">Rp 2.500.000</div>
+                    <div class="price-note">*Harga dapat disesuaikan dengan kebutuhan</div>
+                </div>
+
+                <a href="#contact" class="pricing-cta">
+                    <span class="cta-icon">💻</span>
+                    Mulai Proyek Software!
+                </a>
             </div>
         </div>
     </section>
@@ -6880,6 +7593,137 @@
                 }
             }, 10000);
         }
+
+        // ===== PRICING CALCULATOR =====
+        const pricingData = {
+            game: {
+                base: {
+                    simple: 3000000,
+                    medium: 8000000,
+                    complex: 20000000
+                },
+                timeline: {
+                    normal: 1,
+                    fast: 1.3,
+                    urgent: 1.5
+                }
+            },
+            web: {
+                base: {
+                    simple: 1500000,
+                    medium: 4000000,
+                    complex: 10000000
+                },
+                timeline: {
+                    normal: 1,
+                    fast: 1.3,
+                    urgent: 1.5
+                }
+            },
+            software: {
+                base: {
+                    simple: 2500000,
+                    medium: 7000000,
+                    complex: 18000000
+                },
+                timeline: {
+                    normal: 1,
+                    fast: 1.3,
+                    urgent: 1.5
+                }
+            }
+        };
+
+        function formatPrice(price) {
+            return 'Rp ' + price.toLocaleString('id-ID');
+        }
+
+        function updatePrice(type) {
+            const complexitySelect = document.getElementById(`${type}Complexity`);
+            const timelineSelect = document.getElementById(`${type}Timeline`);
+            const priceDisplay = document.getElementById(`${type}Price`);
+
+            if (!complexitySelect || !timelineSelect || !priceDisplay) return;
+
+            const complexity = complexitySelect.value;
+            const timeline = timelineSelect.value;
+
+            const basePrice = pricingData[type].base[complexity];
+            const timelineMultiplier = pricingData[type].timeline[timeline];
+            const finalPrice = Math.round(basePrice * timelineMultiplier);
+
+            // Add animation class
+            priceDisplay.classList.add('price-updated');
+            
+            // Update price with animation
+            setTimeout(() => {
+                priceDisplay.textContent = formatPrice(finalPrice);
+            }, 150);
+
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                priceDisplay.classList.remove('price-updated');
+            }, 600);
+
+            // Create mini confetti effect on price change
+            createPriceConfetti(priceDisplay);
+        }
+
+        // Mini confetti effect for price updates
+        function createPriceConfetti(element) {
+            const rect = element.getBoundingClientRect();
+            const colors = ['#FF6B9D', '#4ECDC4', '#FFE66D', '#A66DD4', '#FF8C42'];
+            
+            for (let i = 0; i < 8; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: fixed;
+                    width: 10px;
+                    height: 10px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                    pointer-events: none;
+                    z-index: 9999;
+                    left: ${rect.left + rect.width / 2}px;
+                    top: ${rect.top + rect.height / 2}px;
+                    animation: priceConfetti 0.8s ease-out forwards;
+                    transform: rotate(${Math.random() * 360}deg);
+                `;
+                
+                document.body.appendChild(confetti);
+                
+                // Set random direction
+                const angle = (Math.PI * 2 * i) / 8;
+                const velocity = 50 + Math.random() * 50;
+                confetti.style.setProperty('--tx', `${Math.cos(angle) * velocity}px`);
+                confetti.style.setProperty('--ty', `${Math.sin(angle) * velocity - 30}px`);
+                
+                setTimeout(() => confetti.remove(), 800);
+            }
+        }
+
+        // Add CSS for price confetti animation
+        const priceConfettiStyle = document.createElement('style');
+        priceConfettiStyle.textContent = `
+            @keyframes priceConfetti {
+                0% {
+                    opacity: 1;
+                    transform: translate(0, 0) scale(1) rotate(0deg);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(var(--tx, 50px), var(--ty, -50px)) scale(0) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(priceConfettiStyle);
+
+        // Initialize prices on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updatePrice('game');
+            updatePrice('web');
+            updatePrice('software');
+        });
     </script>
 </body>
 </html>
