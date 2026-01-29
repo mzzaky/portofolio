@@ -249,6 +249,69 @@
             background: var(--accent-purple);
         }
 
+        /* Language Toggle */
+        .lang-toggle {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            background: var(--accent-blue);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: 'Baloo 2', cursive;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 4px 4px 0 var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lang-toggle::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 50%);
+            border-radius: 50%;
+        }
+
+        .lang-toggle:hover {
+            transform: rotate(-10deg) scale(1.15);
+            background: var(--accent-cyan);
+            box-shadow: 6px 6px 0 var(--border-color);
+        }
+
+        .lang-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .lang-toggle .lang-text {
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+        }
+
+        .lang-toggle.switching {
+            animation: langSwitch 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes langSwitch {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(90deg); }
+            100% { transform: rotateY(0deg); }
+        }
+
+        [data-theme="dark"] .lang-toggle {
+            background: var(--accent-orange);
+        }
+
+        [data-theme="dark"] .lang-toggle:hover {
+            background: var(--accent-yellow);
+        }
+
         /* ===== HERO SECTION ===== */
         .hero {
             min-height: 100vh;
@@ -1154,6 +1217,308 @@
             box-shadow: 8px 8px 0 rgba(0,0,0,0.3);
         }
 
+        /* ===== FAQ ACCORDION ===== */
+        .faq-section {
+            padding: 100px 20px;
+            background: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-section::before {
+            content: '❓';
+            position: absolute;
+            top: 30px;
+            left: 5%;
+            font-size: 4rem;
+            opacity: 0.15;
+            animation: questionFloat 4s ease-in-out infinite;
+        }
+
+        .faq-section::after {
+            content: '💡';
+            position: absolute;
+            top: 50px;
+            right: 5%;
+            font-size: 3.5rem;
+            opacity: 0.15;
+            animation: questionFloat 4s ease-in-out infinite 1s;
+        }
+
+        @keyframes questionFloat {
+            0%, 100% { transform: translateY(0) rotate(-10deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 4px solid var(--border-color);
+            border-radius: 25px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 6px 6px 0 var(--border-color);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .faq-item:hover {
+            transform: translateX(5px);
+            box-shadow: 10px 10px 0 var(--border-color);
+        }
+
+        .faq-item.active {
+            border-color: var(--accent-pink);
+            box-shadow: 6px 6px 0 var(--accent-pink);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 25px 30px;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-secondary);
+        }
+
+        .faq-question .question-text {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .faq-question .question-icon {
+            font-size: 1.5rem;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .faq-toggle-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-yellow);
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .faq-toggle-icon {
+            background: var(--accent-pink);
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .faq-answer-content {
+            padding: 0 30px 25px 30px;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            border-top: 3px dashed var(--border-color);
+            margin-top: 0;
+            padding-top: 20px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.4s ease 0.1s;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-item.active .faq-answer-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .faq-answer-content a {
+            color: var(--accent-pink);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px dashed var(--accent-pink);
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer-content a:hover {
+            background: var(--accent-pink);
+            color: white;
+            border-radius: 5px;
+            padding: 2px 5px;
+        }
+
+        /* FAQ Color Variations */
+        .faq-item:nth-child(1) .faq-toggle-icon { background: var(--accent-pink); }
+        .faq-item:nth-child(2) .faq-toggle-icon { background: var(--accent-blue); }
+        .faq-item:nth-child(3) .faq-toggle-icon { background: var(--accent-yellow); }
+        .faq-item:nth-child(4) .faq-toggle-icon { background: var(--accent-purple); }
+        .faq-item:nth-child(5) .faq-toggle-icon { background: var(--accent-green); }
+        .faq-item:nth-child(6) .faq-toggle-icon { background: var(--accent-orange); }
+
+        .faq-item:nth-child(1).active { border-color: var(--accent-pink); box-shadow: 6px 6px 0 var(--accent-pink); }
+        .faq-item:nth-child(2).active { border-color: var(--accent-blue); box-shadow: 6px 6px 0 var(--accent-blue); }
+        .faq-item:nth-child(3).active { border-color: var(--accent-yellow); box-shadow: 6px 6px 0 var(--accent-yellow); }
+        .faq-item:nth-child(4).active { border-color: var(--accent-purple); box-shadow: 6px 6px 0 var(--accent-purple); }
+        .faq-item:nth-child(5).active { border-color: var(--accent-green); box-shadow: 6px 6px 0 var(--accent-green); }
+        .faq-item:nth-child(6).active { border-color: var(--accent-orange); box-shadow: 6px 6px 0 var(--accent-orange); }
+
+        /* Responsive FAQ */
+        @media (max-width: 768px) {
+            .faq-question {
+                padding: 20px;
+                font-size: 1rem;
+            }
+            
+            .faq-answer-content {
+                padding: 0 20px 20px 20px;
+                font-size: 1rem;
+            }
+            
+            .faq-toggle-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ===== EASTER EGG - KONAMI CODE ===== */
+        .easter-egg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .easter-egg-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .easter-egg-content {
+            text-align: center;
+            transform: scale(0.5);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .easter-egg-overlay.active .easter-egg-content {
+            transform: scale(1);
+        }
+
+        .easter-egg-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: 4rem;
+            color: var(--accent-yellow);
+            text-shadow: 4px 4px 0 var(--accent-pink), 8px 8px 0 var(--accent-blue);
+            margin-bottom: 30px;
+            animation: rainbowText 2s linear infinite;
+        }
+
+        @keyframes rainbowText {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .easter-egg-emoji {
+            font-size: 8rem;
+            animation: danceEmoji 0.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes danceEmoji {
+            0%, 100% { transform: rotate(-15deg) scale(1); }
+            50% { transform: rotate(15deg) scale(1.1); }
+        }
+
+        .easter-egg-message {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.5rem;
+            color: white;
+            margin-top: 30px;
+            animation: floatText 2s ease-in-out infinite;
+        }
+
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .easter-egg-close {
+            margin-top: 40px;
+            padding: 15px 40px;
+            font-family: 'Baloo 2', cursive;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--border-color);
+            background: var(--accent-green);
+            border: 4px solid var(--border-color);
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 5px 5px 0 var(--border-color);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .easter-egg-close:hover {
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 0 var(--border-color);
+        }
+
+        /* Secret clickable area hint */
+        .secret-hint {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            opacity: 0.3;
+            cursor: default;
+            user-select: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .secret-hint:hover {
+            opacity: 0.6;
+        }
+
         /* ===== FOOTER ===== */
         footer {
             background: var(--bg-card);
@@ -1704,6 +2069,12 @@
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
+            }
+
+            .lang-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
             }
 
             .hero-avatar {
@@ -5131,6 +5502,9 @@
         <a href="#projects" class="nav-link">Proyek</a>
         <a href="#pricing" class="nav-link">Biaya</a>
         <a href="#contact" class="nav-link">Kontak</a>
+        <button class="lang-toggle" id="langToggle" aria-label="Toggle language" title="Switch Language">
+            <span class="lang-text">ID</span>
+        </button>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☀️</button>
     </nav>
 
@@ -5142,20 +5516,20 @@
                 <div class="avatar-sticker">⭐</div>
                 <div class="avatar-sticker">🚀</div>
             </div>
-            <span class="hero-badge">✨ Tersedia untuk Proyek Baru!</span>
+            <span class="hero-badge" data-lang-id="✨ Tersedia untuk Proyek Baru!" data-lang-en="✨ Available for New Projects!">✨ Tersedia untuk Proyek Baru!</span>
             <h1 class="hero-title">
-                Halo! <span class="wave">👋</span><br>
-                Saya <span class="highlight">Aithor</span>
+                <span data-lang-id="Halo!" data-lang-en="Hello!">Halo!</span> <span class="wave">👋</span><br>
+                <span data-lang-id="Saya" data-lang-en="I'm">Saya</span> <span class="highlight">Aithor</span>
             </h1>
-            <p class="hero-subtitle">
+            <p class="hero-subtitle" data-lang-id="Hi, perkenalkan aku seorang developer website, game, dan software pada platform pc dan android, moto utamaku adalah &quot;Kreativitas Dimana satu-satunya batasan hanyalah imajinasi!&quot;🎨💻." data-lang-en="Hi, I'm a website, game, and software developer for PC and Android platforms. My main motto is &quot;Creativity where the only limit is imagination!&quot;🎨💻.">
                 Hi, perkenalkan aku seorang developer website, game, dan software pada platform pc dan android, moto utamaku adalah "Kreativitas Dimana satu-satunya batasan hanyalah imajinasi!"🎨💻.
             </p>
             <div class="hero-buttons">
                 <a href="#projects" class="btn btn-primary">
-                    <span>🔥</span> Lihat Karya Saya
+                    <span>🔥</span> <span data-lang-id="Lihat Karya Saya" data-lang-en="See My Work">Lihat Karya Saya</span>
                 </a>
                 <a href="#contact" class="btn btn-secondary">
-                    <span>💌</span> Hubungi Saya
+                    <span>💌</span> <span data-lang-id="Hubungi Saya" data-lang-en="Contact Me">Hubungi Saya</span>
                 </a>
             </div>
         </div>
@@ -5164,26 +5538,26 @@
     <!-- About Section -->
     <section class="about" id="about">
         <div class="section-header">
-            <span class="section-badge">🌟 Kenali Saya</span>
-            <h2 class="section-title">Tentang Saya</h2>
+            <span class="section-badge" data-lang-id="🌟 Kenali Saya" data-lang-en="🌟 Know Me">🌟 Kenali Saya</span>
+            <h2 class="section-title" data-lang-id="Tentang Saya" data-lang-en="About Me">Tentang Saya</h2>
         </div>
         <div class="about-container">
             <div class="about-image fade-in">
                 <div class="about-image-main">🧑‍🎨</div>
             </div>
             <div class="about-content fade-in">
-                <h3>👋 Hai, Senang Bertemu!</h3>
-                <p>
+                <h3 data-lang-id="👋 Hai, Senang Bertemu!" data-lang-en="👋 Hi, Nice to Meet You!">👋 Hai, Senang Bertemu!</h3>
+                <p data-lang-id="Saya adalah seorang pengembang web & desainer UI/UX yang passionate dalam menciptakan pengalaman digital yang tidak hanya fungsional, tapi juga menyenangkan! Dengan pengalaman lebih dari 5 tahun, saya telah membantu berbagai brand untuk mewujudkan visi digital mereka." data-lang-en="I am a passionate web developer & UI/UX designer in creating digital experiences that are not only functional, but also enjoyable! With over 5 years of experience, I have helped various brands realize their digital vision.">
                     Saya adalah seorang pengembang web & desainer UI/UX yang passionate dalam menciptakan pengalaman digital yang tidak hanya fungsional, tapi juga menyenangkan! Dengan pengalaman lebih dari 5 tahun, saya telah membantu berbagai brand untuk mewujudkan visi digital mereka.
                 </p>
-                <p>
+                <p data-lang-id="Ketika tidak sedang coding, Anda bisa menemukan saya bermain game, menggambar ilustrasi digital, atau menjelajahi kafe-kafe baru di kota! ☕🎮" data-lang-en="When I'm not coding, you can find me playing games, drawing digital illustrations, or exploring new cafes in town! ☕🎮">
                     Ketika tidak sedang coding, Anda bisa menemukan saya bermain game, menggambar ilustrasi digital, atau menjelajahi kafe-kafe baru di kota! ☕🎮
                 </p>
                 <div class="fun-facts">
-                    <div class="fun-fact">☕ Pecandu Kopi</div>
-                    <div class="fun-fact">🎮 Gamer</div>
-                    <div class="fun-fact">🎨 Ilustrator</div>
-                    <div class="fun-fact">🌱 Pencinta Tanaman</div>
+                    <div class="fun-fact" data-lang-id="☕ Pecandu Kopi" data-lang-en="☕ Coffee Addict">☕ Pecandu Kopi</div>
+                    <div class="fun-fact" data-lang-id="🎮 Gamer" data-lang-en="🎮 Gamer">🎮 Gamer</div>
+                    <div class="fun-fact" data-lang-id="🎨 Ilustrator" data-lang-en="🎨 Illustrator">🎨 Ilustrator</div>
+                    <div class="fun-fact" data-lang-id="🌱 Pencinta Tanaman" data-lang-en="🌱 Plant Lover">🌱 Pencinta Tanaman</div>
                 </div>
             </div>
         </div>
@@ -5192,14 +5566,14 @@
     <!-- Skills Section -->
     <section class="skills" id="skills">
         <div class="section-header">
-            <span class="section-badge">💪 Kemampuan Saya</span>
-            <h2 class="section-title">Keahlian</h2>
+            <span class="section-badge" data-lang-id="💪 Kemampuan Saya" data-lang-en="💪 My Skills">💪 Kemampuan Saya</span>
+            <h2 class="section-title" data-lang-id="Keahlian" data-lang-en="Skills">Keahlian</h2>
         </div>
         <div class="skills-grid">
             <div class="skill-card fade-in">
                 <div class="skill-icon">🎨</div>
                 <h3>UI/UX Design</h3>
-                <p>Menciptakan antarmuka yang indah dan mudah digunakan dengan Figma & Adobe XD</p>
+                <p data-lang-id="Menciptakan antarmuka yang indah dan mudah digunakan dengan Figma & Adobe XD" data-lang-en="Creating beautiful and user-friendly interfaces with Figma & Adobe XD">Menciptakan antarmuka yang indah dan mudah digunakan dengan Figma & Adobe XD</p>
                 <div class="skill-bar">
                     <div class="skill-progress" style="--progress: 95%"></div>
                 </div>
@@ -5207,7 +5581,7 @@
             <div class="skill-card fade-in">
                 <div class="skill-icon">⚛️</div>
                 <h3>React & Next.js</h3>
-                <p>Membangun aplikasi web modern dengan performa tinggi dan SEO friendly</p>
+                <p data-lang-id="Membangun aplikasi web modern dengan performa tinggi dan SEO friendly" data-lang-en="Building modern web applications with high performance and SEO friendly">Membangun aplikasi web modern dengan performa tinggi dan SEO friendly</p>
                 <div class="skill-bar">
                     <div class="skill-progress" style="--progress: 90%"></div>
                 </div>
@@ -5215,7 +5589,7 @@
             <div class="skill-card fade-in">
                 <div class="skill-icon">🎯</div>
                 <h3>JavaScript/TypeScript</h3>
-                <p>Menguasai ES6+, async/await, dan TypeScript untuk kode yang lebih robust</p>
+                <p data-lang-id="Menguasai ES6+, async/await, dan TypeScript untuk kode yang lebih robust" data-lang-en="Mastering ES6+, async/await, and TypeScript for more robust code">Menguasai ES6+, async/await, dan TypeScript untuk kode yang lebih robust</p>
                 <div class="skill-bar">
                     <div class="skill-progress" style="--progress: 92%"></div>
                 </div>
@@ -5223,7 +5597,7 @@
             <div class="skill-card fade-in">
                 <div class="skill-icon">🗄️</div>
                 <h3>Backend Development</h3>
-                <p>Node.js, Express, dan database management dengan MongoDB & PostgreSQL</p>
+                <p data-lang-id="Node.js, Express, dan database management dengan MongoDB & PostgreSQL" data-lang-en="Node.js, Express, and database management with MongoDB & PostgreSQL">Node.js, Express, dan database management dengan MongoDB & PostgreSQL</p>
                 <div class="skill-bar">
                     <div class="skill-progress" style="--progress: 85%"></div>
                 </div>
@@ -5231,7 +5605,7 @@
             <div class="skill-card fade-in">
                 <div class="skill-icon">📱</div>
                 <h3>Mobile Development</h3>
-                <p>React Native untuk aplikasi mobile cross-platform yang mulus</p>
+                <p data-lang-id="React Native untuk aplikasi mobile cross-platform yang mulus" data-lang-en="React Native for smooth cross-platform mobile applications">React Native untuk aplikasi mobile cross-platform yang mulus</p>
                 <div class="skill-bar">
                     <div class="skill-progress" style="--progress: 80%"></div>
                 </div>
@@ -5239,7 +5613,7 @@
             <div class="skill-card fade-in">
                 <div class="skill-icon">☁️</div>
                 <h3>Cloud & DevOps</h3>
-                <p>AWS, Docker, CI/CD untuk deployment yang handal dan scalable</p>
+                <p data-lang-id="AWS, Docker, CI/CD untuk deployment yang handal dan scalable" data-lang-en="AWS, Docker, CI/CD for reliable and scalable deployment">AWS, Docker, CI/CD untuk deployment yang handal dan scalable</p>
                 <div class="skill-bar">
                     <div class="skill-progress" style="--progress: 75%"></div>
                 </div>
@@ -5740,11 +6114,123 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="section-header">
+            <span class="section-badge">🤔 FAQ</span>
+            <h2 class="section-title" data-lang-id="Pertanyaan Umum" data-lang-en="Frequently Asked Questions">Pertanyaan Umum</h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item fade-in">
+                <button class="faq-question">
+                    <span class="question-text">
+                        <span class="question-icon">💼</span>
+                        <span data-lang-id="Bagaimana cara memesan jasa Anda?" data-lang-en="How do I order your services?">Bagaimana cara memesan jasa Anda?</span>
+                    </span>
+                    <span class="faq-toggle-icon">⬇️</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content" data-lang-id="Sangat mudah! Anda bisa menghubungi saya melalui formulir kontak di atas, atau langsung melalui WhatsApp dan Email yang tersedia di social bar. Saya akan merespons dalam waktu 1x24 jam untuk mendiskusikan kebutuhan proyek Anda! 🚀" data-lang-en="Very easy! You can contact me through the contact form above, or directly through WhatsApp and Email available in the social bar. I will respond within 24 hours to discuss your project needs! 🚀">
+                        Sangat mudah! Anda bisa menghubungi saya melalui formulir kontak di atas, atau langsung melalui WhatsApp dan Email yang tersedia di social bar. Saya akan merespons dalam waktu 1x24 jam untuk mendiskusikan kebutuhan proyek Anda! 🚀
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fade-in">
+                <button class="faq-question">
+                    <span class="question-text">
+                        <span class="question-icon">⏱️</span>
+                        <span data-lang-id="Berapa lama waktu pengerjaan proyek?" data-lang-en="How long does project completion take?">Berapa lama waktu pengerjaan proyek?</span>
+                    </span>
+                    <span class="faq-toggle-icon">⬇️</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content" data-lang-id="Waktu pengerjaan bervariasi tergantung kompleksitas proyek. Untuk proyek sederhana biasanya 1-2 minggu, proyek menengah 2-4 minggu, dan proyek kompleks bisa 1-3 bulan. Saya selalu memberikan estimasi waktu yang jelas di awal! ⏰" data-lang-en="Completion time varies depending on project complexity. For simple projects usually 1-2 weeks, medium projects 2-4 weeks, and complex projects can take 1-3 months. I always provide a clear time estimate at the beginning! ⏰">
+                        Waktu pengerjaan bervariasi tergantung kompleksitas proyek. Untuk proyek sederhana biasanya 1-2 minggu, proyek menengah 2-4 minggu, dan proyek kompleks bisa 1-3 bulan. Saya selalu memberikan estimasi waktu yang jelas di awal! ⏰
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fade-in">
+                <button class="faq-question">
+                    <span class="question-text">
+                        <span class="question-icon">💰</span>
+                        <span data-lang-id="Bagaimana sistem pembayarannya?" data-lang-en="How does the payment system work?">Bagaimana sistem pembayarannya?</span>
+                    </span>
+                    <span class="faq-toggle-icon">⬇️</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content" data-lang-id="Saya menggunakan sistem pembayaran bertahap: 50% di muka sebagai DP, dan 50% sisanya setelah proyek selesai dan disetujui. Pembayaran bisa melalui transfer bank, e-wallet, atau platform seperti Trakteer dan Saweria! 💳" data-lang-en="I use a staged payment system: 50% upfront as a deposit, and the remaining 50% after the project is completed and approved. Payment can be made via bank transfer, e-wallet, or platforms like Trakteer and Saweria! 💳">
+                        Saya menggunakan sistem pembayaran bertahap: 50% di muka sebagai DP, dan 50% sisanya setelah proyek selesai dan disetujui. Pembayaran bisa melalui transfer bank, e-wallet, atau platform seperti Trakteer dan Saweria! 💳
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fade-in">
+                <button class="faq-question">
+                    <span class="question-text">
+                        <span class="question-icon">🔄</span>
+                        <span data-lang-id="Apakah ada garansi revisi?" data-lang-en="Is there a revision guarantee?">Apakah ada garansi revisi?</span>
+                    </span>
+                    <span class="faq-toggle-icon">⬇️</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content" data-lang-id="Tentu saja! Setiap proyek mendapatkan 3x revisi gratis. Revisi tambahan akan dikenakan biaya tambahan yang akan didiskusikan terlebih dahulu. Kepuasan Anda adalah prioritas utama saya! 😊" data-lang-en="Of course! Every project gets 3 free revisions. Additional revisions will incur extra costs that will be discussed beforehand. Your satisfaction is my top priority! 😊">
+                        Tentu saja! Setiap proyek mendapatkan 3x revisi gratis. Revisi tambahan akan dikenakan biaya tambahan yang akan didiskusikan terlebih dahulu. Kepuasan Anda adalah prioritas utama saya! 😊
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fade-in">
+                <button class="faq-question">
+                    <span class="question-text">
+                        <span class="question-icon">📦</span>
+                        <span data-lang-id="Apa saja yang saya dapatkan setelah proyek selesai?" data-lang-en="What do I get after the project is completed?">Apa saja yang saya dapatkan setelah proyek selesai?</span>
+                    </span>
+                    <span class="faq-toggle-icon">⬇️</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content" data-lang-id="Anda akan mendapatkan seluruh file proyek, source code (jika berlaku), dokumentasi singkat, dan panduan penggunaan. Untuk website, saya juga menyediakan layanan maintenance dengan biaya terpisah! 📁" data-lang-en="You will receive all project files, source code (if applicable), brief documentation, and usage guide. For websites, I also provide maintenance services at a separate cost! 📁">
+                        Anda akan mendapatkan seluruh file proyek, source code (jika berlaku), dokumentasi singkat, dan panduan penggunaan. Untuk website, saya juga menyediakan layanan maintenance dengan biaya terpisah! 📁
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item fade-in">
+                <button class="faq-question">
+                    <span class="question-text">
+                        <span class="question-icon">🤝</span>
+                        <span data-lang-id="Apakah bisa konsultasi dulu sebelum memesan?" data-lang-en="Can I consult first before ordering?">Apakah bisa konsultasi dulu sebelum memesan?</span>
+                    </span>
+                    <span class="faq-toggle-icon">⬇️</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content" data-lang-id="Pasti bisa! Saya menyediakan sesi konsultasi gratis untuk mendiskusikan ide dan kebutuhan proyek Anda. Hubungi saya kapan saja dan mari kita wujudkan ide Anda bersama! 💡" data-lang-en="Of course! I provide free consultation sessions to discuss your ideas and project needs. Contact me anytime and let's bring your ideas to life together! 💡">
+                        Pasti bisa! Saya menyediakan sesi konsultasi gratis untuk mendiskusikan ide dan kebutuhan proyek Anda. Hubungi saya kapan saja dan mari kita wujudkan ide Anda bersama! 💡
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Easter Egg Overlay -->
+    <div class="easter-egg-overlay" id="easterEggOverlay">
+        <div class="easter-egg-content">
+            <h2 class="easter-egg-title">🎉 SELAMAT! 🎉</h2>
+            <div class="easter-egg-emoji">🦄</div>
+            <p class="easter-egg-message" data-lang-id="Kamu menemukan rahasia tersembunyi!<br>Kamu adalah programmer sejati! 🎮" data-lang-en="You found a hidden secret!<br>You are a true programmer! 🎮">Kamu menemukan rahasia tersembunyi!<br>Kamu adalah programmer sejati! 🎮</p>
+            <button class="easter-egg-close" onclick="closeEasterEgg()" data-lang-id="Tutup ✨" data-lang-en="Close ✨">Tutup ✨</button>
+        </div>
+    </div>
+
+    <!-- Secret hint -->
+    <div class="secret-hint" data-lang-id="↑↑↓↓←→←→BA" data-lang-en="↑↑↓↓←→←→BA">↑↑↓↓←→←→BA</div>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>Dibuat dengan <span>❤️</span> oleh Aithor © 2025</p>
-            <p>Semua hak dilindungi 🌈</p>
+            <p data-lang-id="Dibuat dengan" data-lang-en="Made with"><span>Dibuat dengan</span> <span>❤️</span> <span data-lang-id="oleh Aithor © 2025" data-lang-en="by Aithor © 2025">oleh Aithor © 2025</span></p>
+            <p data-lang-id="Semua hak dilindungi 🌈" data-lang-en="All rights reserved 🌈">Semua hak dilindungi 🌈</p>
         </div>
     </footer>
 
@@ -7724,6 +8210,228 @@
             updatePrice('web');
             updatePrice('software');
         });
+
+        // ===== LANGUAGE TOGGLE =====
+        const langToggle = document.getElementById('langToggle');
+        let currentLang = localStorage.getItem('lang') || 'id';
+
+        // Translation data for nav links
+        const navTranslations = {
+            id: {
+                'Beranda': 'Beranda',
+                'Tentang': 'Tentang',
+                'Keahlian': 'Keahlian',
+                'Galeri': 'Galeri',
+                'Proyek': 'Proyek',
+                'Biaya': 'Biaya',
+                'Kontak': 'Kontak'
+            },
+            en: {
+                'Beranda': 'Home',
+                'Tentang': 'About',
+                'Keahlian': 'Skills',
+                'Galeri': 'Gallery',
+                'Proyek': 'Projects',
+                'Biaya': 'Pricing',
+                'Kontak': 'Contact'
+            }
+        };
+
+        // Initialize language
+        function initLanguage() {
+            updateLanguageUI(currentLang);
+        }
+
+        // Update language toggle button
+        function updateLangToggle(lang) {
+            const langText = langToggle.querySelector('.lang-text');
+            langText.textContent = lang.toUpperCase();
+            langToggle.classList.add('switching');
+            setTimeout(() => langToggle.classList.remove('switching'), 500);
+        }
+
+        // Update all translatable elements
+        function updateLanguageUI(lang) {
+            updateLangToggle(lang);
+            
+            // Update nav links
+            const navLinksElements = document.querySelectorAll('.nav-link');
+            navLinksElements.forEach(link => {
+                const currentText = link.textContent.trim();
+                // Find matching translation
+                for (const [idText, enText] of Object.entries(navTranslations.en)) {
+                    if (currentText === idText || currentText === enText) {
+                        link.textContent = lang === 'en' ? enText : navTranslations.id[idText];
+                        break;
+                    }
+                }
+            });
+
+            // Update all elements with data-lang attributes
+            const translatableElements = document.querySelectorAll('[data-lang-id][data-lang-en]');
+            translatableElements.forEach(el => {
+                const newText = lang === 'en' ? el.getAttribute('data-lang-en') : el.getAttribute('data-lang-id');
+                if (el.innerHTML !== undefined && newText.includes('<br>')) {
+                    el.innerHTML = newText;
+                } else {
+                    el.textContent = newText;
+                }
+            });
+        }
+
+        // Toggle language
+        langToggle.addEventListener('click', () => {
+            currentLang = currentLang === 'id' ? 'en' : 'id';
+            localStorage.setItem('lang', currentLang);
+            updateLanguageUI(currentLang);
+            
+            // Show toast notification
+            showShortcutNotification(currentLang === 'en' ? '🌐 Language: English' : '🌐 Bahasa: Indonesia');
+            
+            // Create confetti effect
+            createConfetti();
+        });
+
+        // Initialize language on page load
+        initLanguage();
+
+        // ===== FAQ ACCORDION =====
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                if (isActive) {
+                    item.classList.remove('active');
+                } else {
+                    item.classList.add('active');
+                    
+                    // Play bounce sound effect (visual feedback)
+                    const toggleIcon = item.querySelector('.faq-toggle-icon');
+                    toggleIcon.style.animation = 'none';
+                    toggleIcon.offsetHeight; // Trigger reflow
+                    toggleIcon.style.animation = '';
+                }
+            });
+        });
+
+        // ===== EASTER EGG - KONAMI CODE =====
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+        let konamiIndex = 0;
+        let easterEggActivated = false;
+
+        document.addEventListener('keydown', (e) => {
+            // Skip if typing in input
+            const activeElement = document.activeElement;
+            const isTyping = activeElement.tagName === 'INPUT' || 
+                            activeElement.tagName === 'TEXTAREA' || 
+                            activeElement.isContentEditable;
+            
+            if (isTyping) return;
+
+            // Check Konami code
+            if (e.code === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                
+                // Visual feedback for correct key
+                showKonamiProgress(konamiIndex);
+                
+                if (konamiIndex === konamiCode.length) {
+                    activateEasterEgg();
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        function showKonamiProgress(index) {
+            // Create a small visual indicator
+            const indicator = document.createElement('div');
+            indicator.style.cssText = `
+                position: fixed;
+                bottom: 50px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--accent-yellow);
+                color: var(--border-color);
+                padding: 10px 20px;
+                border-radius: 20px;
+                font-family: 'Baloo 2', cursive;
+                font-weight: 700;
+                border: 3px solid var(--border-color);
+                box-shadow: 4px 4px 0 var(--border-color);
+                z-index: 9999;
+                animation: fadeInOut 0.8s ease forwards;
+            `;
+            indicator.textContent = '🎮 ' + '⭐'.repeat(index);
+            document.body.appendChild(indicator);
+            
+            setTimeout(() => indicator.remove(), 800);
+        }
+
+        function activateEasterEgg() {
+            if (easterEggActivated) return;
+            easterEggActivated = true;
+            
+            const overlay = document.getElementById('easterEggOverlay');
+            overlay.classList.add('active');
+            
+            // Create massive confetti
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createConfetti(), i * 200);
+            }
+            
+            // Play celebration animation
+            document.body.style.animation = 'rainbowBg 0.5s linear';
+            setTimeout(() => document.body.style.animation = '', 500);
+        }
+
+        function closeEasterEgg() {
+            const overlay = document.getElementById('easterEggOverlay');
+            overlay.classList.remove('active');
+            easterEggActivated = false;
+        }
+
+        // Add fadeInOut animation for konami progress
+        const konamiStyle = document.createElement('style');
+        konamiStyle.textContent = `
+            @keyframes fadeInOut {
+                0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+                20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            }
+            @keyframes rainbowBg {
+                0% { filter: hue-rotate(0deg); }
+                100% { filter: hue-rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(konamiStyle);
+
+        // Secret click easter egg - click the secret hint 7 times
+        let secretClicks = 0;
+        const secretHint = document.querySelector('.secret-hint');
+        if (secretHint) {
+            secretHint.addEventListener('click', () => {
+                secretClicks++;
+                if (secretClicks >= 7) {
+                    activateEasterEgg();
+                    secretClicks = 0;
+                }
+            });
+        }
     </script>
 </body>
 </html>
