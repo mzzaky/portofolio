@@ -6719,17 +6719,36 @@
         let konamiIndex = 0;
 
         document.addEventListener('keydown', (e) => {
+            // Skip if typing in input
+            const activeElement = document.activeElement;
+            const isTyping = activeElement.tagName === 'INPUT' || 
+                            activeElement.tagName === 'TEXTAREA' || 
+                            activeElement.isContentEditable;
+            
+            if (isTyping) return;
+
             if (e.key === konamiCode[konamiIndex]) {
                 konamiIndex++;
+                
+                // Visual feedback for correct key
+                if (typeof showKonamiProgress === 'function') {
+                    showKonamiProgress(konamiIndex);
+                }
+                
                 if (konamiIndex === konamiCode.length) {
-                    // Mega confetti celebration!
-                    for (let i = 0; i < 5; i++) {
-                        setTimeout(createConfetti, i * 500);
+                    // Activate easter egg overlay
+                    if (typeof activateEasterEgg === 'function') {
+                        activateEasterEgg();
+                    } else {
+                        // Fallback: Mega confetti celebration
+                        for (let i = 0; i < 5; i++) {
+                            setTimeout(createConfetti, i * 500);
+                        }
+                        document.body.style.animation = 'rainbow 2s ease';
+                        setTimeout(() => {
+                            document.body.style.animation = '';
+                        }, 2000);
                     }
-                    document.body.style.animation = 'rainbow 2s ease';
-                    setTimeout(() => {
-                        document.body.style.animation = '';
-                    }, 2000);
                     konamiIndex = 0;
                 }
             } else {
@@ -8239,13 +8258,18 @@
 
         // Initialize language
         function initLanguage() {
-            updateLanguageUI(currentLang);
+            if (langToggle) {
+                updateLanguageUI(currentLang);
+            }
         }
 
         // Update language toggle button
         function updateLangToggle(lang) {
+            if (!langToggle) return;
             const langText = langToggle.querySelector('.lang-text');
-            langText.textContent = lang.toUpperCase();
+            if (langText) {
+                langText.textContent = lang.toUpperCase();
+            }
             langToggle.classList.add('switching');
             setTimeout(() => langToggle.classList.remove('switching'), 500);
         }
@@ -8271,26 +8295,32 @@
             const translatableElements = document.querySelectorAll('[data-lang-id][data-lang-en]');
             translatableElements.forEach(el => {
                 const newText = lang === 'en' ? el.getAttribute('data-lang-en') : el.getAttribute('data-lang-id');
-                if (el.innerHTML !== undefined && newText.includes('<br>')) {
+                if (el.innerHTML !== undefined && newText && newText.includes('<br>')) {
                     el.innerHTML = newText;
-                } else {
+                } else if (newText) {
                     el.textContent = newText;
                 }
             });
         }
 
         // Toggle language
-        langToggle.addEventListener('click', () => {
-            currentLang = currentLang === 'id' ? 'en' : 'id';
-            localStorage.setItem('lang', currentLang);
-            updateLanguageUI(currentLang);
-            
-            // Show toast notification
-            showShortcutNotification(currentLang === 'en' ? '🌐 Language: English' : '🌐 Bahasa: Indonesia');
-            
-            // Create confetti effect
-            createConfetti();
-        });
+        if (langToggle) {
+            langToggle.addEventListener('click', () => {
+                currentLang = currentLang === 'id' ? 'en' : 'id';
+                localStorage.setItem('lang', currentLang);
+                updateLanguageUI(currentLang);
+                
+                // Show toast notification
+                if (typeof showShortcutNotification === 'function') {
+                    showShortcutNotification(currentLang === 'en' ? '🌐 Language: English' : '🌐 Bahasa: Indonesia');
+                }
+                
+                // Create confetti effect
+                if (typeof createConfetti === 'function') {
+                    createConfetti();
+                }
+            });
+        }
 
         // Initialize language on page load
         initLanguage();
@@ -8298,63 +8328,42 @@
         // ===== FAQ ACCORDION =====
         const faqItems = document.querySelectorAll('.faq-item');
 
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
+        if (faqItems.length > 0) {
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
                 
-                // Close all other FAQ items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                    }
-                });
-                
-                // Toggle current item
-                if (isActive) {
-                    item.classList.remove('active');
-                } else {
-                    item.classList.add('active');
-                    
-                    // Play bounce sound effect (visual feedback)
-                    const toggleIcon = item.querySelector('.faq-toggle-icon');
-                    toggleIcon.style.animation = 'none';
-                    toggleIcon.offsetHeight; // Trigger reflow
-                    toggleIcon.style.animation = '';
+                if (question) {
+                    question.addEventListener('click', () => {
+                        const isActive = item.classList.contains('active');
+                        
+                        // Close all other FAQ items
+                        faqItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+                        
+                        // Toggle current item
+                        if (isActive) {
+                            item.classList.remove('active');
+                        } else {
+                            item.classList.add('active');
+                            
+                            // Play bounce sound effect (visual feedback)
+                            const toggleIcon = item.querySelector('.faq-toggle-icon');
+                            if (toggleIcon) {
+                                toggleIcon.style.animation = 'none';
+                                toggleIcon.offsetHeight; // Trigger reflow
+                                toggleIcon.style.animation = '';
+                            }
+                        }
+                    });
                 }
             });
-        });
+        }
 
-        // ===== EASTER EGG - KONAMI CODE =====
-        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
-        let konamiIndex = 0;
+        // ===== EASTER EGG FUNCTIONS =====
         let easterEggActivated = false;
-
-        document.addEventListener('keydown', (e) => {
-            // Skip if typing in input
-            const activeElement = document.activeElement;
-            const isTyping = activeElement.tagName === 'INPUT' || 
-                            activeElement.tagName === 'TEXTAREA' || 
-                            activeElement.isContentEditable;
-            
-            if (isTyping) return;
-
-            // Check Konami code
-            if (e.code === konamiCode[konamiIndex]) {
-                konamiIndex++;
-                
-                // Visual feedback for correct key
-                showKonamiProgress(konamiIndex);
-                
-                if (konamiIndex === konamiCode.length) {
-                    activateEasterEgg();
-                    konamiIndex = 0;
-                }
-            } else {
-                konamiIndex = 0;
-            }
-        });
 
         function showKonamiProgress(index) {
             // Create a small visual indicator
@@ -8386,7 +8395,9 @@
             easterEggActivated = true;
             
             const overlay = document.getElementById('easterEggOverlay');
-            overlay.classList.add('active');
+            if (overlay) {
+                overlay.classList.add('active');
+            }
             
             // Create massive confetti
             for (let i = 0; i < 5; i++) {
@@ -8400,7 +8411,9 @@
 
         function closeEasterEgg() {
             const overlay = document.getElementById('easterEggOverlay');
-            overlay.classList.remove('active');
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
             easterEggActivated = false;
         }
 
