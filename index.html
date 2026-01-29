@@ -178,6 +178,252 @@
             75% { transform: translateY(30px) rotate(-5deg); }
         }
 
+        /* ===== SECTION FLOATING ICONS ===== */
+        .section-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .section-icon {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0.15;
+            filter: drop-shadow(2px 2px 0 var(--border-color));
+            animation: iconFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { 
+                transform: translateY(0) rotate(-10deg) scale(1); 
+            }
+            25% { 
+                transform: translateY(-20px) rotate(5deg) scale(1.1); 
+            }
+            50% { 
+                transform: translateY(-10px) rotate(-5deg) scale(1); 
+            }
+            75% { 
+                transform: translateY(-25px) rotate(10deg) scale(1.05); 
+            }
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { 
+                transform: translateY(0) scale(1) rotate(0deg); 
+            }
+            20% { 
+                transform: translateY(-30px) scale(1.2) rotate(-15deg); 
+            }
+            40% { 
+                transform: translateY(-5px) scale(0.9) rotate(10deg); 
+            }
+            60% { 
+                transform: translateY(-20px) scale(1.1) rotate(-5deg); 
+            }
+            80% { 
+                transform: translateY(-8px) scale(0.95) rotate(5deg); 
+            }
+        }
+
+        @keyframes iconSpin {
+            0% { 
+                transform: rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: rotate(90deg) scale(1.2); 
+            }
+            50% { 
+                transform: rotate(180deg) scale(1); 
+            }
+            75% { 
+                transform: rotate(270deg) scale(1.2); 
+            }
+            100% { 
+                transform: rotate(360deg) scale(1); 
+            }
+        }
+
+        @keyframes iconWobble {
+            0%, 100% { 
+                transform: rotate(-5deg) translateX(0); 
+            }
+            25% { 
+                transform: rotate(5deg) translateX(10px); 
+            }
+            50% { 
+                transform: rotate(-3deg) translateX(-5px); 
+            }
+            75% { 
+                transform: rotate(8deg) translateX(8px); 
+            }
+        }
+
+        @keyframes iconZoom {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 0.15;
+            }
+            50% { 
+                transform: scale(1.3) rotate(10deg); 
+                opacity: 0.25;
+            }
+        }
+
+        /* Different animations for variety */
+        .section-icon.bounce { animation: iconBounce 4s ease-in-out infinite; }
+        .section-icon.spin { animation: iconSpin 8s linear infinite; }
+        .section-icon.wobble { animation: iconWobble 3s ease-in-out infinite; }
+        .section-icon.zoom { animation: iconZoom 5s ease-in-out infinite; }
+
+        /* Position variations */
+        .section-icon:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .section-icon:nth-child(2) { top: 20%; right: 8%; animation-delay: -1s; }
+        .section-icon:nth-child(3) { top: 60%; left: 3%; animation-delay: -2s; }
+        .section-icon:nth-child(4) { top: 70%; right: 5%; animation-delay: -3s; }
+        .section-icon:nth-child(5) { top: 40%; left: 8%; animation-delay: -1.5s; }
+        .section-icon:nth-child(6) { top: 85%; right: 10%; animation-delay: -2.5s; }
+        .section-icon:nth-child(7) { top: 15%; left: 85%; animation-delay: -0.5s; }
+        .section-icon:nth-child(8) { top: 50%; right: 3%; animation-delay: -3.5s; }
+
+        /* ===== ALIEN SPACESHIP EASTER EGG ===== */
+        .alien-spaceship {
+            position: fixed;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 9998;
+            pointer-events: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            filter: drop-shadow(0 0 10px var(--accent-green)) drop-shadow(3px 3px 0 var(--border-color));
+            animation: spaceshipHover 0.5s ease-in-out infinite;
+        }
+
+        .alien-spaceship.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .alien-spaceship:hover {
+            filter: drop-shadow(0 0 20px var(--accent-yellow)) drop-shadow(3px 3px 0 var(--border-color));
+        }
+
+        @keyframes spaceshipHover {
+            0%, 100% { 
+                transform: translateY(0) rotate(-5deg); 
+            }
+            50% { 
+                transform: translateY(-8px) rotate(5deg); 
+            }
+        }
+
+        @keyframes spaceshipCaught {
+            0% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1;
+            }
+            25% { 
+                transform: scale(1.5) rotate(180deg); 
+            }
+            50% { 
+                transform: scale(2) rotate(360deg); 
+            }
+            75% { 
+                transform: scale(1.5) rotate(540deg); 
+                opacity: 0.5;
+            }
+            100% { 
+                transform: scale(0) rotate(720deg); 
+                opacity: 0;
+            }
+        }
+
+        .alien-spaceship.caught {
+            animation: spaceshipCaught 1s ease-out forwards !important;
+            pointer-events: none;
+        }
+
+        /* Spaceship trail effect */
+        .spaceship-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            pointer-events: none;
+            z-index: 9997;
+            opacity: 0.6;
+            animation: trailFade 0.5s ease-out forwards;
+        }
+
+        @keyframes trailFade {
+            0% { 
+                transform: scale(1); 
+                opacity: 0.6; 
+            }
+            100% { 
+                transform: scale(0); 
+                opacity: 0; 
+            }
+        }
+
+        /* Alien catch counter */
+        .alien-catch-counter {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 4px solid var(--border-color);
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-primary);
+            box-shadow: 5px 5px 0 var(--border-color);
+            z-index: 9999;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alien-catch-counter.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .alien-catch-counter .counter-icon {
+            font-size: 1.5rem;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .section-icon {
+                font-size: 1.8rem;
+                opacity: 0.1;
+            }
+            
+            .alien-spaceship {
+                font-size: 2rem;
+            }
+            
+            .alien-catch-counter {
+                top: 80px;
+                right: 10px;
+                font-size: 0.85rem;
+                padding: 8px 15px;
+            }
+        }
+
         /* ===== NAVIGATION ===== */
         .navbar {
             position: fixed;
@@ -5535,6 +5781,15 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <!-- Section Floating Icons -->
+        <div class="section-icons">
+            <span class="section-icon bounce">💻</span>
+            <span class="section-icon wobble">🚀</span>
+            <span class="section-icon spin">⭐</span>
+            <span class="section-icon zoom">🎮</span>
+            <span class="section-icon bounce" style="animation-delay: -2s;">✨</span>
+            <span class="section-icon wobble" style="animation-delay: -1s;">🌟</span>
+        </div>
         <div class="hero-content">
             <div class="hero-avatar">
                 <div class="avatar-circle">
@@ -5564,6 +5819,15 @@
 
     <!-- About Section -->
     <section class="about" id="about">
+        <!-- Section Floating Icons -->
+        <div class="section-icons">
+            <span class="section-icon bounce">🎨</span>
+            <span class="section-icon wobble">☕</span>
+            <span class="section-icon spin">🎯</span>
+            <span class="section-icon zoom">💡</span>
+            <span class="section-icon bounce" style="animation-delay: -1.5s;">🌱</span>
+            <span class="section-icon wobble" style="animation-delay: -2.5s;">📚</span>
+        </div>
         <div class="section-header">
             <span class="section-badge" data-lang-id="🌟 Kenali Saya" data-lang-en="🌟 Know Me">🌟 Kenali Saya</span>
             <h2 class="section-title" data-lang-id="Tentang Saya" data-lang-en="About Me">Tentang Saya</h2>
@@ -5594,6 +5858,15 @@
 
     <!-- Skills Section -->
     <section class="skills" id="skills">
+        <!-- Section Floating Icons -->
+        <div class="section-icons">
+            <span class="section-icon bounce">⚡</span>
+            <span class="section-icon wobble">🔧</span>
+            <span class="section-icon spin">⚙️</span>
+            <span class="section-icon zoom">🛠️</span>
+            <span class="section-icon bounce" style="animation-delay: -2s;">💪</span>
+            <span class="section-icon wobble" style="animation-delay: -1s;">📊</span>
+        </div>
         <div class="section-header">
             <span class="section-badge" data-lang-id="💪 Kemampuan Saya" data-lang-en="💪 My Skills">💪 Kemampuan Saya</span>
             <h2 class="section-title" data-lang-id="Keahlian" data-lang-en="Skills">Keahlian</h2>
@@ -5652,6 +5925,15 @@
 
     <!-- Gallery Section -->
     <section class="gallery" id="gallery">
+        <!-- Section Floating Icons -->
+        <div class="section-icons">
+            <span class="section-icon bounce">📷</span>
+            <span class="section-icon wobble">🖼️</span>
+            <span class="section-icon spin">🎬</span>
+            <span class="section-icon zoom">🌈</span>
+            <span class="section-icon bounce" style="animation-delay: -1.5s;">✏️</span>
+            <span class="section-icon wobble" style="animation-delay: -2.5s;">🎭</span>
+        </div>
         <div class="section-header">
             <span class="section-badge">📸 Hasil Karya</span>
             <h2 class="section-title">Galeri</h2>
@@ -5765,6 +6047,15 @@
 
     <!-- Projects Section -->
     <section class="projects" id="projects">
+        <!-- Section Floating Icons -->
+        <div class="section-icons">
+            <span class="section-icon bounce">🚀</span>
+            <span class="section-icon wobble">💼</span>
+            <span class="section-icon spin">🏆</span>
+            <span class="section-icon zoom">📱</span>
+            <span class="section-icon bounce" style="animation-delay: -2s;">🖥️</span>
+            <span class="section-icon wobble" style="animation-delay: -1s;">🎪</span>
+        </div>
         <div class="section-header">
             <span class="section-badge">🚀 Karya Terbaik</span>
             <h2 class="section-title">Proyek Saya</h2>
@@ -5833,6 +6124,15 @@
 
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials">
+        <!-- Section Floating Icons -->
+        <div class="section-icons">
+            <span class="section-icon bounce">💬</span>
+            <span class="section-icon wobble">❤️</span>
+            <span class="section-icon spin">👍</span>
+            <span class="section-icon zoom">😊</span>
+            <span class="section-icon bounce" style="animation-delay: -1.5s;">🌟</span>
+            <span class="section-icon wobble" style="animation-delay: -2.5s;">💯</span>
+        </div>
         <div class="section-header">
             <span class="section-badge">💬 Kata Mereka</span>
             <h2 class="section-title">Testimoni</h2>
@@ -6087,6 +6387,15 @@
 
     <!-- Contact Section -->
     <section class="contact" id="contact">
+        <!-- Section Floating Icons -->
+        <div class="section-icons">
+            <span class="section-icon bounce">📧</span>
+            <span class="section-icon wobble">💌</span>
+            <span class="section-icon spin">📞</span>
+            <span class="section-icon zoom">🤝</span>
+            <span class="section-icon bounce" style="animation-delay: -2s;">💬</span>
+            <span class="section-icon wobble" style="animation-delay: -1s;">🌐</span>
+        </div>
         <div class="section-header">
             <span class="section-badge">📬 Mari Berbicara</span>
             <h2 class="section-title">Hubungi Saya</h2>
@@ -6145,6 +6454,15 @@
 
     <!-- FAQ Section -->
     <section class="faq-section" id="faq">
+        <!-- Section Floating Icons -->
+        <div class="section-icons">
+            <span class="section-icon bounce">❓</span>
+            <span class="section-icon wobble">💡</span>
+            <span class="section-icon spin">🔍</span>
+            <span class="section-icon zoom">📖</span>
+            <span class="section-icon bounce" style="animation-delay: -1.5s;">🎯</span>
+            <span class="section-icon wobble" style="animation-delay: -2.5s;">✅</span>
+        </div>
         <div class="section-header">
             <span class="section-badge">🤔 FAQ</span>
             <h2 class="section-title" data-lang-id="Pertanyaan Umum" data-lang-en="Frequently Asked Questions">Pertanyaan Umum</h2>
@@ -6254,6 +6572,15 @@
 
     <!-- Secret hint -->
     <div class="secret-hint" data-lang-id="↑↑↓↓←→←→BA" data-lang-en="↑↑↓↓←→←→BA">↑↑↓↓←→←→BA</div>
+
+    <!-- Alien Spaceship Easter Egg -->
+    <div class="alien-spaceship" id="alienSpaceship">🛸</div>
+    
+    <!-- Alien Catch Counter -->
+    <div class="alien-catch-counter" id="alienCatchCounter">
+        <span class="counter-icon">🛸</span>
+        <span id="alienCatchCount">0</span>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -8474,6 +8801,246 @@
                 }
             });
         }
+
+        // ===== ALIEN SPACESHIP EASTER EGG =====
+        const alienSpaceship = document.getElementById('alienSpaceship');
+        const alienCatchCounter = document.getElementById('alienCatchCounter');
+        const alienCatchCount = document.getElementById('alienCatchCount');
+        
+        let alienCatches = parseInt(localStorage.getItem('alienCatches') || '0');
+        let alienVisible = false;
+        let alienTimeout = null;
+        let alienMoveInterval = null;
+        let alienAppearInterval = null;
+        
+        // Update counter display
+        function updateAlienCounter() {
+            if (alienCatchCount) {
+                alienCatchCount.textContent = alienCatches;
+            }
+            if (alienCatches > 0 && alienCatchCounter) {
+                alienCatchCounter.classList.add('visible');
+            }
+        }
+        
+        // Initialize counter
+        updateAlienCounter();
+        
+        // Random position generator
+        function getRandomPosition() {
+            const maxX = window.innerWidth - 60;
+            const maxY = window.innerHeight - 60;
+            return {
+                x: Math.random() * maxX,
+                y: Math.random() * maxY
+            };
+        }
+        
+        // Random speed generator (makes it hard to catch!)
+        function getRandomSpeed() {
+            return 800 + Math.random() * 1500; // 800ms - 2300ms
+        }
+        
+        // Move spaceship to random position
+        function moveAlien() {
+            if (!alienSpaceship || !alienVisible) return;
+            
+            const pos = getRandomPosition();
+            const speed = getRandomSpeed();
+            
+            alienSpaceship.style.transition = `left ${speed}ms ease-in-out, top ${speed}ms ease-in-out`;
+            alienSpaceship.style.left = pos.x + 'px';
+            alienSpaceship.style.top = pos.y + 'px';
+            
+            // Create trail effect
+            createSpaceshipTrail(
+                parseFloat(alienSpaceship.style.left) || pos.x,
+                parseFloat(alienSpaceship.style.top) || pos.y
+            );
+        }
+        
+        // Create trail particles
+        function createSpaceshipTrail(x, y) {
+            const trail = document.createElement('div');
+            trail.className = 'spaceship-trail';
+            trail.style.left = (x + 20) + 'px';
+            trail.style.top = (y + 20) + 'px';
+            document.body.appendChild(trail);
+            
+            setTimeout(() => trail.remove(), 500);
+        }
+        
+        // Show alien spaceship
+        function showAlien() {
+            if (!alienSpaceship) return;
+            
+            const pos = getRandomPosition();
+            alienSpaceship.style.left = pos.x + 'px';
+            alienSpaceship.style.top = pos.y + 'px';
+            alienSpaceship.classList.add('visible');
+            alienSpaceship.classList.remove('caught');
+            alienVisible = true;
+            
+            // Start random movement
+            alienMoveInterval = setInterval(moveAlien, getRandomSpeed());
+            
+            // Hide after 8-15 seconds
+            const hideDelay = 8000 + Math.random() * 7000;
+            alienTimeout = setTimeout(hideAlien, hideDelay);
+        }
+        
+        // Hide alien spaceship
+        function hideAlien() {
+            if (!alienSpaceship) return;
+            
+            alienSpaceship.classList.remove('visible');
+            alienVisible = false;
+            
+            if (alienMoveInterval) {
+                clearInterval(alienMoveInterval);
+                alienMoveInterval = null;
+            }
+            if (alienTimeout) {
+                clearTimeout(alienTimeout);
+                alienTimeout = null;
+            }
+        }
+        
+        // Catch alien spaceship
+        function catchAlien() {
+            if (!alienVisible || !alienSpaceship) return;
+            
+            // Stop movement
+            hideAlien();
+            
+            // Play caught animation
+            alienSpaceship.classList.add('caught');
+            alienSpaceship.classList.add('visible');
+            
+            // Increment counter
+            alienCatches++;
+            localStorage.setItem('alienCatches', alienCatches.toString());
+            updateAlienCounter();
+            
+            // Create celebration confetti
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    if (typeof createConfetti === 'function') {
+                        createConfetti();
+                    }
+                }, i * 200);
+            }
+            
+            // Show congratulations
+            setTimeout(() => {
+                if (alienCatches === 1) {
+                    // First catch - show easter egg overlay
+                    showAlienEasterEgg();
+                } else {
+                    // Subsequent catches - show toast
+                    if (typeof showShortcutNotification === 'function') {
+                        const messages = [
+                            '🛸 Alien tertangkap lagi! Total: ' + alienCatches,
+                            '👽 Kamu jago! Sudah ' + alienCatches + ' alien!',
+                            '🌟 Luar biasa! ' + alienCatches + ' tangkapan!',
+                            '🚀 Pemburu alien pro! ' + alienCatches + 'x',
+                            '✨ Alien hunter! Skor: ' + alienCatches
+                        ];
+                        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+                        showShortcutNotification(randomMsg);
+                    }
+                }
+                
+                // Hide spaceship after animation
+                setTimeout(() => {
+                    alienSpaceship.classList.remove('visible');
+                    alienSpaceship.classList.remove('caught');
+                }, 500);
+            }, 1000);
+        }
+        
+        // Show alien easter egg overlay (first catch)
+        function showAlienEasterEgg() {
+            const overlay = document.getElementById('easterEggOverlay');
+            if (overlay) {
+                // Update content for alien catch
+                const title = overlay.querySelector('.easter-egg-title');
+                const emoji = overlay.querySelector('.easter-egg-emoji');
+                const message = overlay.querySelector('.easter-egg-message');
+                
+                if (title) title.textContent = '🛸 ALIEN TERTANGKAP! 🛸';
+                if (emoji) emoji.textContent = '👽';
+                if (message) {
+                    const lang = localStorage.getItem('lang') || 'id';
+                    message.innerHTML = lang === 'en' 
+                        ? 'You caught a flying alien!<br>You are an elite alien hunter! 🎯'
+                        : 'Kamu menangkap alien yang terbang!<br>Kamu adalah pemburu alien elit! 🎯';
+                }
+                
+                overlay.classList.add('active');
+                
+                // Restore original content when closed
+                const closeBtn = overlay.querySelector('.easter-egg-close');
+                const originalClose = closeBtn.onclick;
+                closeBtn.onclick = () => {
+                    overlay.classList.remove('active');
+                    // Restore original content
+                    setTimeout(() => {
+                        if (title) title.textContent = '🎉 SELAMAT! 🎉';
+                        if (emoji) emoji.textContent = '🦄';
+                        if (message) {
+                            const lang = localStorage.getItem('lang') || 'id';
+                            message.innerHTML = lang === 'en' 
+                                ? 'You found a hidden secret!<br>You are a true programmer! 🎮'
+                                : 'Kamu menemukan rahasia tersembunyi!<br>Kamu adalah programmer sejati! 🎮';
+                        }
+                    }, 500);
+                };
+            }
+        }
+        
+        // Add click handler for alien spaceship
+        if (alienSpaceship) {
+            alienSpaceship.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                catchAlien();
+            });
+            
+            // Make it harder - move away on mouse approach
+            alienSpaceship.addEventListener('mouseenter', () => {
+                if (alienVisible && Math.random() > 0.3) { // 70% chance to dodge
+                    moveAlien();
+                }
+            });
+        }
+        
+        // Start alien appearance cycle
+        function startAlienCycle() {
+            // First appearance after 15-30 seconds
+            const firstDelay = 15000 + Math.random() * 15000;
+            
+            setTimeout(() => {
+                showAlien();
+                
+                // Then appear every 30-60 seconds
+                alienAppearInterval = setInterval(() => {
+                    if (!alienVisible) {
+                        showAlien();
+                    }
+                }, 30000 + Math.random() * 30000);
+            }, firstDelay);
+        }
+        
+        // Start the alien cycle when page loads
+        startAlienCycle();
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (alienMoveInterval) clearInterval(alienMoveInterval);
+            if (alienTimeout) clearTimeout(alienTimeout);
+            if (alienAppearInterval) clearInterval(alienAppearInterval);
+        });
     </script>
 </body>
 </html>
