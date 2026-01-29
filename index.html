@@ -4089,6 +4089,354 @@
                 font-size: 1.1rem;
             }
         }
+
+        /* ===== SHORTCUT INFO WIDGET ===== */
+        .shortcut-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 100px;
+            background: var(--bg-card);
+            border: 4px solid var(--border-color);
+            border-radius: 25px;
+            padding: 18px 22px;
+            box-shadow: 8px 8px 0 var(--border-color);
+            z-index: 998;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            min-width: 220px;
+            max-width: 280px;
+            animation: shortcutWidgetEntry 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes shortcutWidgetEntry {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.8) rotate(-5deg);
+            }
+            60% {
+                transform: translateY(-10px) scale(1.05) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+        /* Move widget left when scroll-top button is visible */
+        .shortcut-widget.scroll-visible {
+            right: 110px;
+        }
+
+        .shortcut-widget.minimized {
+            min-width: auto;
+            max-width: none;
+            padding: 12px 16px;
+            border-radius: 50px;
+            animation: shortcutMinimizedPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes shortcutMinimizedPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 8px 8px 0 var(--border-color);
+            }
+            50% { 
+                transform: scale(1.03);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 15px var(--glow-blue);
+            }
+        }
+
+        .shortcut-widget.minimized .shortcut-content {
+            display: none;
+        }
+
+        .shortcut-widget.minimized .shortcut-header h3 span:last-child {
+            display: none;
+        }
+
+        .shortcut-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .shortcut-widget.minimized .shortcut-header {
+            margin-bottom: 0;
+        }
+
+        .shortcut-header h3 {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .shortcut-header-icon {
+            font-size: 1.4rem;
+            animation: keyboardWiggle 2s ease-in-out infinite;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+        }
+
+        @keyframes keyboardWiggle {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            25% { transform: rotate(5deg) scale(1.1); }
+            50% { transform: rotate(-3deg) scale(1); }
+            75% { transform: rotate(8deg) scale(1.15); }
+        }
+
+        .shortcut-toggle {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 3px 3px 0 var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .shortcut-toggle:hover {
+            transform: rotate(180deg) scale(1.1);
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
+        }
+
+        .shortcut-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: var(--bg-secondary);
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            padding: 10px 14px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shortcut-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-25deg);
+            transition: left 0.5s ease;
+        }
+
+        .shortcut-item:hover::before {
+            left: 150%;
+        }
+
+        .shortcut-item:hover {
+            transform: translateX(5px) scale(1.02);
+            box-shadow: 4px 4px 0 var(--border-color);
+        }
+
+        .shortcut-item:nth-child(1) { border-left: 5px solid var(--accent-pink); }
+        .shortcut-item:nth-child(2) { border-left: 5px solid var(--accent-blue); }
+        .shortcut-item:nth-child(3) { border-left: 5px solid var(--accent-green); }
+        .shortcut-item:nth-child(4) { border-left: 5px solid var(--accent-yellow); }
+        .shortcut-item:nth-child(5) { border-left: 5px solid var(--accent-purple); }
+
+        .shortcut-label {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            flex: 1;
+        }
+
+        .shortcut-keys {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .key-badge {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 0.75rem;
+            background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            box-shadow: 2px 2px 0 var(--border-color), inset 0 -2px 0 rgba(0,0,0,0.1);
+            min-width: 28px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .key-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 3px 3px 0 var(--border-color), inset 0 -2px 0 rgba(0,0,0,0.1);
+        }
+
+        .key-plus {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--accent-pink);
+        }
+
+        /* Dark mode enhancements for shortcut widget */
+        [data-theme="dark"] .shortcut-widget {
+            box-shadow: 8px 8px 0 var(--border-color), 0 0 20px rgba(78, 205, 196, 0.15);
+        }
+
+        [data-theme="dark"] .shortcut-widget.minimized {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            background-size: 200% 200%;
+            animation: shortcutMinimizedPulseDark 3s ease-in-out infinite, gradientShift 5s ease infinite;
+        }
+
+        @keyframes shortcutMinimizedPulseDark {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 8px 8px 0 var(--border-color), 0 0 20px rgba(179, 136, 255, 0.4);
+            }
+            50% { 
+                transform: scale(1.03);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 30px rgba(24, 255, 255, 0.5);
+            }
+        }
+
+        [data-theme="dark"] .shortcut-widget.minimized .shortcut-header h3 {
+            color: white;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+        }
+
+        [data-theme="dark"] .key-badge {
+            background: linear-gradient(180deg, #2a2a4e 0%, #1a1a2e 100%);
+            box-shadow: 2px 2px 0 var(--border-color), inset 0 -2px 0 rgba(0,0,0,0.3), 0 0 8px rgba(78, 205, 196, 0.2);
+        }
+
+        [data-theme="dark"] .shortcut-item {
+            background: rgba(15, 15, 35, 0.8);
+            box-shadow: inset 0 0 10px rgba(78, 205, 196, 0.05);
+        }
+
+        [data-theme="dark"] .shortcut-item:hover {
+            box-shadow: 4px 4px 0 var(--border-color), 0 0 15px rgba(78, 205, 196, 0.2);
+        }
+
+        /* Minimized view decorations */
+        .shortcut-minimized-icon {
+            display: none;
+            font-size: 1.3rem;
+            animation: minimizedIconBounce 1.5s ease-in-out infinite;
+        }
+
+        .shortcut-widget.minimized .shortcut-minimized-icon {
+            display: inline;
+        }
+
+        .shortcut-widget.minimized .shortcut-header-icon {
+            display: none;
+        }
+
+        @keyframes minimizedIconBounce {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.15) rotate(-10deg); }
+            50% { transform: scale(1) rotate(0deg); }
+            75% { transform: scale(1.15) rotate(10deg); }
+        }
+
+        /* Hidden elements state */
+        .widget-hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            transform: scale(0.8) !important;
+        }
+
+        .navbar.widget-hidden {
+            transform: translateX(-50%) translateY(-150%) !important;
+        }
+
+        .announcement-bar.widget-hidden {
+            transform: translateX(-50%) translateY(-150%) !important;
+        }
+
+        .social-bar.widget-hidden {
+            transform: translateX(-50%) translateY(150%) !important;
+        }
+
+        /* Responsive for shortcut widget */
+        @media (max-width: 768px) {
+            .shortcut-widget {
+                bottom: 110px;
+                right: 15px;
+                min-width: 190px;
+                max-width: 250px;
+                padding: 14px 16px;
+            }
+
+            .shortcut-widget.scroll-visible {
+                right: 15px;
+                bottom: 110px;
+            }
+
+            .shortcut-header h3 {
+                font-size: 0.9rem;
+            }
+
+            .shortcut-item {
+                padding: 8px 10px;
+            }
+
+            .shortcut-label {
+                font-size: 0.8rem;
+            }
+
+            .key-badge {
+                font-size: 0.7rem;
+                padding: 3px 6px;
+                min-width: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .shortcut-widget {
+                bottom: 100px;
+                right: 10px;
+                min-width: 170px;
+                max-width: 220px;
+                padding: 12px 14px;
+            }
+
+            .shortcut-widget.minimized {
+                padding: 10px 14px;
+            }
+
+            .shortcut-header h3 span:last-child {
+                display: none;
+            }
+
+            .shortcut-toggle {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -4222,7 +4570,7 @@
         <!-- Minimized view elements -->
         <div class="promo-minimized-view">
             <div class="promo-mini-icon">🔥</div>
-            <div class="promo-mini-text">Cek Promo Disini</div>
+            <div class="promo-mini-text">Offer</div>
             <div class="promo-mini-arrow">
                 <span class="arrow-bounce">👆</span>
             </div>
@@ -4806,6 +5154,60 @@
     <audio id="audioPlayer" preload="auto">
         <!-- Music source will be set via JavaScript -->
     </audio>
+
+    <!-- Shortcut Info Widget -->
+    <div class="shortcut-widget" id="shortcutWidget">
+        <div class="shortcut-header">
+            <h3>
+                <span class="shortcut-header-icon">⌨️</span>
+                <span class="shortcut-minimized-icon">🎹</span>
+                <span>Shortcuts</span>
+            </h3>
+            <button class="shortcut-toggle" id="shortcutToggle" title="Minimize/Maximize">➖</button>
+        </div>
+        <div class="shortcut-content">
+            <div class="shortcut-item">
+                <span class="shortcut-label">Widget Kiri</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">1</span>
+                </div>
+            </div>
+            <div class="shortcut-item">
+                <span class="shortcut-label">Navigasi</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">2</span>
+                </div>
+            </div>
+            <div class="shortcut-item">
+                <span class="shortcut-label">Social Bar</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">3</span>
+                </div>
+            </div>
+            <div class="shortcut-item">
+                <span class="shortcut-label">Mode Gelap</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">4</span>
+                </div>
+            </div>
+            <div class="shortcut-item">
+                <span class="shortcut-label">Play/Pause</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">Space</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scroll to Top Button -->
     <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">⬆️</button>
@@ -5940,9 +6342,19 @@
             }
         });
 
-        // Keyboard shortcuts
+        // Keyboard shortcuts for music player (local, without Alt key)
+        // Note: Alt+Space shortcut is handled globally above
         document.addEventListener('keydown', (e) => {
-            // Check if music player is in viewport
+            // Check if user is typing in an input field
+            const activeElement = document.activeElement;
+            const isTyping = activeElement.tagName === 'INPUT' || 
+                            activeElement.tagName === 'TEXTAREA' || 
+                            activeElement.isContentEditable;
+            
+            // Skip if Alt key is pressed (handled by global shortcuts)
+            if (e.altKey || isTyping) return;
+            
+            // Check if music player is in viewport and expanded
             const rect = musicPlayer.getBoundingClientRect();
             const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
             
@@ -6283,6 +6695,187 @@
             socialBar.addEventListener('click', (e) => {
                 e.stopPropagation();
             });
+        }
+
+        // ===== SHORTCUT INFO WIDGET =====
+        const shortcutWidget = document.getElementById('shortcutWidget');
+        const shortcutToggle = document.getElementById('shortcutToggle');
+        let shortcutMinimized = false;
+
+        // Toggle shortcut widget minimize/maximize
+        function toggleShortcutWidget() {
+            shortcutMinimized = !shortcutMinimized;
+            shortcutWidget.classList.toggle('minimized', shortcutMinimized);
+            shortcutToggle.textContent = shortcutMinimized ? '➕' : '➖';
+        }
+
+        shortcutToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleShortcutWidget();
+        });
+
+        // Prevent click effects on shortcut widget
+        shortcutWidget.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Update shortcut widget position based on scroll-top button visibility
+        function updateShortcutWidgetPosition() {
+            const scrollTopVisible = scrollTopBtn.classList.contains('visible');
+            shortcutWidget.classList.toggle('scroll-visible', scrollTopVisible);
+        }
+
+        // Observer for scroll-top button visibility
+        const scrollTopObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    updateShortcutWidgetPosition();
+                }
+            });
+        });
+
+        scrollTopObserver.observe(scrollTopBtn, { attributes: true });
+
+        // ===== GLOBAL KEYBOARD SHORTCUTS =====
+        // State tracking for widget visibility
+        let leftWidgetsHidden = false;
+        let navBarHidden = false;
+        let socialBarHidden = false;
+
+        // Toggle left widgets (signboard clock, visitor stats, promo widget, music player)
+        function toggleLeftWidgets() {
+            leftWidgetsHidden = !leftWidgetsHidden;
+            
+            const signboardClock = document.getElementById('signboardClock');
+            const visitorStats = document.getElementById('visitorStats');
+            const promoWidgetEl = document.getElementById('promoWidget');
+            const musicPlayerEl = document.getElementById('musicPlayer');
+            
+            if (signboardClock) signboardClock.classList.toggle('widget-hidden', leftWidgetsHidden);
+            if (visitorStats) visitorStats.classList.toggle('widget-hidden', leftWidgetsHidden);
+            if (promoWidgetEl) promoWidgetEl.classList.toggle('widget-hidden', leftWidgetsHidden);
+            if (musicPlayerEl) musicPlayerEl.classList.toggle('widget-hidden', leftWidgetsHidden);
+            
+            // Show notification
+            showShortcutNotification(leftWidgetsHidden ? '🙈 Widget Kiri Disembunyikan' : '🎉 Widget Kiri Ditampilkan');
+        }
+
+        // Toggle navbar and announcement bar
+        function toggleNavAndAnnouncement() {
+            navBarHidden = !navBarHidden;
+            
+            const navbar = document.querySelector('.navbar');
+            const announcementBar = document.getElementById('announcementBar');
+            
+            if (navbar) navbar.classList.toggle('widget-hidden', navBarHidden);
+            if (announcementBar) announcementBar.classList.toggle('widget-hidden', navBarHidden);
+            
+            showShortcutNotification(navBarHidden ? '🙈 Navigasi Disembunyikan' : '🎉 Navigasi Ditampilkan');
+        }
+
+        // Toggle social bar
+        function toggleSocialBar() {
+            socialBarHidden = !socialBarHidden;
+            
+            const socialBarEl = document.querySelector('.social-bar');
+            
+            if (socialBarEl) socialBarEl.classList.toggle('widget-hidden', socialBarHidden);
+            
+            showShortcutNotification(socialBarHidden ? '🙈 Social Bar Disembunyikan' : '🎉 Social Bar Ditampilkan');
+        }
+
+        // Toggle theme (light/dark mode)
+        function toggleThemeShortcut() {
+            themeToggle.click();
+            const newTheme = html.getAttribute('data-theme');
+            showShortcutNotification(newTheme === 'dark' ? '🌙 Mode Malam Aktif' : '☀️ Mode Terang Aktif');
+        }
+
+        // Toggle music play/pause
+        function toggleMusicPlayPause() {
+            if (playlist.length === 0) {
+                showShortcutNotification('🎵 Tidak ada musik di playlist');
+                return;
+            }
+            
+            playPauseBtn.click();
+            showShortcutNotification(isPlaying ? '▶️ Musik Dimainkan' : '⏸️ Musik Dijeda');
+        }
+
+        // Show shortcut notification toast
+        function showShortcutNotification(message) {
+            const toast = document.getElementById('copyToast');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+            const progressBar = toast.querySelector('.toast-progress-bar');
+
+            // Clear any existing timeout
+            if (toastTimeout) {
+                clearTimeout(toastTimeout);
+            }
+
+            toastTitle.textContent = '⌨️ Shortcut';
+            toastMessage.textContent = message;
+
+            // Reset animation
+            toast.classList.remove('show');
+            progressBar.style.animation = 'none';
+            
+            // Force reflow
+            void toast.offsetWidth;
+            
+            // Show toast
+            toast.classList.add('show');
+            progressBar.style.animation = 'progressShrink 2s linear forwards';
+
+            // Hide toast after delay
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // Global keyboard event listener for shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Check if user is typing in an input field
+            const activeElement = document.activeElement;
+            const isTyping = activeElement.tagName === 'INPUT' || 
+                            activeElement.tagName === 'TEXTAREA' || 
+                            activeElement.isContentEditable;
+            
+            // Only process shortcuts if not typing and Alt key is pressed
+            if (e.altKey && !isTyping) {
+                switch(e.key) {
+                    case '1':
+                        e.preventDefault();
+                        toggleLeftWidgets();
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        toggleNavAndAnnouncement();
+                        break;
+                    case '3':
+                        e.preventDefault();
+                        toggleSocialBar();
+                        break;
+                    case '4':
+                        e.preventDefault();
+                        toggleThemeShortcut();
+                        break;
+                    case ' ': // Space
+                        e.preventDefault();
+                        toggleMusicPlayPause();
+                        break;
+                }
+            }
+        });
+
+        // Auto-minimize shortcut widget on mobile after 10 seconds
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                if (!shortcutMinimized) {
+                    toggleShortcutWidget();
+                }
+            }, 10000);
         }
     </script>
 </body>
