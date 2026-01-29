@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ Portofolio Kreatif | Aithor</title>
+    <title>✨ Aithor Dev :)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Fredoka:wght@300;400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
@@ -2792,10 +2792,23 @@
         .promo-widget.minimized {
             min-width: auto;
             max-width: none;
-            padding: 15px;
-            border-radius: 50px;
-            animation: none;
+            padding: 12px 18px;
+            border-radius: 25px;
+            animation: promoMinimizedPulse 2s ease-in-out infinite;
             transform: translateY(-50%);
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-orange), var(--accent-yellow));
+            background-size: 200% 200%;
+        }
+
+        @keyframes promoMinimizedPulse {
+            0%, 100% { 
+                transform: translateY(-50%) scale(1);
+                box-shadow: 8px 8px 0 var(--border-color), 0 0 20px rgba(255, 107, 157, 0.4);
+            }
+            50% { 
+                transform: translateY(-50%) scale(1.05);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 30px rgba(255, 140, 66, 0.6);
+            }
         }
 
         .promo-widget.minimized::before {
@@ -2806,8 +2819,154 @@
             display: none;
         }
 
-        .promo-widget.minimized .promo-header h3 {
+        .promo-widget.minimized .promo-header {
             display: none;
+        }
+
+        .promo-widget.minimized .promo-sparkle {
+            display: block;
+        }
+
+        /* Promo Minimized View Styles */
+        .promo-minimized-view {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .promo-widget.minimized .promo-minimized-view {
+            display: flex;
+        }
+
+        .promo-mini-icon {
+            font-size: 1.8rem;
+            animation: miniIconWobble 1s ease-in-out infinite;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+        }
+
+        @keyframes miniIconWobble {
+            0%, 100% { transform: rotate(-10deg) scale(1); }
+            25% { transform: rotate(10deg) scale(1.1); }
+            50% { transform: rotate(-5deg) scale(1); }
+            75% { transform: rotate(15deg) scale(1.15); }
+        }
+
+        .promo-mini-text {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 800;
+            font-size: 1rem;
+            color: white;
+            text-shadow: 2px 2px 0 var(--border-color), -1px -1px 0 var(--border-color);
+            animation: textPop 2s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes textPop {
+            0%, 100% { transform: scale(1); }
+            10% { transform: scale(1.1); }
+            20% { transform: scale(1); }
+            30% { transform: scale(1.05); }
+            40% { transform: scale(1); }
+        }
+
+        .promo-mini-arrow {
+            display: flex;
+            align-items: center;
+            margin-left: 5px;
+        }
+
+        .arrow-bounce {
+            font-size: 1.4rem;
+            animation: arrowBouncePoint 0.8s ease-in-out infinite;
+            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.4));
+        }
+
+        @keyframes arrowBouncePoint {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-8px) rotate(-5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(5deg); }
+        }
+
+        .promo-mini-badge {
+            background: linear-gradient(135deg, #FF6B6B, #FF8C42);
+            color: white;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 800;
+            font-size: 0.9rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 3px solid var(--border-color);
+            box-shadow: 3px 3px 0 var(--border-color);
+            animation: badgeShake 1.5s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes badgeShake {
+            0%, 100% { transform: rotate(0deg); }
+            15% { transform: rotate(-8deg); }
+            30% { transform: rotate(8deg); }
+            45% { transform: rotate(-5deg); }
+            60% { transform: rotate(5deg); }
+            75% { transform: rotate(0deg); }
+        }
+
+        /* Dark mode for minimized promo */
+        [data-theme="dark"] .promo-widget.minimized {
+            background: linear-gradient(135deg, #FF6B9D, #B388FF, #18FFFF);
+            background-size: 200% 200%;
+            animation: promoMinimizedPulseDark 2s ease-in-out infinite, gradientShift 4s ease infinite;
+        }
+
+        @keyframes promoMinimizedPulseDark {
+            0%, 100% { 
+                transform: translateY(-50%) scale(1);
+                box-shadow: 8px 8px 0 var(--border-color), 0 0 25px rgba(179, 136, 255, 0.5);
+            }
+            50% { 
+                transform: translateY(-50%) scale(1.05);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 35px rgba(24, 255, 255, 0.6);
+            }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        [data-theme="dark"] .promo-mini-text {
+            color: white;
+            text-shadow: 2px 2px 0 #0F0F23, 0 0 10px rgba(179, 136, 255, 0.5);
+        }
+
+        [data-theme="dark"] .promo-mini-badge {
+            background: linear-gradient(135deg, #B388FF, #18FFFF);
+            box-shadow: 3px 3px 0 var(--border-color), 0 0 10px rgba(24, 255, 255, 0.4);
+        }
+
+        /* Responsive for minimized promo */
+        @media (max-width: 480px) {
+            .promo-widget.minimized {
+                padding: 10px 14px;
+            }
+
+            .promo-mini-icon {
+                font-size: 1.4rem;
+            }
+
+            .promo-mini-text {
+                font-size: 0.85rem;
+            }
+
+            .promo-mini-badge {
+                font-size: 0.75rem;
+                padding: 3px 8px;
+            }
+
+            .arrow-bounce {
+                font-size: 1.2rem;
+            }
         }
 
         .promo-header {
@@ -3169,6 +3328,18 @@
                 right: 10px;
                 bottom: 180px;
                 transform: none;
+                animation: promoMinimizedPulseMobile 2s ease-in-out infinite;
+            }
+
+            @keyframes promoMinimizedPulseMobile {
+                0%, 100% { 
+                    transform: scale(1);
+                    box-shadow: 8px 8px 0 var(--border-color), 0 0 20px rgba(255, 107, 157, 0.4);
+                }
+                50% { 
+                    transform: scale(1.05);
+                    box-shadow: 10px 10px 0 var(--border-color), 0 0 30px rgba(255, 140, 66, 0.6);
+                }
             }
         }
 
@@ -3925,7 +4096,7 @@
     <div class="loading-screen" id="loading">
         <div class="loading-emoji">🎨</div>
         <div class="loading-text">
-            Sabar yah, halamannya lagi loading :)
+            Sabar Pak/Bu, halamannya masih loading...
             <div class="loading-dots">
                 <span></span>
                 <span></span>
@@ -4002,10 +4173,10 @@
     </div>
 
     <!-- Visitor Stats Widget -->
-    <div class="visitor-stats" id="visitorStats">
+    <div class="visitor-stats minimized" id="visitorStats">
         <div class="stats-header">
             <h3><span>📊</span> Statistik</h3>
-            <button class="stats-toggle" id="statsToggle" title="Minimize/Maximize">➖</button>
+            <button class="stats-toggle" id="statsToggle" title="Minimize/Maximize">➕</button>
         </div>
         <div class="stats-content">
             <div class="stat-item">
@@ -4040,7 +4211,7 @@
     </div>
 
     <!-- Promo Popup Widget -->
-    <div class="promo-widget" id="promoWidget">
+    <div class="promo-widget minimized" id="promoWidget">
         <!-- Sparkle effects -->
         <div class="promo-sparkle"></div>
         <div class="promo-sparkle"></div>
@@ -4048,9 +4219,19 @@
         <div class="promo-sparkle"></div>
         <div class="promo-sparkle"></div>
         
+        <!-- Minimized view elements -->
+        <div class="promo-minimized-view">
+            <div class="promo-mini-icon">🔥</div>
+            <div class="promo-mini-text">Cek Promo Disini</div>
+            <div class="promo-mini-arrow">
+                <span class="arrow-bounce">👆</span>
+            </div>
+            <div class="promo-mini-badge">50%</div>
+        </div>
+        
         <div class="promo-header">
             <h3><span class="promo-icon">🔥</span> Promo Spesial!</h3>
-            <button class="promo-toggle" id="promoToggle" aria-label="Toggle promo widget">➖</button>
+            <button class="promo-toggle" id="promoToggle" aria-label="Toggle promo widget">➕</button>
         </div>
         
         <div class="promo-content">
@@ -4123,7 +4304,7 @@
                 Saya <span class="highlight">Aithor</span>
             </h1>
             <p class="hero-subtitle">
-                Seorang Developer & Designer kreatif yang mengubah ide-ide keren menjadi pengalaman digital yang menakjubkan! 🎨💻
+                Hi, perkenalkan aku seorang developer website, game, dan software pada platform pc dan android, moto utamaku adalah "Kreativitas Dimana satu-satunya batasan hanyalah imajinasi!"🎨💻.
             </p>
             <div class="hero-buttons">
                 <a href="#projects" class="btn btn-primary">
@@ -4560,7 +4741,7 @@
     </div>
 
     <!-- Music Player Widget -->
-    <div class="music-player" id="musicPlayer">
+    <div class="music-player minimized" id="musicPlayer">
         <!-- Header with play button and info -->
         <div class="music-header">
             <button class="music-toggle-btn" id="playPauseBtn" title="Play/Pause">
@@ -4570,7 +4751,7 @@
                 <div class="music-title" id="musicTitle">No Music Loaded</div>
                 <div class="music-artist" id="musicArtist">Select a track</div>
             </div>
-            <button class="music-minimize" id="minimizeBtn" title="Minimize">➖</button>
+            <button class="music-minimize" id="minimizeBtn" title="Minimize">➕</button>
         </div>
         
         <!-- Main controls -->
@@ -5241,7 +5422,7 @@
         // ===== VISITOR STATS WIDGET =====
         const visitorStats = document.getElementById('visitorStats');
         const statsToggle = document.getElementById('statsToggle');
-        let statsMinimized = false;
+        let statsMinimized = true;
 
         // Simulated visitor data (in real app, connect to backend/analytics)
         const visitorData = {
@@ -5428,7 +5609,7 @@
         const playlistCount = document.getElementById('playlistCount');
         
         let isPlaying = false;
-        let isMinimized = false;
+        let isMinimized = true;
         let isShuffle = false;
         let repeatMode = 0; // 0: no repeat, 1: repeat all, 2: repeat one
         let currentTrackIndex = 0;
@@ -5784,15 +5965,30 @@
         // ===== PROMO WIDGET =====
         const promoWidget = document.getElementById('promoWidget');
         const promoToggle = document.getElementById('promoToggle');
-        let promoMinimized = false;
+        const promoMinimizedView = document.querySelector('.promo-minimized-view');
+        let promoMinimized = true;
 
         // Toggle promo widget
-        promoToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
+        function togglePromoWidget() {
             promoMinimized = !promoMinimized;
             promoWidget.classList.toggle('minimized', promoMinimized);
             promoToggle.textContent = promoMinimized ? '➕' : '➖';
+        }
+
+        promoToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            togglePromoWidget();
         });
+
+        // Allow clicking minimized view to expand
+        if (promoMinimizedView) {
+            promoMinimizedView.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (promoMinimized) {
+                    togglePromoWidget();
+                }
+            });
+        }
 
         // Prevent click effects on promo widget
         promoWidget.addEventListener('click', (e) => {
