@@ -373,37 +373,317 @@
             }
         }
 
-        /* Alien catch counter */
+        /* Alien catch counter - positioned at top right */
         .alien-catch-counter {
             position: fixed;
-            top: 100px;
+            top: 15px;
             right: 20px;
             background: var(--bg-card);
-            border: 4px solid var(--border-color);
-            border-radius: 20px;
-            padding: 10px 20px;
+            border: 4px solid var(--accent-green);
+            border-radius: 25px;
+            padding: 8px 18px;
             font-family: 'Baloo 2', cursive;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text-primary);
-            box-shadow: 5px 5px 0 var(--border-color);
+            box-shadow: 4px 4px 0 var(--border-color), 0 0 15px rgba(78, 205, 196, 0.3);
             z-index: 9999;
             opacity: 0;
-            transform: translateX(100px);
+            transform: translateY(-50px) scale(0.8);
             transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .alien-catch-counter.visible {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0) scale(1);
         }
 
         .alien-catch-counter .counter-icon {
-            font-size: 1.5rem;
-            animation: iconBounce 2s ease-in-out infinite;
+            font-size: 1.3rem;
+            animation: alienCounterWobble 2s ease-in-out infinite;
+        }
+
+        .alien-catch-counter .counter-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-right: 5px;
+        }
+
+        @keyframes alienCounterWobble {
+            0%, 100% { transform: rotate(-10deg) scale(1); }
+            25% { transform: rotate(10deg) scale(1.1); }
+            50% { transform: rotate(-5deg) scale(1); }
+            75% { transform: rotate(15deg) scale(1.05); }
+        }
+
+        /* ===== BLACKHOLE PORTAL ===== */
+        .blackhole-portal {
+            position: fixed;
+            width: 120px;
+            height: 120px;
+            pointer-events: none;
+            z-index: 9996;
+            opacity: 0;
+            transform: scale(0);
+            transition: opacity 0.3s ease;
+        }
+
+        .blackhole-portal.active {
+            opacity: 1;
+        }
+
+        /* Portal outer ring */
+        .portal-outer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                var(--accent-purple),
+                var(--accent-pink),
+                var(--accent-blue),
+                var(--accent-cyan),
+                var(--accent-green),
+                var(--accent-yellow),
+                var(--accent-orange),
+                var(--accent-purple)
+            );
+            animation: portalSpin 2s linear infinite;
+            filter: blur(2px);
+        }
+
+        /* Portal middle ring */
+        .portal-middle {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 180deg,
+                var(--accent-pink),
+                var(--accent-purple),
+                var(--accent-blue),
+                var(--accent-pink)
+            );
+            animation: portalSpinReverse 1.5s linear infinite;
+            box-shadow: 0 0 20px var(--accent-purple), inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        /* Portal inner core - the blackhole */
+        .portal-core {
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 50%;
+            height: 50%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at center,
+                #000000 0%,
+                #1a1a2e 40%,
+                var(--accent-purple) 70%,
+                transparent 100%
+            );
+            box-shadow: 
+                0 0 30px rgba(0,0,0,0.8),
+                0 0 60px var(--accent-purple),
+                inset 0 0 30px rgba(0,0,0,0.9);
+            animation: portalPulse 1s ease-in-out infinite;
+        }
+
+        /* Portal particles */
+        .portal-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan);
+            animation: portalParticle 1s ease-in-out infinite;
+        }
+
+        .portal-particle:nth-child(4) { 
+            top: 5%; left: 50%; 
+            animation-delay: 0s;
+            background: var(--accent-pink);
+            box-shadow: 0 0 10px var(--accent-pink);
+        }
+        .portal-particle:nth-child(5) { 
+            top: 50%; right: 5%; 
+            animation-delay: 0.25s;
+            background: var(--accent-yellow);
+            box-shadow: 0 0 10px var(--accent-yellow);
+        }
+        .portal-particle:nth-child(6) { 
+            bottom: 5%; left: 50%; 
+            animation-delay: 0.5s;
+            background: var(--accent-green);
+            box-shadow: 0 0 10px var(--accent-green);
+        }
+        .portal-particle:nth-child(7) { 
+            top: 50%; left: 5%; 
+            animation-delay: 0.75s;
+            background: var(--accent-orange);
+            box-shadow: 0 0 10px var(--accent-orange);
+        }
+
+        /* Portal energy waves */
+        .portal-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-cyan);
+            opacity: 0;
+            animation: portalWave 1.5s ease-out infinite;
+        }
+
+        .portal-wave:nth-child(8) { animation-delay: 0s; border-color: var(--accent-pink); }
+        .portal-wave:nth-child(9) { animation-delay: 0.5s; border-color: var(--accent-purple); }
+        .portal-wave:nth-child(10) { animation-delay: 1s; border-color: var(--accent-blue); }
+
+        @keyframes portalSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes portalSpinReverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        @keyframes portalPulse {
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 
+                    0 0 30px rgba(0,0,0,0.8),
+                    0 0 60px var(--accent-purple),
+                    inset 0 0 30px rgba(0,0,0,0.9);
+            }
+            50% { 
+                transform: scale(1.1); 
+                box-shadow: 
+                    0 0 40px rgba(0,0,0,0.9),
+                    0 0 80px var(--accent-pink),
+                    inset 0 0 40px rgba(0,0,0,0.95);
+            }
+        }
+
+        @keyframes portalParticle {
+            0%, 100% { 
+                transform: translateY(0) scale(1); 
+                opacity: 1;
+            }
+            50% { 
+                transform: translateY(-10px) scale(1.5); 
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes portalWave {
+            0% { 
+                transform: scale(1); 
+                opacity: 0.8;
+            }
+            100% { 
+                transform: scale(6); 
+                opacity: 0;
+            }
+        }
+
+        /* Portal open animation */
+        @keyframes portalOpen {
+            0% { 
+                transform: scale(0) rotate(-180deg); 
+                opacity: 0;
+            }
+            50% { 
+                transform: scale(1.2) rotate(0deg); 
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1;
+            }
+        }
+
+        /* Portal close animation */
+        @keyframes portalClose {
+            0% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1;
+            }
+            50% { 
+                transform: scale(1.2) rotate(180deg); 
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(0) rotate(360deg); 
+                opacity: 0;
+            }
+        }
+
+        .blackhole-portal.opening {
+            animation: portalOpen 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        .blackhole-portal.closing {
+            animation: portalClose 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        /* Alien emerging from portal */
+        @keyframes alienEmerge {
+            0% { 
+                transform: scale(0) rotate(-360deg); 
+                opacity: 0;
+            }
+            60% { 
+                transform: scale(1.3) rotate(20deg); 
+                opacity: 1;
+            }
+            80% { 
+                transform: scale(0.9) rotate(-10deg); 
+            }
+            100% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1;
+            }
+        }
+
+        /* Alien getting sucked into portal */
+        @keyframes alienSucked {
+            0% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1;
+            }
+            30% { 
+                transform: scale(1.2) rotate(-30deg); 
+            }
+            60% { 
+                transform: scale(0.8) rotate(60deg); 
+            }
+            100% { 
+                transform: scale(0) rotate(720deg); 
+                opacity: 0;
+            }
+        }
+
+        .alien-spaceship.emerging {
+            animation: alienEmerge 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards !important;
+        }
+
+        .alien-spaceship.escaping {
+            animation: alienSucked 0.8s ease-in forwards !important;
+            pointer-events: none !important;
         }
 
         @media (max-width: 768px) {
@@ -417,10 +697,15 @@
             }
             
             .alien-catch-counter {
-                top: 80px;
+                top: 10px;
                 right: 10px;
-                font-size: 0.85rem;
-                padding: 8px 15px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+
+            .blackhole-portal {
+                width: 80px;
+                height: 80px;
             }
         }
 
@@ -6576,9 +6861,24 @@
     <!-- Alien Spaceship Easter Egg -->
     <div class="alien-spaceship" id="alienSpaceship">🛸</div>
     
+    <!-- Blackhole Portal -->
+    <div class="blackhole-portal" id="blackholePortal">
+        <div class="portal-outer"></div>
+        <div class="portal-middle"></div>
+        <div class="portal-core"></div>
+        <div class="portal-particle"></div>
+        <div class="portal-particle"></div>
+        <div class="portal-particle"></div>
+        <div class="portal-particle"></div>
+        <div class="portal-wave"></div>
+        <div class="portal-wave"></div>
+        <div class="portal-wave"></div>
+    </div>
+    
     <!-- Alien Catch Counter -->
     <div class="alien-catch-counter" id="alienCatchCounter">
         <span class="counter-icon">🛸</span>
+        <span class="counter-label">Caught:</span>
         <span id="alienCatchCount">0</span>
     </div>
 
@@ -8802,16 +9102,19 @@
             });
         }
 
-        // ===== ALIEN SPACESHIP EASTER EGG =====
+        // ===== ALIEN SPACESHIP EASTER EGG WITH PORTAL =====
         const alienSpaceship = document.getElementById('alienSpaceship');
         const alienCatchCounter = document.getElementById('alienCatchCounter');
         const alienCatchCount = document.getElementById('alienCatchCount');
+        const blackholePortal = document.getElementById('blackholePortal');
         
         let alienCatches = parseInt(localStorage.getItem('alienCatches') || '0');
         let alienVisible = false;
+        let alienCanBeCaught = false; // New flag to track if alien can be caught
         let alienTimeout = null;
         let alienMoveInterval = null;
         let alienAppearInterval = null;
+        let isPortalAnimating = false;
         
         // Update counter display
         function updateAlienCounter() {
@@ -8828,11 +9131,12 @@
         
         // Random position generator
         function getRandomPosition() {
-            const maxX = window.innerWidth - 60;
-            const maxY = window.innerHeight - 60;
+            const padding = 100; // Keep away from edges
+            const maxX = window.innerWidth - padding;
+            const maxY = window.innerHeight - padding;
             return {
-                x: Math.random() * maxX,
-                y: Math.random() * maxY
+                x: padding + Math.random() * (maxX - padding),
+                y: padding + Math.random() * (maxY - padding)
             };
         }
         
@@ -8841,9 +9145,54 @@
             return 800 + Math.random() * 1500; // 800ms - 2300ms
         }
         
+        // Position portal at coordinates
+        function positionPortal(x, y) {
+            if (!blackholePortal) return;
+            blackholePortal.style.left = (x - 60) + 'px'; // Center portal (120px / 2)
+            blackholePortal.style.top = (y - 60) + 'px';
+        }
+        
+        // Show portal opening animation
+        function showPortalOpening(x, y, callback) {
+            if (!blackholePortal) {
+                if (callback) callback();
+                return;
+            }
+            
+            isPortalAnimating = true;
+            positionPortal(x, y);
+            
+            // Reset classes
+            blackholePortal.classList.remove('closing');
+            blackholePortal.classList.add('active', 'opening');
+            
+            // After portal opens, execute callback
+            setTimeout(() => {
+                if (callback) callback();
+            }, 800); // Match portalOpen animation duration
+        }
+        
+        // Show portal closing animation
+        function showPortalClosing(callback) {
+            if (!blackholePortal) {
+                if (callback) callback();
+                return;
+            }
+            
+            blackholePortal.classList.remove('opening');
+            blackholePortal.classList.add('closing');
+            
+            // After portal closes, hide it and execute callback
+            setTimeout(() => {
+                blackholePortal.classList.remove('active', 'closing');
+                isPortalAnimating = false;
+                if (callback) callback();
+            }, 800); // Match portalClose animation duration
+        }
+        
         // Move spaceship to random position
         function moveAlien() {
-            if (!alienSpaceship || !alienVisible) return;
+            if (!alienSpaceship || !alienVisible || !alienCanBeCaught) return;
             
             const pos = getRandomPosition();
             const speed = getRandomSpeed();
@@ -8853,10 +9202,7 @@
             alienSpaceship.style.top = pos.y + 'px';
             
             // Create trail effect
-            createSpaceshipTrail(
-                parseFloat(alienSpaceship.style.left) || pos.x,
-                parseFloat(alienSpaceship.style.top) || pos.y
-            );
+            createSpaceshipTrail(pos.x, pos.y);
         }
         
         // Create trail particles
@@ -8870,31 +9216,87 @@
             setTimeout(() => trail.remove(), 500);
         }
         
-        // Show alien spaceship
+        // Show alien spaceship with portal effect
         function showAlien() {
-            if (!alienSpaceship) return;
+            if (!alienSpaceship || isPortalAnimating || alienVisible) return;
             
             const pos = getRandomPosition();
+            
+            // Position alien at portal location (hidden initially)
+            alienSpaceship.style.transition = 'none';
             alienSpaceship.style.left = pos.x + 'px';
             alienSpaceship.style.top = pos.y + 'px';
-            alienSpaceship.classList.add('visible');
-            alienSpaceship.classList.remove('caught');
-            alienVisible = true;
+            alienSpaceship.classList.remove('visible', 'caught', 'emerging', 'escaping');
+            alienCanBeCaught = false;
             
-            // Start random movement
-            alienMoveInterval = setInterval(moveAlien, getRandomSpeed());
-            
-            // Hide after 8-15 seconds
-            const hideDelay = 8000 + Math.random() * 7000;
-            alienTimeout = setTimeout(hideAlien, hideDelay);
+            // Step 1: Show portal opening
+            showPortalOpening(pos.x, pos.y, () => {
+                // Step 2: Show alien emerging from portal
+                alienSpaceship.classList.add('visible', 'emerging');
+                alienVisible = true;
+                
+                // Step 3: After alien emerges, close portal
+                setTimeout(() => {
+                    alienSpaceship.classList.remove('emerging');
+                    showPortalClosing(() => {
+                        // Step 4: Alien can now be caught and starts moving
+                        alienCanBeCaught = true;
+                        
+                        // Start random movement
+                        alienMoveInterval = setInterval(moveAlien, getRandomSpeed());
+                        
+                        // Schedule escape after 8-15 seconds
+                        const hideDelay = 8000 + Math.random() * 7000;
+                        alienTimeout = setTimeout(escapeAlien, hideDelay);
+                    });
+                }, 600); // Wait for emerge animation
+            });
         }
         
-        // Hide alien spaceship
-        function hideAlien() {
+        // Alien escapes through portal
+        function escapeAlien() {
+            if (!alienSpaceship || !alienVisible) return;
+            
+            // Stop movement
+            if (alienMoveInterval) {
+                clearInterval(alienMoveInterval);
+                alienMoveInterval = null;
+            }
+            if (alienTimeout) {
+                clearTimeout(alienTimeout);
+                alienTimeout = null;
+            }
+            
+            // Alien can no longer be caught
+            alienCanBeCaught = false;
+            
+            // Get current alien position
+            const alienX = parseFloat(alienSpaceship.style.left) || 0;
+            const alienY = parseFloat(alienSpaceship.style.top) || 0;
+            
+            // Step 1: Show portal opening at alien's position
+            showPortalOpening(alienX, alienY, () => {
+                // Step 2: Alien gets sucked into portal
+                alienSpaceship.classList.add('escaping');
+                
+                // Step 3: After alien is sucked in, close portal
+                setTimeout(() => {
+                    alienSpaceship.classList.remove('visible', 'escaping');
+                    alienVisible = false;
+                    
+                    showPortalClosing(() => {
+                        // Portal closed, alien is gone
+                    });
+                }, 800); // Match alienSucked animation duration
+            });
+        }
+        
+        // Hide alien immediately (used when caught)
+        function hideAlienImmediate() {
             if (!alienSpaceship) return;
             
-            alienSpaceship.classList.remove('visible');
             alienVisible = false;
+            alienCanBeCaught = false;
             
             if (alienMoveInterval) {
                 clearInterval(alienMoveInterval);
@@ -8908,14 +9310,14 @@
         
         // Catch alien spaceship
         function catchAlien() {
-            if (!alienVisible || !alienSpaceship) return;
+            if (!alienCanBeCaught || !alienVisible || !alienSpaceship) return;
             
-            // Stop movement
-            hideAlien();
+            // Stop everything
+            hideAlienImmediate();
             
             // Play caught animation
-            alienSpaceship.classList.add('caught');
-            alienSpaceship.classList.add('visible');
+            alienSpaceship.classList.remove('escaping', 'emerging');
+            alienSpaceship.classList.add('caught', 'visible');
             
             // Increment counter
             alienCatches++;
@@ -8939,7 +9341,14 @@
                 } else {
                     // Subsequent catches - show toast
                     if (typeof showShortcutNotification === 'function') {
-                        const messages = [
+                        const lang = localStorage.getItem('lang') || 'id';
+                        const messages = lang === 'en' ? [
+                            '🛸 Alien caught again! Total: ' + alienCatches,
+                            '👽 Amazing! ' + alienCatches + ' aliens caught!',
+                            '🌟 Incredible! ' + alienCatches + ' catches!',
+                            '🚀 Pro alien hunter! ' + alienCatches + 'x',
+                            '✨ Alien hunter! Score: ' + alienCatches
+                        ] : [
                             '🛸 Alien tertangkap lagi! Total: ' + alienCatches,
                             '👽 Kamu jago! Sudah ' + alienCatches + ' alien!',
                             '🌟 Luar biasa! ' + alienCatches + ' tangkapan!',
@@ -8953,8 +9362,7 @@
                 
                 // Hide spaceship after animation
                 setTimeout(() => {
-                    alienSpaceship.classList.remove('visible');
-                    alienSpaceship.classList.remove('caught');
+                    alienSpaceship.classList.remove('visible', 'caught');
                 }, 500);
             }, 1000);
         }
@@ -8981,7 +9389,6 @@
                 
                 // Restore original content when closed
                 const closeBtn = overlay.querySelector('.easter-egg-close');
-                const originalClose = closeBtn.onclick;
                 closeBtn.onclick = () => {
                     overlay.classList.remove('active');
                     // Restore original content
@@ -9009,7 +9416,7 @@
             
             // Make it harder - move away on mouse approach
             alienSpaceship.addEventListener('mouseenter', () => {
-                if (alienVisible && Math.random() > 0.3) { // 70% chance to dodge
+                if (alienCanBeCaught && alienVisible && Math.random() > 0.3) { // 70% chance to dodge
                     moveAlien();
                 }
             });
@@ -9025,7 +9432,7 @@
                 
                 // Then appear every 30-60 seconds
                 alienAppearInterval = setInterval(() => {
-                    if (!alienVisible) {
+                    if (!alienVisible && !isPortalAnimating) {
                         showAlien();
                     }
                 }, 30000 + Math.random() * 30000);
