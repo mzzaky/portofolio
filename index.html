@@ -5502,12 +5502,12 @@
 
         /* Move palette widget closer when shortcut widget is minimized */
         .palette-widget.shortcut-minimized {
-            right: 140px;
+            right: 160px;
         }
 
         /* Both scroll visible and shortcut minimized */
         .palette-widget.scroll-visible.shortcut-minimized {
-            right: 210px;
+            right: 230px;
         }
 
         .palette-widget.minimized {
@@ -5796,11 +5796,11 @@
             }
 
             .palette-widget.shortcut-minimized {
-                right: 120px;
+                right: 140px;
             }
 
             .palette-widget.scroll-visible.shortcut-minimized {
-                right: 190px;
+                right: 210px;
             }
 
             .palette-header h3 {
@@ -7514,14 +7514,14 @@
     </audio>
 
     <!-- Color Palette Widget -->
-    <div class="palette-widget" id="paletteWidget">
+    <div class="palette-widget minimized" id="paletteWidget">
         <div class="palette-header">
             <h3>
                 <span class="palette-header-icon">🎨</span>
                 <span class="palette-minimized-icon">🌈</span>
                 <span>Warna</span>
             </h3>
-            <button class="palette-toggle" id="paletteToggle" title="Minimize/Maximize">➖</button>
+            <button class="palette-toggle" id="paletteToggle" title="Minimize/Maximize">➕</button>
         </div>
         <div class="palette-content">
             <span class="palette-label">Pilih Tema Warna ✨</span>
@@ -9163,7 +9163,11 @@
         const paletteToggle = document.getElementById('paletteToggle');
         const paletteOptions = document.querySelectorAll('.palette-option');
         const paletteReset = document.getElementById('paletteReset');
-        let paletteMinimized = false;
+        let paletteMinimized = true;
+
+        // Initialize palette widget as minimized
+        paletteWidget.classList.add('minimized');
+        paletteToggle.textContent = '➕';
 
         // Color palette definitions
         const colorPalettes = {
