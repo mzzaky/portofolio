@@ -5471,27 +5471,82 @@
             padding: 16px 18px;
             box-shadow: 8px 8px 0 var(--border-color);
             z-index: 997;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+                        bottom 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                        padding 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                        border-radius 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                        min-width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+                        max-width 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             min-width: 180px;
             max-width: 220px;
-            animation: paletteWidgetEntry 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s forwards;
             opacity: 0;
+            visibility: hidden;
+            transform: translateY(60px) scale(0.7) rotate(10deg);
+        }
+
+        .palette-widget.animate-entry {
+            animation: paletteWidgetEntry 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            visibility: visible;
         }
 
         @keyframes paletteWidgetEntry {
             0% {
                 opacity: 0;
+                visibility: visible;
                 transform: translateY(60px) scale(0.7) rotate(10deg);
             }
             50% {
+                opacity: 0.8;
                 transform: translateY(-15px) scale(1.1) rotate(-5deg);
             }
             70% {
+                opacity: 0.95;
                 transform: translateY(5px) scale(0.95) rotate(2deg);
             }
             100% {
                 opacity: 1;
+                visibility: visible;
                 transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+        /* Opening animation for palette widget */
+        .palette-widget.opening {
+            animation: paletteOpen 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards !important;
+        }
+
+        @keyframes paletteOpen {
+            0% {
+                opacity: 1;
+                transform: scale(0.95);
+                border-radius: 50px;
+            }
+            50% {
+                transform: scale(1.03) rotate(-2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+                border-radius: 25px;
+            }
+        }
+
+        /* Closing animation for palette widget */
+        .palette-widget.closing {
+            animation: paletteClose 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards !important;
+        }
+
+        @keyframes paletteClose {
+            0% {
+                transform: scale(1) rotate(0deg);
+                border-radius: 25px;
+            }
+            50% {
+                transform: scale(1.08) rotate(3deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                border-radius: 50px;
             }
         }
 
@@ -5779,6 +5834,570 @@
 
         [data-theme="dark"] .palette-option {
             box-shadow: 3px 3px 0 var(--border-color), 0 0 8px rgba(255,255,255,0.1);
+        }
+
+        /* Background Palette Section */
+        .bg-palette-section {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px dashed var(--border-color);
+        }
+
+        .bg-palette-label {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .bg-palette-label .bg-icon {
+            animation: bgIconSpin 3s ease-in-out infinite;
+        }
+
+        @keyframes bgIconSpin {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+        }
+
+        .bg-palette-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .bg-palette-option {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 2px 2px 0 var(--border-color);
+        }
+
+        .bg-palette-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, transparent 100%);
+            border-radius: 6px 6px 0 0;
+        }
+
+        .bg-palette-option::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.2) 100%);
+            border-radius: 0 0 6px 6px;
+        }
+
+        .bg-palette-option:hover {
+            transform: scale(1.15) rotate(-5deg);
+            box-shadow: 4px 4px 0 var(--border-color), 0 0 12px currentColor;
+            z-index: 2;
+        }
+
+        .bg-palette-option.active {
+            transform: scale(1.08);
+            box-shadow: 3px 3px 0 var(--border-color), 0 0 10px currentColor;
+        }
+
+        .bg-palette-option.active::before {
+            content: '🏠';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            background: none;
+            top: 0;
+            bottom: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            animation: bgCheckPop 0.4s ease;
+        }
+
+        @keyframes bgCheckPop {
+            0% { transform: scale(0) rotate(-180deg); }
+            50% { transform: scale(1.4) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        /* Background palette color options */
+        .bg-palette-option[data-bg="cream"] { background: linear-gradient(180deg, #FFF9E3 0%, #FFE5D9 100%); }
+        .bg-palette-option[data-bg="cotton-candy"] { background: linear-gradient(180deg, #FFE4EC 0%, #E8E4FF 100%); }
+        .bg-palette-option[data-bg="mint-dream"] { background: linear-gradient(180deg, #E8FFF4 0%, #E4F7FF 100%); }
+        .bg-palette-option[data-bg="sunset-glow"] { background: linear-gradient(180deg, #FFF3E8 0%, #FFE8E8 100%); }
+        .bg-palette-option[data-bg="lavender-mist"] { background: linear-gradient(180deg, #F3E8FF 0%, #E8F0FF 100%); }
+        .bg-palette-option[data-bg="lemon-fizz"] { background: linear-gradient(180deg, #FFFDE8 0%, #F0FFE8 100%); }
+        .bg-palette-option[data-bg="bubblegum-sky"] { background: linear-gradient(180deg, #FFE8F3 0%, #E8FAFF 100%); }
+        .bg-palette-option[data-bg="tropical-breeze"] { background: linear-gradient(180deg, #E8FFF8 0%, #FFF8E8 100%); }
+
+        /* ===== CONSOLE PANEL WIDGET ===== */
+        .console-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 520px;
+            background: var(--bg-card);
+            border: 4px solid var(--border-color);
+            border-radius: 20px;
+            padding: 14px 16px;
+            box-shadow: 8px 8px 0 var(--border-color);
+            z-index: 996;
+            min-width: 260px;
+            max-width: 300px;
+            font-family: 'Baloo 2', cursive;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+            animation: consoleWidgetEntry 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.5s forwards;
+        }
+
+        @keyframes consoleWidgetEntry {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.6) rotate(-15deg);
+            }
+            60% {
+                transform: translateY(-10px) scale(1.05) rotate(3deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+        /* Console positioning based on other widgets */
+        .console-widget.palette-minimized {
+            right: 380px;
+        }
+
+        .console-widget.shortcut-minimized {
+            right: 360px;
+        }
+
+        .console-widget.palette-minimized.shortcut-minimized {
+            right: 220px;
+        }
+
+        .console-widget.scroll-visible {
+            right: 590px;
+        }
+
+        .console-widget.scroll-visible.palette-minimized {
+            right: 450px;
+        }
+
+        .console-widget.scroll-visible.shortcut-minimized {
+            right: 430px;
+        }
+
+        .console-widget.scroll-visible.palette-minimized.shortcut-minimized {
+            right: 290px;
+        }
+
+        /* Minimized state */
+        .console-widget.minimized {
+            min-width: auto;
+            max-width: none;
+            padding: 10px 14px;
+            border-radius: 50px;
+            animation: consoleMinimizedBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes consoleMinimizedBounce {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                box-shadow: 8px 8px 0 var(--border-color);
+            }
+            25% { 
+                transform: scale(1.05) rotate(-2deg);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 15px var(--glow-blue);
+            }
+            50% { 
+                transform: scale(1.08) rotate(0deg);
+                box-shadow: 12px 12px 0 var(--border-color), 0 0 20px var(--accent-green);
+            }
+            75% { 
+                transform: scale(1.05) rotate(2deg);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 15px var(--accent-purple);
+            }
+        }
+
+        [data-theme="dark"] .console-widget.minimized {
+            animation: consoleMinimizedBounceDark 2s ease-in-out infinite;
+        }
+
+        @keyframes consoleMinimizedBounceDark {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                box-shadow: 8px 8px 0 var(--border-color), 0 0 15px rgba(0, 255, 136, 0.3);
+                background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 255, 136, 0.1) 100%);
+            }
+            25% { 
+                transform: scale(1.05) rotate(-2deg);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 25px rgba(0, 255, 136, 0.5);
+            }
+            50% { 
+                transform: scale(1.08) rotate(0deg);
+                box-shadow: 12px 12px 0 var(--border-color), 0 0 30px rgba(78, 205, 196, 0.5);
+            }
+            75% { 
+                transform: scale(1.05) rotate(2deg);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 25px rgba(179, 136, 255, 0.5);
+            }
+        }
+
+        .console-widget.minimized .console-content {
+            display: none;
+            opacity: 0;
+            max-height: 0;
+        }
+
+        .console-widget.minimized .console-header {
+            margin-bottom: 0;
+        }
+
+        .console-widget.minimized .console-header h3 span:last-child {
+            display: none;
+        }
+
+        /* Opening animation */
+        .console-widget.opening {
+            animation: consoleOpen 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes consoleOpen {
+            0% {
+                transform: scale(0.9);
+                border-radius: 50px;
+            }
+            50% {
+                transform: scale(1.05) rotate(-2deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                border-radius: 20px;
+            }
+        }
+
+        /* Closing animation */
+        .console-widget.closing {
+            animation: consoleClose 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes consoleClose {
+            0% {
+                transform: scale(1) rotate(0deg);
+                border-radius: 20px;
+            }
+            50% {
+                transform: scale(1.1) rotate(3deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                border-radius: 50px;
+            }
+        }
+
+        .console-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            gap: 8px;
+        }
+
+        .console-header h3 {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 0;
+        }
+
+        .console-header-icon {
+            font-size: 1.2rem;
+            animation: consoleIconPulse 1.5s ease-in-out infinite;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+        }
+
+        @keyframes consoleIconPulse {
+            0%, 100% { transform: scale(1); filter: hue-rotate(0deg); }
+            50% { transform: scale(1.15); filter: hue-rotate(30deg); }
+        }
+
+        .console-minimized-icon {
+            display: none;
+            font-size: 1.1rem;
+            animation: consoleMinIconBlink 1s ease-in-out infinite;
+        }
+
+        @keyframes consoleMinIconBlink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        .console-widget.minimized .console-minimized-icon {
+            display: inline;
+        }
+
+        .console-widget.minimized .console-header-icon {
+            display: none;
+        }
+
+        .console-toggle {
+            width: 28px;
+            height: 28px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 3px 3px 0 var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .console-toggle:hover {
+            transform: rotate(180deg) scale(1.1);
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+        }
+
+        .console-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        /* Console screen */
+        .console-screen {
+            background: #0d1117;
+            border: 3px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            min-height: 80px;
+            max-height: 100px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            color: #00ff88;
+            box-shadow: inset 0 0 20px rgba(0, 255, 136, 0.1);
+            position: relative;
+        }
+
+        .console-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+            animation: scanLine 2s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% { top: 0; opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .console-screen::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .console-screen::-webkit-scrollbar-track {
+            background: #0d1117;
+            border-radius: 3px;
+        }
+
+        .console-screen::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 3px;
+        }
+
+        .console-output {
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+
+        .console-output .system {
+            color: #58a6ff;
+        }
+
+        .console-output .success {
+            color: #00ff88;
+        }
+
+        .console-output .error {
+            color: #ff6b6b;
+        }
+
+        .console-output .secret {
+            color: #ffd700;
+            text-shadow: 0 0 10px #ffd700;
+            animation: secretGlow 1s ease-in-out infinite;
+        }
+
+        @keyframes secretGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Console input */
+        .console-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #0d1117;
+            border: 3px solid var(--border-color);
+            border-radius: 12px;
+            padding: 6px 10px;
+            transition: all 0.3s ease;
+        }
+
+        .console-input-wrapper:focus-within {
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+            border-color: #00ff88;
+        }
+
+        .console-prompt {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #00ff88;
+            animation: promptBlink 1s step-end infinite;
+        }
+
+        @keyframes promptBlink {
+            50% { opacity: 0.5; }
+        }
+
+        .console-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: #00ff88;
+            caret-color: #00ff88;
+        }
+
+        .console-input::placeholder {
+            color: rgba(0, 255, 136, 0.4);
+            font-style: italic;
+        }
+
+        /* Console hints */
+        .console-hints {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .console-hint {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+            padding: 3px 8px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .console-hint:hover {
+            transform: scale(1.05);
+            background: var(--accent-green);
+            color: white;
+        }
+
+        /* Dark mode console enhancements */
+        [data-theme="dark"] .console-widget {
+            box-shadow: 8px 8px 0 var(--border-color), 0 0 20px rgba(0, 255, 136, 0.15);
+        }
+
+        [data-theme="dark"] .console-screen {
+            box-shadow: inset 0 0 30px rgba(0, 255, 136, 0.15), 0 0 15px rgba(0, 255, 136, 0.1);
+        }
+
+        /* Responsive for console widget */
+        @media (max-width: 1200px) {
+            .console-widget {
+                right: 400px;
+            }
+            .console-widget.palette-minimized {
+                right: 280px;
+            }
+            .console-widget.shortcut-minimized {
+                right: 260px;
+            }
+            .console-widget.palette-minimized.shortcut-minimized {
+                right: 160px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .console-widget {
+                bottom: 200px;
+                right: 15px;
+                min-width: 200px;
+                max-width: 240px;
+            }
+            .console-widget.palette-minimized,
+            .console-widget.shortcut-minimized,
+            .console-widget.palette-minimized.shortcut-minimized,
+            .console-widget.scroll-visible,
+            .console-widget.scroll-visible.palette-minimized,
+            .console-widget.scroll-visible.shortcut-minimized,
+            .console-widget.scroll-visible.palette-minimized.shortcut-minimized {
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .console-widget {
+                bottom: 270px;
+                right: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .console-widget {
+                bottom: 260px;
+                right: 10px;
+                min-width: 180px;
+                max-width: 220px;
+                padding: 10px 12px;
+            }
+            .console-header h3 span:last-child {
+                display: none;
+            }
+            .console-screen {
+                min-height: 60px;
+                max-height: 80px;
+                font-size: 0.7rem;
+            }
         }
 
         /* Responsive for palette widget */
@@ -7539,10 +8158,53 @@
                 <div class="palette-option" data-palette="tropical" title="Tropical Teal-Orange"></div>
                 <div class="palette-option" data-palette="lavender" title="Lavender Purple"></div>
             </div>
+            
+            <!-- Background Palette Section -->
+            <div class="bg-palette-section">
+                <span class="bg-palette-label"><span class="bg-icon">🏠</span> Background Halaman</span>
+                <div class="bg-palette-grid">
+                    <div class="bg-palette-option active" data-bg="cream" title="Cream (Default)"></div>
+                    <div class="bg-palette-option" data-bg="cotton-candy" title="Cotton Candy"></div>
+                    <div class="bg-palette-option" data-bg="mint-dream" title="Mint Dream"></div>
+                    <div class="bg-palette-option" data-bg="sunset-glow" title="Sunset Glow"></div>
+                    <div class="bg-palette-option" data-bg="lavender-mist" title="Lavender Mist"></div>
+                    <div class="bg-palette-option" data-bg="lemon-fizz" title="Lemon Fizz"></div>
+                    <div class="bg-palette-option" data-bg="bubblegum-sky" title="Bubblegum Sky"></div>
+                    <div class="bg-palette-option" data-bg="tropical-breeze" title="Tropical Breeze"></div>
+                </div>
+            </div>
+            
             <button class="palette-reset" id="paletteReset">
                 <span>🔄</span>
-                <span>Reset Warna</span>
+                <span>Reset Semua</span>
             </button>
+        </div>
+    </div>
+
+    <!-- Console Panel Widget -->
+    <div class="console-widget minimized" id="consoleWidget">
+        <div class="console-header">
+            <h3>
+                <span class="console-header-icon">💻</span>
+                <span class="console-minimized-icon">⌨️</span>
+                <span>Console</span>
+            </h3>
+            <button class="console-toggle" id="consoleToggle" title="Minimize/Maximize">➕</button>
+        </div>
+        <div class="console-content">
+            <div class="console-screen" id="consoleScreen">
+                <div class="console-output" id="consoleOutput"><span class="system">$ System ready...</span>
+<span class="system">$ Ketik 'help' untuk melihat perintah</span></div>
+            </div>
+            <div class="console-input-wrapper">
+                <span class="console-prompt">&gt;</span>
+                <input type="text" class="console-input" id="consoleInput" placeholder="Ketik perintah..." autocomplete="off">
+            </div>
+            <div class="console-hints">
+                <span class="console-hint" data-cmd="help">help</span>
+                <span class="console-hint" data-cmd="clear">clear</span>
+                <span class="console-hint" data-cmd="about">about</span>
+            </div>
         </div>
     </div>
 
@@ -9163,11 +9825,16 @@
         const paletteToggle = document.getElementById('paletteToggle');
         const paletteOptions = document.querySelectorAll('.palette-option');
         const paletteReset = document.getElementById('paletteReset');
+        const bgPaletteOptions = document.querySelectorAll('.bg-palette-option');
         let paletteMinimized = true;
 
-        // Initialize palette widget as minimized
-        paletteWidget.classList.add('minimized');
-        paletteToggle.textContent = '➕';
+        // Initialize palette widget with animation after a small delay
+        setTimeout(() => {
+            paletteWidget.classList.add('animate-entry');
+        }, 300);
+
+        // Forward declaration for console widget position update
+        let updateConsoleWidgetPosition = function() {};
 
         // Color palette definitions
         const colorPalettes = {
@@ -9340,15 +10007,145 @@
         // Reset palette to default
         function resetPalette() {
             applyPalette('default');
-            showShortcutNotification('🔄 Warna direset ke default!');
+            applyBackgroundPalette('cream');
+            showShortcutNotification('🔄 Semua warna direset ke default!');
         }
 
-        // Toggle palette widget minimize/maximize
+        // Toggle palette widget minimize/maximize with animation
         function togglePaletteWidget() {
+            if (paletteMinimized) {
+                // Opening
+                paletteWidget.classList.remove('minimized', 'closing');
+                paletteWidget.classList.add('opening');
+                paletteToggle.textContent = '➖';
+                
+                setTimeout(() => {
+                    paletteWidget.classList.remove('opening');
+                }, 400);
+            } else {
+                // Closing
+                paletteWidget.classList.remove('opening');
+                paletteWidget.classList.add('closing');
+                
+                setTimeout(() => {
+                    paletteWidget.classList.remove('closing');
+                    paletteWidget.classList.add('minimized');
+                    paletteToggle.textContent = '➕';
+                }, 350);
+            }
             paletteMinimized = !paletteMinimized;
-            paletteWidget.classList.toggle('minimized', paletteMinimized);
-            paletteToggle.textContent = paletteMinimized ? '➕' : '➖';
+            
+            // Update console widget position
+            updateConsoleWidgetPosition();
         }
+
+        // Background palette definitions (light and dark mode pairs)
+        const bgPalettes = {
+            'cream': {
+                light: { primary: '#FFF9E3', secondary: '#FFE5D9' },
+                dark: { primary: '#1A1A2E', secondary: '#16213E' }
+            },
+            'cotton-candy': {
+                light: { primary: '#FFE4EC', secondary: '#E8E4FF' },
+                dark: { primary: '#2E1A2E', secondary: '#1E1632' }
+            },
+            'mint-dream': {
+                light: { primary: '#E8FFF4', secondary: '#E4F7FF' },
+                dark: { primary: '#1A2E28', secondary: '#162E3E' }
+            },
+            'sunset-glow': {
+                light: { primary: '#FFF3E8', secondary: '#FFE8E8' },
+                dark: { primary: '#2E241A', secondary: '#3E1E1E' }
+            },
+            'lavender-mist': {
+                light: { primary: '#F3E8FF', secondary: '#E8F0FF' },
+                dark: { primary: '#241A2E', secondary: '#1A1E3E' }
+            },
+            'lemon-fizz': {
+                light: { primary: '#FFFDE8', secondary: '#F0FFE8' },
+                dark: { primary: '#2E2E1A', secondary: '#1E3E1A' }
+            },
+            'bubblegum-sky': {
+                light: { primary: '#FFE8F3', secondary: '#E8FAFF' },
+                dark: { primary: '#2E1A24', secondary: '#1A2E3E' }
+            },
+            'tropical-breeze': {
+                light: { primary: '#E8FFF8', secondary: '#FFF8E8' },
+                dark: { primary: '#1A2E2A', secondary: '#2E2A1A' }
+            }
+        };
+
+        // Apply background palette
+        function applyBackgroundPalette(bgName) {
+            const bgPalette = bgPalettes[bgName];
+            if (!bgPalette) return;
+
+            const root = document.documentElement;
+            const currentTheme = root.getAttribute('data-theme');
+            const colors = currentTheme === 'dark' ? bgPalette.dark : bgPalette.light;
+
+            root.style.setProperty('--bg-primary', colors.primary);
+            root.style.setProperty('--bg-secondary', colors.secondary);
+
+            // Store both light and dark mode colors as data attributes for theme switching
+            root.setAttribute('data-bg-palette', bgName);
+
+            // Update active state
+            bgPaletteOptions.forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.getAttribute('data-bg') === bgName) {
+                    opt.classList.add('active');
+                }
+            });
+
+            // Save preference
+            localStorage.setItem('bgPalette', bgName);
+
+            // Show notification
+            const bgPaletteNames = {
+                'cream': '🍦 Cream',
+                'cotton-candy': '🍭 Cotton Candy',
+                'mint-dream': '🌿 Mint Dream',
+                'sunset-glow': '🌅 Sunset Glow',
+                'lavender-mist': '💜 Lavender Mist',
+                'lemon-fizz': '🍋 Lemon Fizz',
+                'bubblegum-sky': '🫧 Bubblegum Sky',
+                'tropical-breeze': '🏝️ Tropical Breeze'
+            };
+            showShortcutNotification(`${bgPaletteNames[bgName] || bgName} background aktif!`);
+        }
+
+        // Update background colors when theme changes
+        function updateBackgroundForTheme() {
+            const bgName = document.documentElement.getAttribute('data-bg-palette') || 'cream';
+            const bgPalette = bgPalettes[bgName];
+            if (!bgPalette) return;
+
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const colors = currentTheme === 'dark' ? bgPalette.dark : bgPalette.light;
+
+            document.documentElement.style.setProperty('--bg-primary', colors.primary);
+            document.documentElement.style.setProperty('--bg-secondary', colors.secondary);
+        }
+
+        // Observe theme changes to update background
+        const bgThemeObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'data-theme') {
+                    updateBackgroundForTheme();
+                }
+            });
+        });
+        bgThemeObserver.observe(document.documentElement, { attributes: true });
+
+        // Background palette option click handlers
+        bgPaletteOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const bgName = option.getAttribute('data-bg');
+                applyBackgroundPalette(bgName);
+            });
+        });
 
         // Palette toggle click handler
         paletteToggle.addEventListener('click', (e) => {
@@ -9388,6 +10185,24 @@
             applyPalette(savedPalette);
         }
 
+        // Load saved background palette on page load
+        const savedBgPalette = localStorage.getItem('bgPalette');
+        if (savedBgPalette && bgPalettes[savedBgPalette]) {
+            // Apply without showing notification on load
+            const bgPalette = bgPalettes[savedBgPalette];
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const colors = currentTheme === 'dark' ? bgPalette.dark : bgPalette.light;
+            document.documentElement.style.setProperty('--bg-primary', colors.primary);
+            document.documentElement.style.setProperty('--bg-secondary', colors.secondary);
+            document.documentElement.setAttribute('data-bg-palette', savedBgPalette);
+            bgPaletteOptions.forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.getAttribute('data-bg') === savedBgPalette) {
+                    opt.classList.add('active');
+                }
+            });
+        }
+
         // ===== SHORTCUT INFO WIDGET =====
         const shortcutWidget = document.getElementById('shortcutWidget');
         const shortcutToggle = document.getElementById('shortcutToggle');
@@ -9401,6 +10216,9 @@
             
             // Move palette widget closer when shortcut is minimized
             paletteWidget.classList.toggle('shortcut-minimized', shortcutMinimized);
+            
+            // Update console widget position
+            updateConsoleWidgetPosition();
         }
 
         shortcutToggle.addEventListener('click', (e) => {
@@ -9412,6 +10230,316 @@
         shortcutWidget.addEventListener('click', (e) => {
             e.stopPropagation();
         });
+
+        // ===== CONSOLE PANEL WIDGET =====
+        const consoleWidget = document.getElementById('consoleWidget');
+        const consoleToggle = document.getElementById('consoleToggle');
+        const consoleInput = document.getElementById('consoleInput');
+        const consoleOutput = document.getElementById('consoleOutput');
+        const consoleScreen = document.getElementById('consoleScreen');
+        const consoleHints = document.querySelectorAll('.console-hint');
+        let consoleMinimized = true;
+
+        // Console commands configuration - Easy to add custom commands!
+        const consoleCommands = {
+            // ===== ADD YOUR CUSTOM COMMANDS HERE =====
+            // Format: 'command': { response: 'message', type: 'success/error/secret/system' }
+            
+            // Basic commands
+            'help': {
+                response: `📋 Perintah tersedia:
+• help - Tampilkan bantuan
+• clear - Bersihkan layar
+• about - Tentang developer
+• version - Versi website
+• date - Tanggal hari ini
+• time - Waktu sekarang
+• hi/hello - Sapa console
+• thanks - Terima kasih
+• matrix - Mode hacker 😎
+• konami - ???
+• love - ❤️
+• coffee - ☕
+🔮 Hint: Ada perintah rahasia lho...`,
+                type: 'system'
+            },
+            'clear': {
+                action: 'clear',
+                type: 'system'
+            },
+            'about': {
+                response: `👨‍💻 Developer: Aithor
+🎮 Spesialisasi: Game Dev, Web Dev, Software Dev
+💼 Passion: Creating awesome digital experiences!
+🌟 Motto: "Code with passion, create with purpose"`,
+                type: 'success'
+            },
+            'version': {
+                response: '🚀 Aithor Portfolio v2.0.0 - Cartoonish Edition',
+                type: 'success'
+            },
+            'date': {
+                action: 'date',
+                type: 'system'
+            },
+            'time': {
+                action: 'time',
+                type: 'system'
+            },
+            'hi': {
+                response: '👋 Halo juga! Selamat datang di console rahasia!',
+                type: 'success'
+            },
+            'hello': {
+                response: '👋 Hello there! Welcome to the secret console!',
+                type: 'success'
+            },
+            'thanks': {
+                response: '🙏 Sama-sama! Terima kasih sudah berkunjung! ✨',
+                type: 'success'
+            },
+            
+            // Secret commands
+            'matrix': {
+                response: `🟩 W A K E  U P  N E O . . .
+🟩 The Matrix has you...
+🟩 Follow the white rabbit 🐰
+🔮 You found a secret command!`,
+                type: 'secret'
+            },
+            'konami': {
+                response: `⬆️⬆️⬇️⬇️⬅️➡️⬅️➡️🅱️🅰️
+🎮 Konami Code Activated!
+✨ Kamu sudah tahu kan? Coba di keyboard!`,
+                type: 'secret'
+            },
+            'love': {
+                response: `💖 L O V E 💖
+You are loved! Keep being awesome! 
+🌈 Spread love, not hate! 🌈`,
+                type: 'secret'
+            },
+            'coffee': {
+                response: `☕ *brewing coffee*
+━━━━━━━━━━━━
+  ( (
+   ) )
+ ........
+ |      |]
+ \\      /
+  \`----'
+☕ Here's your virtual coffee!`,
+                type: 'secret'
+            },
+            '42': {
+                response: `🌌 The Answer to the Ultimate Question of Life,
+the Universe, and Everything is... 42!
+📖 - The Hitchhiker's Guide to the Galaxy`,
+                type: 'secret'
+            },
+            'sudo': {
+                response: `🔒 Nice try! But you don't have root access here 😄
+💡 Hint: This is just a portfolio, not a real terminal!`,
+                type: 'error'
+            },
+            'hack': {
+                response: `⚠️ HACK ATTEMPT DETECTED!
+🚨 Just kidding! This is a safe zone 😊
+🔐 No hacking here, only fun!`,
+                type: 'error'
+            },
+            'secret': {
+                response: `🔮 ✨ You found the SECRET command! ✨ 🔮
+🏆 Congrats! You're a true explorer!
+🎁 Here's a virtual cookie: 🍪`,
+                type: 'secret'
+            },
+            'alien': {
+                response: `👽 *beep boop*
+🛸 Alien transmission received!
+📡 "We come in peace... and to catch aliens!"
+🎯 Try catching the flying UFO!`,
+                type: 'secret'
+            },
+            'easteregg': {
+                response: `🥚 Easter Egg Hunter Detected! 🐰
+🎉 Kamu menemukan perintah rahasia!
+💡 Tips: Coba ketik ⬆️⬆️⬇️⬇️⬅️➡️⬅️➡️BA di keyboard!`,
+                type: 'secret'
+            },
+            'music': {
+                response: `🎵 Music Commands:
+• Play/Pause: Alt + 5
+• Check out the Music Player widget! 🎧`,
+                type: 'system'
+            },
+            'theme': {
+                response: `🎨 Theme Commands:
+• Toggle Dark Mode: Alt + 4
+• Or click the ☀️/🌙 button!`,
+                type: 'system'
+            },
+            'aithor': {
+                response: `✨ A I T H O R ✨
+🎮 Game Developer
+🌐 Web Developer
+💻 Software Developer
+🚀 Dream Maker
+❤️ Thanks for visiting my portfolio!`,
+                type: 'secret'
+            },
+            
+            // ===== ADD MORE CUSTOM COMMANDS BELOW =====
+            // Example:
+            // 'mycommand': {
+            //     response: 'Your response here',
+            //     type: 'success' // or 'error', 'secret', 'system'
+            // },
+        };
+
+        // Initialize console widget with animation delay
+        setTimeout(() => {
+            consoleWidget.style.opacity = '1';
+        }, 500);
+
+        // Update console widget position based on other widgets (reassign the function)
+        updateConsoleWidgetPosition = function() {
+            const scrollTopVisible = scrollTopBtn.classList.contains('visible');
+            
+            consoleWidget.classList.toggle('palette-minimized', paletteMinimized);
+            consoleWidget.classList.toggle('shortcut-minimized', shortcutMinimized);
+            consoleWidget.classList.toggle('scroll-visible', scrollTopVisible);
+        };
+
+        // Toggle console widget minimize/maximize with animation
+        function toggleConsoleWidget() {
+            if (consoleMinimized) {
+                // Opening
+                consoleWidget.classList.remove('minimized', 'closing');
+                consoleWidget.classList.add('opening');
+                consoleToggle.textContent = '➖';
+                
+                setTimeout(() => {
+                    consoleWidget.classList.remove('opening');
+                    consoleInput.focus();
+                }, 500);
+            } else {
+                // Closing
+                consoleWidget.classList.remove('opening');
+                consoleWidget.classList.add('closing');
+                
+                setTimeout(() => {
+                    consoleWidget.classList.remove('closing');
+                    consoleWidget.classList.add('minimized');
+                    consoleToggle.textContent = '➕';
+                }, 400);
+            }
+            consoleMinimized = !consoleMinimized;
+        }
+
+        // Process console command
+        function processCommand(cmd) {
+            const trimmedCmd = cmd.trim().toLowerCase();
+            
+            if (!trimmedCmd) return;
+            
+            // Add command to output
+            addToConsole(`> ${cmd}`, 'system');
+            
+            // Check if command exists
+            const commandData = consoleCommands[trimmedCmd];
+            
+            if (commandData) {
+                // Handle special actions
+                if (commandData.action === 'clear') {
+                    consoleOutput.innerHTML = '<span class="system">$ Console cleared</span>';
+                    return;
+                }
+                if (commandData.action === 'date') {
+                    const now = new Date();
+                    const dateStr = now.toLocaleDateString('id-ID', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+                    addToConsole(`📅 ${dateStr}`, 'success');
+                    return;
+                }
+                if (commandData.action === 'time') {
+                    const now = new Date();
+                    const timeStr = now.toLocaleTimeString('id-ID');
+                    addToConsole(`⏰ ${timeStr}`, 'success');
+                    return;
+                }
+                
+                // Regular response
+                addToConsole(commandData.response, commandData.type);
+                
+                // Special effects for secret commands
+                if (commandData.type === 'secret') {
+                    createConfetti();
+                }
+            } else {
+                addToConsole(`❌ Perintah '${trimmedCmd}' tidak dikenali. Ketik 'help' untuk bantuan.`, 'error');
+            }
+        }
+
+        // Add text to console output
+        function addToConsole(text, type = 'system') {
+            const span = document.createElement('span');
+            span.className = type;
+            span.textContent = '\n' + text;
+            consoleOutput.appendChild(span);
+            
+            // Scroll to bottom
+            consoleScreen.scrollTop = consoleScreen.scrollHeight;
+        }
+
+        // Console toggle click handler
+        consoleToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleConsoleWidget();
+        });
+
+        // Console input handler
+        consoleInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                processCommand(consoleInput.value);
+                consoleInput.value = '';
+            }
+        });
+
+        // Console hint click handlers
+        consoleHints.forEach(hint => {
+            hint.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const cmd = hint.getAttribute('data-cmd');
+                consoleInput.value = cmd;
+                consoleInput.focus();
+            });
+        });
+
+        // Prevent click effects on console widget
+        consoleWidget.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Initial position update
+        setTimeout(() => {
+            updateConsoleWidgetPosition();
+        }, 600);
+
+        // Observer for scroll-top button visibility (for console widget)
+        const consoleScrollObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    updateConsoleWidgetPosition();
+                }
+            });
+        });
+        consoleScrollObserver.observe(scrollTopBtn, { attributes: true });
 
         // ===== TOGGLE BUTTONS FUNCTIONALITY =====
         const toggleButtons = document.querySelectorAll('.shortcut-item.toggle-btn');
