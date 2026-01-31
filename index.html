@@ -5500,6 +5500,16 @@
             right: 390px;
         }
 
+        /* Move palette widget closer when shortcut widget is minimized */
+        .palette-widget.shortcut-minimized {
+            right: 140px;
+        }
+
+        /* Both scroll visible and shortcut minimized */
+        .palette-widget.scroll-visible.shortcut-minimized {
+            right: 210px;
+        }
+
         .palette-widget.minimized {
             min-width: auto;
             max-width: none;
@@ -5783,6 +5793,14 @@
 
             .palette-widget.scroll-visible {
                 right: 310px;
+            }
+
+            .palette-widget.shortcut-minimized {
+                right: 120px;
+            }
+
+            .palette-widget.scroll-visible.shortcut-minimized {
+                right: 190px;
             }
 
             .palette-header h3 {
@@ -9376,6 +9394,9 @@
             shortcutMinimized = !shortcutMinimized;
             shortcutWidget.classList.toggle('minimized', shortcutMinimized);
             shortcutToggle.textContent = shortcutMinimized ? '➕' : '➖';
+            
+            // Move palette widget closer when shortcut is minimized
+            paletteWidget.classList.toggle('shortcut-minimized', shortcutMinimized);
         }
 
         shortcutToggle.addEventListener('click', (e) => {
