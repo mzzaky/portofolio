@@ -5184,6 +5184,105 @@
         .shortcut-item:nth-child(4) { border-left: 5px solid var(--accent-yellow); }
         .shortcut-item:nth-child(5) { border-left: 5px solid var(--accent-purple); }
 
+        /* ===== TOGGLE BUTTON STYLES ===== */
+        .shortcut-item.toggle-btn {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .shortcut-item.toggle-btn:active {
+            transform: translateX(2px) scale(0.98);
+        }
+
+        /* Toggle indicator container */
+        .toggle-indicator {
+            position: relative;
+            width: 42px;
+            height: 24px;
+            background: var(--bg-secondary);
+            border: 3px solid var(--border-color);
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            flex-shrink: 0;
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.15);
+        }
+
+        /* Toggle knob */
+        .toggle-indicator::before {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(180deg, #ffffff 0%, #e0e0e0 100%);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+        }
+
+        /* Toggle ON state */
+        .shortcut-item.toggle-btn.active .toggle-indicator {
+            background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-blue) 100%);
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.1), 0 0 10px var(--glow-blue);
+        }
+
+        .shortcut-item.toggle-btn.active .toggle-indicator::before {
+            left: calc(100% - 20px);
+            background: linear-gradient(180deg, #ffffff 0%, var(--accent-yellow) 100%);
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.15), 0 0 8px var(--accent-yellow);
+        }
+
+        /* Toggle OFF state - red tint */
+        .shortcut-item.toggle-btn:not(.active) .toggle-indicator {
+            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-orange) 100%);
+            opacity: 0.6;
+        }
+
+        /* Status emoji indicator */
+        .toggle-status {
+            font-size: 1rem;
+            margin-left: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .shortcut-item.toggle-btn.active .toggle-status::after {
+            content: '✨';
+            animation: statusSparkle 1s ease-in-out infinite;
+        }
+
+        @keyframes statusSparkle {
+            0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.7; transform: scale(1.2) rotate(15deg); }
+        }
+
+        /* Click animation */
+        .shortcut-item.toggle-btn.clicked {
+            animation: toggleClick 0.3s ease;
+        }
+
+        @keyframes toggleClick {
+            0% { transform: translateX(5px) scale(1.02); }
+            50% { transform: translateX(8px) scale(1.05); box-shadow: 6px 6px 0 var(--border-color); }
+            100% { transform: translateX(5px) scale(1.02); }
+        }
+
+        /* Dark mode toggle enhancements */
+        [data-theme="dark"] .toggle-indicator {
+            background: #1a1a2e;
+            box-shadow: inset 2px 2px 6px rgba(0,0,0,0.4);
+        }
+
+        [data-theme="dark"] .toggle-indicator::before {
+            background: linear-gradient(180deg, #ffffff 0%, #b0b0b0 100%);
+        }
+
+        [data-theme="dark"] .shortcut-item.toggle-btn.active .toggle-indicator {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-green) 100%);
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.2), 0 0 15px var(--glow-blue);
+        }
+
         .shortcut-label {
             font-family: 'Patrick Hand', cursive;
             font-size: 0.9rem;
@@ -7025,45 +7124,30 @@
             <button class="shortcut-toggle" id="shortcutToggle" title="Minimize/Maximize">➖</button>
         </div>
         <div class="shortcut-content">
-            <div class="shortcut-item">
+            <div class="shortcut-item toggle-btn active" id="toggleLeftWidgets" data-toggle="left-widgets">
                 <span class="shortcut-label">Widget Kiri</span>
-                <div class="shortcut-keys">
-                    <span class="key-badge">Alt</span>
-                    <span class="key-plus">+</span>
-                    <span class="key-badge">1</span>
-                </div>
+                <div class="toggle-indicator"></div>
+                <span class="toggle-status"></span>
             </div>
-            <div class="shortcut-item">
+            <div class="shortcut-item toggle-btn active" id="toggleNavigation" data-toggle="navigation">
                 <span class="shortcut-label">Navigasi</span>
-                <div class="shortcut-keys">
-                    <span class="key-badge">Alt</span>
-                    <span class="key-plus">+</span>
-                    <span class="key-badge">2</span>
-                </div>
+                <div class="toggle-indicator"></div>
+                <span class="toggle-status"></span>
             </div>
-            <div class="shortcut-item">
+            <div class="shortcut-item toggle-btn active" id="toggleSocialBar" data-toggle="social-bar">
                 <span class="shortcut-label">Social Bar</span>
-                <div class="shortcut-keys">
-                    <span class="key-badge">Alt</span>
-                    <span class="key-plus">+</span>
-                    <span class="key-badge">3</span>
-                </div>
+                <div class="toggle-indicator"></div>
+                <span class="toggle-status"></span>
             </div>
-            <div class="shortcut-item">
+            <div class="shortcut-item toggle-btn" id="toggleDarkMode" data-toggle="dark-mode">
                 <span class="shortcut-label">Mode Gelap</span>
-                <div class="shortcut-keys">
-                    <span class="key-badge">Alt</span>
-                    <span class="key-plus">+</span>
-                    <span class="key-badge">4</span>
-                </div>
+                <div class="toggle-indicator"></div>
+                <span class="toggle-status"></span>
             </div>
-            <div class="shortcut-item">
+            <div class="shortcut-item toggle-btn" id="togglePlayPause" data-toggle="play-pause">
                 <span class="shortcut-label">Play/Pause</span>
-                <div class="shortcut-keys">
-                    <span class="key-badge">Alt</span>
-                    <span class="key-plus">+</span>
-                    <span class="key-badge">5</span>
-                </div>
+                <div class="toggle-indicator"></div>
+                <span class="toggle-status"></span>
             </div>
         </div>
     </div>
@@ -7080,6 +7164,73 @@
                 createConfetti();
             }, 1500);
         });
+
+        // ===== EASTER EGG SOUND EFFECTS SYSTEM =====
+        // Sound effect URLs - placeholder for custom URLs
+        const easterEggSounds = {
+            konamiCode: './assets/sound/sfx_easteregg_konami.mp3', // Masukkan URL sound effect untuk Konami Code di sini
+            alienCaught: './assets/sound/sfx_easteregg_alienship.mp3', // Masukkan URL sound effect untuk Alien tertangkap di sini
+        };
+
+        // Track if sounds have been played (only play on first discovery)
+        let konamiSoundPlayed = localStorage.getItem('konamiSoundPlayed') === 'true';
+        let alienSoundPlayed = localStorage.getItem('alienSoundPlayed') === 'true';
+
+        // Sound effect player function
+        function playEasterEggSound(soundType) {
+            const soundUrl = easterEggSounds[soundType];
+            if (!soundUrl || soundUrl === '') {
+                console.log(`🔊 Easter Egg Sound (${soundType}): URL tidak tersedia`);
+                return;
+            }
+
+            try {
+                const audio = new Audio(soundUrl);
+                audio.volume = 0.7;
+                audio.play().catch(err => {
+                    console.log('Sound effect gagal diputar:', err);
+                });
+            } catch (error) {
+                console.log('Error memutar sound effect:', error);
+            }
+        }
+
+        // Play Konami Code sound (only first time)
+        function playKonamiSound() {
+            if (!konamiSoundPlayed) {
+                playEasterEggSound('konamiCode');
+                konamiSoundPlayed = true;
+                localStorage.setItem('konamiSoundPlayed', 'true');
+            }
+        }
+
+        // Play Alien Caught sound (only first time)
+        function playAlienCaughtSound() {
+            if (!alienSoundPlayed) {
+                playEasterEggSound('alienCaught');
+                alienSoundPlayed = true;
+                localStorage.setItem('alienSoundPlayed', 'true');
+            }
+        }
+
+        // Function to set custom sound URLs (can be called from console)
+        window.setEasterEggSound = function(type, url) {
+            if (easterEggSounds.hasOwnProperty(type)) {
+                easterEggSounds[type] = url;
+                console.log(`✅ Sound URL untuk "${type}" telah diatur: ${url}`);
+            } else {
+                console.log(`❌ Tipe sound tidak valid. Gunakan: 'konamiCode' atau 'alienCaught'`);
+            }
+        };
+
+        // Function to reset sound played status (for testing)
+        window.resetEasterEggSounds = function() {
+            konamiSoundPlayed = false;
+            alienSoundPlayed = false;
+            localStorage.removeItem('konamiSoundPlayed');
+            localStorage.removeItem('alienSoundPlayed');
+            console.log('✅ Status sound effect telah direset!');
+        };
 
         // ===== THEME TOGGLE =====
         const themeToggle = document.getElementById('themeToggle');
@@ -8597,6 +8748,83 @@
             e.stopPropagation();
         });
 
+        // ===== TOGGLE BUTTONS FUNCTIONALITY =====
+        const toggleButtons = document.querySelectorAll('.shortcut-item.toggle-btn');
+        
+        // Initialize dark mode toggle state based on current theme
+        const darkModeToggle = document.getElementById('toggleDarkMode');
+        if (darkModeToggle) {
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                darkModeToggle.classList.add('active');
+            }
+        }
+
+        // Click animation helper
+        function playClickAnimation(element) {
+            element.classList.add('clicked');
+            setTimeout(() => element.classList.remove('clicked'), 300);
+        }
+
+        // Toggle button click handlers
+        toggleButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const toggleType = btn.getAttribute('data-toggle');
+                
+                playClickAnimation(btn);
+                
+                switch(toggleType) {
+                    case 'left-widgets':
+                        toggleLeftWidgets();
+                        btn.classList.toggle('active', !leftWidgetsHidden);
+                        break;
+                    case 'navigation':
+                        toggleNavAndAnnouncement();
+                        btn.classList.toggle('active', !navBarHidden);
+                        break;
+                    case 'social-bar':
+                        toggleSocialBar();
+                        btn.classList.toggle('active', !socialBarHidden);
+                        break;
+                    case 'dark-mode':
+                        toggleThemeShortcut();
+                        const newTheme = html.getAttribute('data-theme');
+                        btn.classList.toggle('active', newTheme === 'dark');
+                        break;
+                    case 'play-pause':
+                        toggleMusicPlayPause();
+                        btn.classList.toggle('active', isPlaying);
+                        break;
+                }
+            });
+        });
+
+        // Keep toggle buttons in sync with state changes from keyboard shortcuts
+        function syncToggleStates() {
+            const leftWidgetsBtn = document.getElementById('toggleLeftWidgets');
+            const navBtn = document.getElementById('toggleNavigation');
+            const socialBtn = document.getElementById('toggleSocialBar');
+            const darkModeBtn = document.getElementById('toggleDarkMode');
+            const playPauseBtn_toggle = document.getElementById('togglePlayPause');
+            
+            if (leftWidgetsBtn) leftWidgetsBtn.classList.toggle('active', !leftWidgetsHidden);
+            if (navBtn) navBtn.classList.toggle('active', !navBarHidden);
+            if (socialBtn) socialBtn.classList.toggle('active', !socialBarHidden);
+            if (darkModeBtn) darkModeBtn.classList.toggle('active', html.getAttribute('data-theme') === 'dark');
+            if (playPauseBtn_toggle) playPauseBtn_toggle.classList.toggle('active', isPlaying);
+        }
+
+        // Observer for theme changes
+        const themeObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'data-theme') {
+                    syncToggleStates();
+                }
+            });
+        });
+        themeObserver.observe(html, { attributes: true });
+
         // Update shortcut widget position based on scroll-top button visibility
         function updateShortcutWidgetPosition() {
             const scrollTopVisible = scrollTopBtn.classList.contains('visible');
@@ -8636,6 +8864,9 @@
             
             // Show notification
             showShortcutNotification(leftWidgetsHidden ? '🙈 Widget Kiri Disembunyikan' : '🎉 Widget Kiri Ditampilkan');
+            
+            // Sync toggle buttons state
+            if (typeof syncToggleStates === 'function') syncToggleStates();
         }
 
         // Toggle navbar and announcement bar
@@ -8649,6 +8880,9 @@
             if (announcementBar) announcementBar.classList.toggle('widget-hidden', navBarHidden);
             
             showShortcutNotification(navBarHidden ? '🙈 Navigasi Disembunyikan' : '🎉 Navigasi Ditampilkan');
+            
+            // Sync toggle buttons state
+            if (typeof syncToggleStates === 'function') syncToggleStates();
         }
 
         // Toggle social bar
@@ -8660,6 +8894,9 @@
             if (socialBarEl) socialBarEl.classList.toggle('widget-hidden', socialBarHidden);
             
             showShortcutNotification(socialBarHidden ? '🙈 Social Bar Disembunyikan' : '🎉 Social Bar Ditampilkan');
+            
+            // Sync toggle buttons state
+            if (typeof syncToggleStates === 'function') syncToggleStates();
         }
 
         // Toggle theme (light/dark mode)
@@ -8667,6 +8904,9 @@
             themeToggle.click();
             const newTheme = html.getAttribute('data-theme');
             showShortcutNotification(newTheme === 'dark' ? '🌙 Mode Malam Aktif' : '☀️ Mode Terang Aktif');
+            
+            // Sync toggle buttons state
+            if (typeof syncToggleStates === 'function') syncToggleStates();
         }
 
         // Toggle music play/pause
@@ -8678,6 +8918,9 @@
             
             playPauseBtn.click();
             showShortcutNotification(isPlaying ? '▶️ Musik Dimainkan' : '⏸️ Musik Dijeda');
+            
+            // Sync toggle buttons state
+            if (typeof syncToggleStates === 'function') syncToggleStates();
         }
 
         // Show shortcut notification toast
@@ -9051,6 +9294,9 @@
             if (easterEggActivated) return;
             easterEggActivated = true;
             
+            // Play Konami Code sound effect (first time only)
+            playKonamiSound();
+            
             const overlay = document.getElementById('easterEggOverlay');
             if (overlay) {
                 overlay.classList.add('active');
@@ -9370,6 +9616,9 @@
         
         // Show alien easter egg overlay (first catch)
         function showAlienEasterEgg() {
+            // Play Alien Caught sound effect (first time only)
+            playAlienCaughtSound();
+            
             const overlay = document.getElementById('easterEggOverlay');
             if (overlay) {
                 // Update content for alien catch
