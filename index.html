@@ -5188,6 +5188,16 @@
         .shortcut-item.toggle-btn {
             cursor: pointer;
             user-select: none;
+            gap: 8px;
+        }
+
+        .shortcut-item.toggle-btn .shortcut-label {
+            flex: 1;
+            min-width: 60px;
+        }
+
+        .shortcut-item.toggle-btn .shortcut-keys {
+            flex-shrink: 0;
         }
 
         .shortcut-item.toggle-btn:active {
@@ -5238,23 +5248,6 @@
         .shortcut-item.toggle-btn:not(.active) .toggle-indicator {
             background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-orange) 100%);
             opacity: 0.6;
-        }
-
-        /* Status emoji indicator */
-        .toggle-status {
-            font-size: 1rem;
-            margin-left: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .shortcut-item.toggle-btn.active .toggle-status::after {
-            content: '✨';
-            animation: statusSparkle 1s ease-in-out infinite;
-        }
-
-        @keyframes statusSparkle {
-            0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
-            50% { opacity: 0.7; transform: scale(1.2) rotate(15deg); }
         }
 
         /* Click animation */
@@ -5464,6 +5457,393 @@
                 width: 28px;
                 height: 28px;
                 font-size: 0.8rem;
+            }
+        }
+
+        /* ===== COLOR PALETTE WIDGET ===== */
+        .palette-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 320px;
+            background: var(--bg-card);
+            border: 4px solid var(--border-color);
+            border-radius: 25px;
+            padding: 16px 18px;
+            box-shadow: 8px 8px 0 var(--border-color);
+            z-index: 997;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            min-width: 180px;
+            max-width: 220px;
+            animation: paletteWidgetEntry 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s forwards;
+            opacity: 0;
+        }
+
+        @keyframes paletteWidgetEntry {
+            0% {
+                opacity: 0;
+                transform: translateY(60px) scale(0.7) rotate(10deg);
+            }
+            50% {
+                transform: translateY(-15px) scale(1.1) rotate(-5deg);
+            }
+            70% {
+                transform: translateY(5px) scale(0.95) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+        /* Move widget left when scroll-top button is visible */
+        .palette-widget.scroll-visible {
+            right: 390px;
+        }
+
+        .palette-widget.minimized {
+            min-width: auto;
+            max-width: none;
+            padding: 12px 16px;
+            border-radius: 50px;
+            animation: paletteMinimizedPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes paletteMinimizedPulse {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                box-shadow: 8px 8px 0 var(--border-color);
+                background: var(--bg-card);
+            }
+            25% { 
+                transform: scale(1.08) rotate(-3deg);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 20px var(--glow-pink);
+            }
+            50% { 
+                transform: scale(1.05) rotate(0deg);
+                box-shadow: 12px 12px 0 var(--border-color), 0 0 25px var(--glow-blue);
+            }
+            75% { 
+                transform: scale(1.08) rotate(3deg);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 20px var(--accent-yellow);
+            }
+        }
+
+        [data-theme="dark"] .palette-widget.minimized {
+            animation: paletteMinimizedPulseDark 2.5s ease-in-out infinite;
+        }
+
+        @keyframes paletteMinimizedPulseDark {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                box-shadow: 8px 8px 0 var(--border-color), 0 0 15px rgba(179, 136, 255, 0.3);
+                background: linear-gradient(135deg, var(--bg-card) 0%, rgba(166, 109, 212, 0.2) 100%);
+            }
+            25% { 
+                transform: scale(1.08) rotate(-3deg);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 25px rgba(255, 107, 157, 0.5);
+                background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 107, 157, 0.2) 100%);
+            }
+            50% { 
+                transform: scale(1.05) rotate(0deg);
+                box-shadow: 12px 12px 0 var(--border-color), 0 0 30px rgba(78, 205, 196, 0.5);
+                background: linear-gradient(135deg, var(--bg-card) 0%, rgba(78, 205, 196, 0.2) 100%);
+            }
+            75% { 
+                transform: scale(1.08) rotate(3deg);
+                box-shadow: 10px 10px 0 var(--border-color), 0 0 25px rgba(255, 230, 109, 0.5);
+                background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 230, 109, 0.2) 100%);
+            }
+        }
+
+        .palette-widget.minimized .palette-content {
+            display: none;
+        }
+
+        .palette-widget.minimized .palette-header h3 span:last-child {
+            display: none;
+        }
+
+        .palette-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            gap: 8px;
+        }
+
+        .palette-widget.minimized .palette-header {
+            margin-bottom: 0;
+        }
+
+        .palette-header h3 {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 0;
+        }
+
+        .palette-header-icon {
+            font-size: 1.3rem;
+            animation: paletteIconWiggle 2s ease-in-out infinite;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+        }
+
+        @keyframes paletteIconWiggle {
+            0%, 100% { transform: rotate(-10deg) scale(1); }
+            25% { transform: rotate(15deg) scale(1.15); }
+            50% { transform: rotate(-5deg) scale(1.05); }
+            75% { transform: rotate(20deg) scale(1.1); }
+        }
+
+        .palette-minimized-icon {
+            display: none;
+            font-size: 1.2rem;
+            animation: paletteMinimizedIconBounce 1.5s ease-in-out infinite;
+        }
+
+        @keyframes paletteMinimizedIconBounce {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-15deg); }
+            50% { transform: scale(1.1) rotate(10deg); }
+            75% { transform: scale(1.25) rotate(-10deg); }
+        }
+
+        .palette-widget.minimized .palette-minimized-icon {
+            display: inline;
+        }
+
+        .palette-widget.minimized .palette-header-icon {
+            display: none;
+        }
+
+        .palette-toggle {
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 3px 3px 0 var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .palette-toggle:hover {
+            transform: rotate(180deg) scale(1.1);
+            background: linear-gradient(135deg, var(--accent-yellow), var(--accent-orange));
+        }
+
+        .palette-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .palette-label {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2px;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .palette-option {
+            width: 36px;
+            height: 36px;
+            border: 3px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 3px 3px 0 var(--border-color);
+        }
+
+        .palette-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 50%);
+            border-radius: 8px;
+        }
+
+        .palette-option:hover {
+            transform: scale(1.15) rotate(-5deg);
+            box-shadow: 5px 5px 0 var(--border-color), 0 0 15px currentColor;
+            z-index: 2;
+        }
+
+        .palette-option.active {
+            transform: scale(1.1);
+            box-shadow: 4px 4px 0 var(--border-color), 0 0 12px currentColor;
+        }
+
+        .palette-option.active::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5), -1px -1px 2px rgba(0,0,0,0.5);
+            animation: checkBounce 0.5s ease;
+        }
+
+        @keyframes checkBounce {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            50% { transform: translate(-50%, -50%) scale(1.3); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Color options */
+        .palette-option[data-palette="default"] { background: linear-gradient(135deg, #FF6B9D 0%, #4ECDC4 100%); }
+        .palette-option[data-palette="candy"] { background: linear-gradient(135deg, #FF9FF3 0%, #FFC312 100%); }
+        .palette-option[data-palette="ocean"] { background: linear-gradient(135deg, #74C0FC 0%, #38D9A9 100%); }
+        .palette-option[data-palette="sunset"] { background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%); }
+        .palette-option[data-palette="grape"] { background: linear-gradient(135deg, #B388FF 0%, #FF6B9D 100%); }
+        .palette-option[data-palette="mint"] { background: linear-gradient(135deg, #6BCB77 0%, #4ECDC4 100%); }
+        .palette-option[data-palette="peach"] { background: linear-gradient(135deg, #FF8C42 0%, #FFB6C1 100%); }
+        .palette-option[data-palette="berry"] { background: linear-gradient(135deg, #9B59B6 0%, #E74C3C 100%); }
+        .palette-option[data-palette="lemon"] { background: linear-gradient(135deg, #F1C40F 0%, #2ECC71 100%); }
+        .palette-option[data-palette="bubblegum"] { background: linear-gradient(135deg, #FF69B4 0%, #00CED1 100%); }
+        .palette-option[data-palette="tropical"] { background: linear-gradient(135deg, #00D4AA 0%, #FF6B35 100%); }
+        .palette-option[data-palette="lavender"] { background: linear-gradient(135deg, #E6E6FA 0%, #DDA0DD 100%); }
+
+        /* Palette reset button */
+        .palette-reset {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 3px 3px 0 var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .palette-reset:hover {
+            transform: translateY(-3px);
+            box-shadow: 5px 5px 0 var(--border-color);
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: white;
+        }
+
+        .palette-reset:active {
+            transform: translateY(0);
+            box-shadow: 2px 2px 0 var(--border-color);
+        }
+
+        /* Dark mode enhancements */
+        [data-theme="dark"] .palette-widget {
+            box-shadow: 8px 8px 0 var(--border-color), 0 0 20px rgba(179, 136, 255, 0.15);
+        }
+
+        [data-theme="dark"] .palette-option {
+            box-shadow: 3px 3px 0 var(--border-color), 0 0 8px rgba(255,255,255,0.1);
+        }
+
+        /* Responsive for palette widget */
+        @media (max-width: 768px) {
+            .palette-widget {
+                bottom: 30px;
+                right: 240px;
+                min-width: 160px;
+                max-width: 200px;
+                padding: 12px 14px;
+            }
+
+            .palette-widget.scroll-visible {
+                right: 310px;
+            }
+
+            .palette-header h3 {
+                font-size: 0.85rem;
+            }
+
+            .palette-option {
+                width: 30px;
+                height: 30px;
+            }
+
+            .palette-grid {
+                gap: 6px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .palette-widget {
+                bottom: 120px;
+                right: 15px;
+                min-width: 150px;
+                max-width: 180px;
+            }
+
+            .palette-widget.scroll-visible {
+                right: 15px;
+                bottom: 190px;
+            }
+
+            .palette-option {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .palette-widget {
+                bottom: 110px;
+                right: 10px;
+                min-width: 140px;
+                max-width: 170px;
+                padding: 10px 12px;
+            }
+
+            .palette-widget.scroll-visible {
+                right: 10px;
+                bottom: 180px;
+            }
+
+            .palette-header h3 span:last-child {
+                display: none;
+            }
+
+            .palette-option {
+                width: 26px;
+                height: 26px;
+                border-width: 2px;
+            }
+
+            .palette-toggle {
+                width: 26px;
+                height: 26px;
+                font-size: 0.75rem;
             }
         }
 
@@ -7113,6 +7493,39 @@
         <!-- Music source will be set via JavaScript -->
     </audio>
 
+    <!-- Color Palette Widget -->
+    <div class="palette-widget" id="paletteWidget">
+        <div class="palette-header">
+            <h3>
+                <span class="palette-header-icon">🎨</span>
+                <span class="palette-minimized-icon">🌈</span>
+                <span>Warna</span>
+            </h3>
+            <button class="palette-toggle" id="paletteToggle" title="Minimize/Maximize">➖</button>
+        </div>
+        <div class="palette-content">
+            <span class="palette-label">Pilih Tema Warna ✨</span>
+            <div class="palette-grid">
+                <div class="palette-option active" data-palette="default" title="Default Pink-Cyan"></div>
+                <div class="palette-option" data-palette="candy" title="Candy Pink-Gold"></div>
+                <div class="palette-option" data-palette="ocean" title="Ocean Blue-Teal"></div>
+                <div class="palette-option" data-palette="sunset" title="Sunset Red-Yellow"></div>
+                <div class="palette-option" data-palette="grape" title="Grape Purple-Pink"></div>
+                <div class="palette-option" data-palette="mint" title="Mint Green-Cyan"></div>
+                <div class="palette-option" data-palette="peach" title="Peach Orange-Pink"></div>
+                <div class="palette-option" data-palette="berry" title="Berry Purple-Red"></div>
+                <div class="palette-option" data-palette="lemon" title="Lemon Yellow-Green"></div>
+                <div class="palette-option" data-palette="bubblegum" title="Bubblegum Pink-Teal"></div>
+                <div class="palette-option" data-palette="tropical" title="Tropical Teal-Orange"></div>
+                <div class="palette-option" data-palette="lavender" title="Lavender Purple"></div>
+            </div>
+            <button class="palette-reset" id="paletteReset">
+                <span>🔄</span>
+                <span>Reset Warna</span>
+            </button>
+        </div>
+    </div>
+
     <!-- Shortcut Info Widget -->
     <div class="shortcut-widget" id="shortcutWidget">
         <div class="shortcut-header">
@@ -7126,28 +7539,48 @@
         <div class="shortcut-content">
             <div class="shortcut-item toggle-btn active" id="toggleLeftWidgets" data-toggle="left-widgets">
                 <span class="shortcut-label">Widget Kiri</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">1</span>
+                </div>
                 <div class="toggle-indicator"></div>
-                <span class="toggle-status"></span>
             </div>
             <div class="shortcut-item toggle-btn active" id="toggleNavigation" data-toggle="navigation">
                 <span class="shortcut-label">Navigasi</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">2</span>
+                </div>
                 <div class="toggle-indicator"></div>
-                <span class="toggle-status"></span>
             </div>
             <div class="shortcut-item toggle-btn active" id="toggleSocialBar" data-toggle="social-bar">
                 <span class="shortcut-label">Social Bar</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">3</span>
+                </div>
                 <div class="toggle-indicator"></div>
-                <span class="toggle-status"></span>
             </div>
             <div class="shortcut-item toggle-btn" id="toggleDarkMode" data-toggle="dark-mode">
                 <span class="shortcut-label">Mode Gelap</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">4</span>
+                </div>
                 <div class="toggle-indicator"></div>
-                <span class="toggle-status"></span>
             </div>
             <div class="shortcut-item toggle-btn" id="togglePlayPause" data-toggle="play-pause">
                 <span class="shortcut-label">Play/Pause</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">5</span>
+                </div>
                 <div class="toggle-indicator"></div>
-                <span class="toggle-status"></span>
             </div>
         </div>
     </div>
@@ -7166,17 +7599,13 @@
         });
 
         // ===== EASTER EGG SOUND EFFECTS SYSTEM =====
-        // Sound effect URLs - placeholder for custom URLs
+        // Sound effect URLs
         const easterEggSounds = {
-            konamiCode: './assets/sound/sfx_easteregg_konami.mp3', // Masukkan URL sound effect untuk Konami Code di sini
-            alienCaught: './assets/sound/sfx_easteregg_alienship.mp3', // Masukkan URL sound effect untuk Alien tertangkap di sini
+            konamiCode: './assets/sound/sfx_easteregg_alienship.mp3', // Menggunakan sound yang sama
+            alienCaught: './assets/sound/sfx_easteregg_alienship.mp3',
         };
 
-        // Track if sounds have been played (only play on first discovery)
-        let konamiSoundPlayed = localStorage.getItem('konamiSoundPlayed') === 'true';
-        let alienSoundPlayed = localStorage.getItem('alienSoundPlayed') === 'true';
-
-        // Sound effect player function
+        // Sound effect player function - plays every time
         function playEasterEggSound(soundType) {
             const soundUrl = easterEggSounds[soundType];
             if (!soundUrl || soundUrl === '') {
@@ -7195,22 +7624,14 @@
             }
         }
 
-        // Play Konami Code sound (only first time)
+        // Play Konami Code sound
         function playKonamiSound() {
-            if (!konamiSoundPlayed) {
-                playEasterEggSound('konamiCode');
-                konamiSoundPlayed = true;
-                localStorage.setItem('konamiSoundPlayed', 'true');
-            }
+            playEasterEggSound('konamiCode');
         }
 
-        // Play Alien Caught sound (only first time)
+        // Play Alien Caught sound
         function playAlienCaughtSound() {
-            if (!alienSoundPlayed) {
-                playEasterEggSound('alienCaught');
-                alienSoundPlayed = true;
-                localStorage.setItem('alienSoundPlayed', 'true');
-            }
+            playEasterEggSound('alienCaught');
         }
 
         // Function to set custom sound URLs (can be called from console)
@@ -7221,15 +7642,6 @@
             } else {
                 console.log(`❌ Tipe sound tidak valid. Gunakan: 'konamiCode' atau 'alienCaught'`);
             }
-        };
-
-        // Function to reset sound played status (for testing)
-        window.resetEasterEggSounds = function() {
-            konamiSoundPlayed = false;
-            alienSoundPlayed = false;
-            localStorage.removeItem('konamiSoundPlayed');
-            localStorage.removeItem('alienSoundPlayed');
-            console.log('✅ Status sound effect telah direset!');
         };
 
         // ===== THEME TOGGLE =====
@@ -8726,6 +9138,232 @@
             });
         }
 
+        // ===== COLOR PALETTE WIDGET =====
+        const paletteWidget = document.getElementById('paletteWidget');
+        const paletteToggle = document.getElementById('paletteToggle');
+        const paletteOptions = document.querySelectorAll('.palette-option');
+        const paletteReset = document.getElementById('paletteReset');
+        let paletteMinimized = false;
+
+        // Color palette definitions
+        const colorPalettes = {
+            default: {
+                pink: '#FF6B9D',
+                blue: '#4ECDC4',
+                yellow: '#FFE66D',
+                purple: '#A66DD4',
+                orange: '#FF8C42',
+                green: '#6BCB77',
+                red: '#FF6B6B',
+                cyan: '#74C0FC'
+            },
+            candy: {
+                pink: '#FF9FF3',
+                blue: '#5F9DF7',
+                yellow: '#FFC312',
+                purple: '#C56CF0',
+                orange: '#FF9F43',
+                green: '#26DE81',
+                red: '#FC5C65',
+                cyan: '#45AAF2'
+            },
+            ocean: {
+                pink: '#FDA7DF',
+                blue: '#74C0FC',
+                yellow: '#FFE66D',
+                purple: '#748FFC',
+                orange: '#FF922B',
+                green: '#38D9A9',
+                red: '#FF6B6B',
+                cyan: '#22B8CF'
+            },
+            sunset: {
+                pink: '#FF8787',
+                blue: '#FFA94D',
+                yellow: '#FFE066',
+                purple: '#E599F7',
+                orange: '#FF6B6B',
+                green: '#69DB7C',
+                red: '#F03E3E',
+                cyan: '#FFC078'
+            },
+            grape: {
+                pink: '#FF6B9D',
+                blue: '#845EF7',
+                yellow: '#FFE066',
+                purple: '#B388FF',
+                orange: '#FF8C42',
+                green: '#51CF66',
+                red: '#FF6B6B',
+                cyan: '#9775FA'
+            },
+            mint: {
+                pink: '#FFC0CB',
+                blue: '#4ECDC4',
+                yellow: '#F7DC6F',
+                purple: '#A8E6CF',
+                orange: '#FFB347',
+                green: '#6BCB77',
+                red: '#FF6B6B',
+                cyan: '#56C596'
+            },
+            peach: {
+                pink: '#FFB6C1',
+                blue: '#87CEEB',
+                yellow: '#FFEAA7',
+                purple: '#DDA0DD',
+                orange: '#FF8C42',
+                green: '#98D8C8',
+                red: '#F78FB3',
+                cyan: '#FFDAB9'
+            },
+            berry: {
+                pink: '#E74C3C',
+                blue: '#9B59B6',
+                yellow: '#F39C12',
+                purple: '#8E44AD',
+                orange: '#E67E22',
+                green: '#27AE60',
+                red: '#C0392B',
+                cyan: '#A569BD'
+            },
+            lemon: {
+                pink: '#F8E71C',
+                blue: '#50E3C2',
+                yellow: '#F1C40F',
+                purple: '#9B59B6',
+                orange: '#F39C12',
+                green: '#2ECC71',
+                red: '#E74C3C',
+                cyan: '#1ABC9C'
+            },
+            bubblegum: {
+                pink: '#FF69B4',
+                blue: '#00CED1',
+                yellow: '#FFD700',
+                purple: '#DA70D6',
+                orange: '#FF7F50',
+                green: '#00FA9A',
+                red: '#FF1493',
+                cyan: '#40E0D0'
+            },
+            tropical: {
+                pink: '#FF6B35',
+                blue: '#00D4AA',
+                yellow: '#FFE135',
+                purple: '#7B68EE',
+                orange: '#FF8C00',
+                green: '#00CED1',
+                red: '#FF4500',
+                cyan: '#20B2AA'
+            },
+            lavender: {
+                pink: '#DDA0DD',
+                blue: '#B0C4DE',
+                yellow: '#FFFACD',
+                purple: '#E6E6FA',
+                orange: '#FFDAB9',
+                green: '#98FB98',
+                red: '#FFB6C1',
+                cyan: '#E0FFFF'
+            }
+        };
+
+        // Apply color palette
+        function applyPalette(paletteName) {
+            const palette = colorPalettes[paletteName];
+            if (!palette) return;
+
+            const root = document.documentElement;
+            root.style.setProperty('--accent-pink', palette.pink);
+            root.style.setProperty('--accent-blue', palette.blue);
+            root.style.setProperty('--accent-yellow', palette.yellow);
+            root.style.setProperty('--accent-purple', palette.purple);
+            root.style.setProperty('--accent-orange', palette.orange);
+            root.style.setProperty('--accent-green', palette.green);
+            root.style.setProperty('--accent-red', palette.red);
+            root.style.setProperty('--accent-cyan', palette.cyan);
+
+            // Update active state
+            paletteOptions.forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.getAttribute('data-palette') === paletteName) {
+                    opt.classList.add('active');
+                }
+            });
+
+            // Save preference
+            localStorage.setItem('colorPalette', paletteName);
+
+            // Show notification
+            const paletteNames = {
+                default: '🎨 Default',
+                candy: '🍬 Candy',
+                ocean: '🌊 Ocean',
+                sunset: '🌅 Sunset',
+                grape: '🍇 Grape',
+                mint: '🌿 Mint',
+                peach: '🍑 Peach',
+                berry: '🫐 Berry',
+                lemon: '🍋 Lemon',
+                bubblegum: '🫧 Bubblegum',
+                tropical: '🏝️ Tropical',
+                lavender: '💜 Lavender'
+            };
+            showShortcutNotification(`${paletteNames[paletteName] || paletteName} palette aktif!`);
+        }
+
+        // Reset palette to default
+        function resetPalette() {
+            applyPalette('default');
+            showShortcutNotification('🔄 Warna direset ke default!');
+        }
+
+        // Toggle palette widget minimize/maximize
+        function togglePaletteWidget() {
+            paletteMinimized = !paletteMinimized;
+            paletteWidget.classList.toggle('minimized', paletteMinimized);
+            paletteToggle.textContent = paletteMinimized ? '➕' : '➖';
+        }
+
+        // Palette toggle click handler
+        paletteToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            togglePaletteWidget();
+        });
+
+        // Prevent click effects on palette widget
+        paletteWidget.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Palette option click handlers
+        paletteOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const paletteName = option.getAttribute('data-palette');
+                applyPalette(paletteName);
+            });
+        });
+
+        // Reset button handler
+        paletteReset.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetPalette();
+        });
+
+        // Update palette widget position based on scroll-top button visibility
+        function updatePaletteWidgetPosition() {
+            const scrollTopVisible = scrollTopBtn.classList.contains('visible');
+            paletteWidget.classList.toggle('scroll-visible', scrollTopVisible);
+        }
+
+        // Load saved palette on page load
+        const savedPalette = localStorage.getItem('colorPalette');
+        if (savedPalette && colorPalettes[savedPalette]) {
+            applyPalette(savedPalette);
+        }
+
         // ===== SHORTCUT INFO WIDGET =====
         const shortcutWidget = document.getElementById('shortcutWidget');
         const shortcutToggle = document.getElementById('shortcutToggle');
@@ -8829,6 +9467,7 @@
         function updateShortcutWidgetPosition() {
             const scrollTopVisible = scrollTopBtn.classList.contains('visible');
             shortcutWidget.classList.toggle('scroll-visible', scrollTopVisible);
+            paletteWidget.classList.toggle('scroll-visible', scrollTopVisible);
         }
 
         // Observer for scroll-top button visibility
