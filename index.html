@@ -5515,6 +5515,11 @@
             animation: paletteOpen 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards !important;
         }
 
+        .palette-widget.opening .palette-content {
+            opacity: 0;
+            animation: paletteContentFadeIn 0.3s ease 0.15s forwards;
+        }
+
         @keyframes paletteOpen {
             0% {
                 opacity: 1;
@@ -5531,9 +5536,25 @@
             }
         }
 
+        @keyframes paletteContentFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Closing animation for palette widget */
         .palette-widget.closing {
             animation: paletteClose 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards !important;
+        }
+
+        .palette-widget.closing .palette-content {
+            opacity: 0;
+            transition: opacity 0.15s ease;
         }
 
         @keyframes paletteClose {
@@ -5626,10 +5647,6 @@
             }
         }
 
-        .palette-widget.minimized .palette-content {
-            display: none;
-        }
-
         .palette-widget.minimized .palette-header h3 span:last-child {
             display: none;
         }
@@ -5716,6 +5733,20 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Hide content when minimized (using visibility + height for smoother transition) */
+        .palette-widget.minimized .palette-content {
+            display: none;
+            opacity: 0;
+        }
+
+        /* When opening starts but still has minimized class */
+        .palette-widget.minimized.opening .palette-content {
+            display: flex;
+            opacity: 0;
         }
 
         .palette-label {
@@ -5995,33 +6026,38 @@
             }
         }
 
-        /* Console positioning based on other widgets - more spacing when minimized */
+        /* Console positioning based on other widgets
+           Palette widget positions:
+           - Default: right: 320px
+           - shortcut-minimized: right: 160px
+           Console must be LEFT of palette (higher right value) with ~120px gap for minimized widgets
+        */
         .console-widget.palette-minimized {
-            right: 220px;
+            right: 440px; /* palette at 320px + ~120px gap */
         }
 
         .console-widget.shortcut-minimized {
-            right: 380px;
+            right: 400px;
         }
 
         .console-widget.palette-minimized.shortcut-minimized {
-            right: 150px;
+            right: 280px; /* palette at 160px + ~120px gap */
         }
 
         .console-widget.scroll-visible {
-            right: 610px;
+            right: 630px;
         }
 
         .console-widget.scroll-visible.palette-minimized {
-            right: 290px;
+            right: 510px;
         }
 
         .console-widget.scroll-visible.shortcut-minimized {
-            right: 450px;
+            right: 470px;
         }
 
         .console-widget.scroll-visible.palette-minimized.shortcut-minimized {
-            right: 220px;
+            right: 350px;
         }
 
         /* Minimized state */
@@ -8307,7 +8343,7 @@
         // ===== EASTER EGG SOUND EFFECTS SYSTEM =====
         // Sound effect URLs
         const easterEggSounds = {
-            konamiCode: './assets/sound/sfx_easteregg_alienship.mp3', // Menggunakan sound yang sama
+            konamiCode: './assets/sound/sfx_easteregg_konami.mp3', // Menggunakan sound yang sama
             alienCaught: './assets/sound/sfx_easteregg_alienship.mp3',
         };
 
@@ -10038,14 +10074,19 @@
         // Toggle palette widget minimize/maximize with animation
         function togglePaletteWidget() {
             if (paletteMinimized) {
-                // Opening
-                paletteWidget.classList.remove('minimized', 'closing');
+                // Opening - add opening class first, then remove minimized after tiny delay
                 paletteWidget.classList.add('opening');
                 paletteToggle.textContent = '➖';
                 
+                // Small delay before removing minimized to let opening animation prepare
+                setTimeout(() => {
+                    paletteWidget.classList.remove('minimized');
+                }, 50);
+                
+                // Remove opening class after animation completes
                 setTimeout(() => {
                     paletteWidget.classList.remove('opening');
-                }, 400);
+                }, 450);
             } else {
                 // Closing
                 paletteWidget.classList.remove('opening');
