@@ -5183,6 +5183,92 @@
         .shortcut-item:nth-child(3) { border-left: 5px solid var(--accent-green); }
         .shortcut-item:nth-child(4) { border-left: 5px solid var(--accent-yellow); }
         .shortcut-item:nth-child(5) { border-left: 5px solid var(--accent-purple); }
+        .shortcut-item:nth-child(6) { border-left: 5px solid var(--accent-cyan); }
+
+        /* ===== FAST MODE STYLES ===== */
+        /* When fast mode is active, disable all animations and transitions */
+        [data-fast-mode="true"],
+        [data-fast-mode="true"] * {
+            animation-duration: 0s !important;
+            animation-delay: 0s !important;
+            transition-duration: 0s !important;
+            transition-delay: 0s !important;
+        }
+
+        /* Hide decorative floating elements in fast mode */
+        [data-fast-mode="true"] .floating-shapes,
+        [data-fast-mode="true"] .section-icons,
+        [data-fast-mode="true"] .shape,
+        [data-fast-mode="true"] .section-icon,
+        [data-fast-mode="true"] .alien-spaceship,
+        [data-fast-mode="true"] .blackhole-portal,
+        [data-fast-mode="true"] .spaceship-trail {
+            display: none !important;
+        }
+
+        /* Simplify shadows and effects in fast mode */
+        [data-fast-mode="true"] .card,
+        [data-fast-mode="true"] .project-card,
+        [data-fast-mode="true"] .skill-category,
+        [data-fast-mode="true"] .service-card,
+        [data-fast-mode="true"] .shortcut-widget,
+        [data-fast-mode="true"] .palette-widget,
+        [data-fast-mode="true"] .console-widget {
+            box-shadow: 2px 2px 0 var(--border-color) !important;
+        }
+
+        /* Remove glow effects in fast mode */
+        [data-fast-mode="true"] * {
+            filter: none !important;
+            text-shadow: none !important;
+        }
+
+        /* Keep custom cursor in fast mode but simplify */
+        [data-fast-mode="true"] body {
+            cursor: auto !important;
+        }
+
+        /* Disable smooth scroll in fast mode */
+        [data-fast-mode="true"] html {
+            scroll-behavior: auto !important;
+        }
+
+        /* Fast mode indicator badge */
+        .fast-mode-badge {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'Baloo 2', cursive;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border: 3px solid var(--border-color);
+            box-shadow: 3px 3px 0 var(--border-color);
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .fast-mode-badge.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fast-mode-badge .badge-icon {
+            font-size: 1rem;
+        }
+
+        /* In fast mode, the badge shouldn't have transition */
+        [data-fast-mode="true"] .fast-mode-badge {
+            transition: none !important;
+        }
 
         /* ===== TOGGLE BUTTON STYLES ===== */
         .shortcut-item.toggle-btn {
@@ -8324,7 +8410,22 @@
                 </div>
                 <div class="toggle-indicator"></div>
             </div>
+            <div class="shortcut-item toggle-btn" id="toggleFastMode" data-toggle="fast-mode">
+                <span class="shortcut-label">Mode Cepat</span>
+                <div class="shortcut-keys">
+                    <span class="key-badge">Alt</span>
+                    <span class="key-plus">+</span>
+                    <span class="key-badge">6</span>
+                </div>
+                <div class="toggle-indicator"></div>
+            </div>
         </div>
+    </div>
+
+    <!-- Fast Mode Badge -->
+    <div class="fast-mode-badge" id="fastModeBadge">
+        <span class="badge-icon">⚡</span>
+        <span>Fast Mode</span>
     </div>
 
     <!-- Scroll to Top Button -->
@@ -10606,6 +10707,18 @@ the Universe, and Everything is... 42!
         });
         consoleScrollObserver.observe(scrollTopBtn, { attributes: true });
 
+        // ===== FAST MODE STATE (declare early for toggle initialization) =====
+        let fastModeEnabled = localStorage.getItem('fastMode') === 'true';
+
+        // Initialize fast mode on page load
+        if (fastModeEnabled) {
+            document.documentElement.setAttribute('data-fast-mode', 'true');
+            const fastModeBadge = document.getElementById('fastModeBadge');
+            if (fastModeBadge) {
+                setTimeout(() => fastModeBadge.classList.add('visible'), 100);
+            }
+        }
+
         // ===== TOGGLE BUTTONS FUNCTIONALITY =====
         const toggleButtons = document.querySelectorAll('.shortcut-item.toggle-btn');
         
@@ -10616,6 +10729,12 @@ the Universe, and Everything is... 42!
             if (currentTheme === 'dark') {
                 darkModeToggle.classList.add('active');
             }
+        }
+
+        // Initialize fast mode toggle state based on saved preference
+        const fastModeToggle = document.getElementById('toggleFastMode');
+        if (fastModeToggle && fastModeEnabled) {
+            fastModeToggle.classList.add('active');
         }
 
         // Click animation helper
@@ -10654,6 +10773,10 @@ the Universe, and Everything is... 42!
                         toggleMusicPlayPause();
                         btn.classList.toggle('active', isPlaying);
                         break;
+                    case 'fast-mode':
+                        toggleFastMode();
+                        btn.classList.toggle('active', fastModeEnabled);
+                        break;
                 }
             });
         });
@@ -10665,12 +10788,14 @@ the Universe, and Everything is... 42!
             const socialBtn = document.getElementById('toggleSocialBar');
             const darkModeBtn = document.getElementById('toggleDarkMode');
             const playPauseBtn_toggle = document.getElementById('togglePlayPause');
+            const fastModeBtn = document.getElementById('toggleFastMode');
             
             if (leftWidgetsBtn) leftWidgetsBtn.classList.toggle('active', !leftWidgetsHidden);
             if (navBtn) navBtn.classList.toggle('active', !navBarHidden);
             if (socialBtn) socialBtn.classList.toggle('active', !socialBarHidden);
             if (darkModeBtn) darkModeBtn.classList.toggle('active', html.getAttribute('data-theme') === 'dark');
             if (playPauseBtn_toggle) playPauseBtn_toggle.classList.toggle('active', isPlaying);
+            if (fastModeBtn) fastModeBtn.classList.toggle('active', fastModeEnabled);
         }
 
         // Observer for theme changes
@@ -10782,6 +10907,29 @@ the Universe, and Everything is... 42!
             if (typeof syncToggleStates === 'function') syncToggleStates();
         }
 
+        // Toggle fast mode (disable animations for lighter page)
+        function toggleFastMode() {
+            fastModeEnabled = !fastModeEnabled;
+            
+            const html = document.documentElement;
+            const fastModeBadge = document.getElementById('fastModeBadge');
+            
+            if (fastModeEnabled) {
+                html.setAttribute('data-fast-mode', 'true');
+                localStorage.setItem('fastMode', 'true');
+                if (fastModeBadge) fastModeBadge.classList.add('visible');
+                showShortcutNotification('⚡ Mode Cepat Aktif - Animasi Dimatikan');
+            } else {
+                html.removeAttribute('data-fast-mode');
+                localStorage.setItem('fastMode', 'false');
+                if (fastModeBadge) fastModeBadge.classList.remove('visible');
+                showShortcutNotification('✨ Mode Normal - Animasi Aktif');
+            }
+            
+            // Sync toggle buttons state
+            if (typeof syncToggleStates === 'function') syncToggleStates();
+        }
+
         // Show shortcut notification toast
         function showShortcutNotification(message) {
             const toast = document.getElementById('copyToast');
@@ -10844,6 +10992,10 @@ the Universe, and Everything is... 42!
                     case '5':
                         e.preventDefault();
                         toggleMusicPlayPause();
+                        break;
+                    case '6':
+                        e.preventDefault();
+                        toggleFastMode();
                         break;
                 }
             }
